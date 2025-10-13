@@ -1,0 +1,62 @@
+[
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "name": "Shoes",
+    "sku": "1",
+    "threshold": 5,
+    "company": 1
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "name": "Tee-shirt",
+    "sku": "2",
+    "threshold": 5,
+    "company": 2
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 3,
+  "fields": {
+    "name": "Paper",
+    "sku": "3",
+    "threshold": 10,
+    "company": 3
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 4,
+  "fields": {
+    "name": "Table",
+    "sku": "4",
+    "threshold": 15,
+    "company": 4
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 5,
+  "fields": {
+    "name": "Nouveau Computer A",
+    "sku": "SKU-A-01",
+    "threshold": 10,
+    "company": 1
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 6,
+  "fields": {
+    "name": "Nouveau Gaspetro  B",
+    "sku": "SKU-B-02",
+    "threshold": 5,
+    "company": 2
+  }
+}
+]

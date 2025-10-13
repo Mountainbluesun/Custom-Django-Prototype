@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password_hash": "pbkdf2_sha256$1000000$HQJ6oz7qOTSt7GIlsIl0W6$qM2JmdsTizUbX2NGotWvCfCk9AceKTUBnb4Dw1yFS9Q=",
+    "is_admin": true,
+    "is_active": true,
+    "companies": [1,2,3,4]
+  }
+]

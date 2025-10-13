@@ -1,0 +1,31 @@
+
+/home/administrateur/stock_manager/.env
+
+ini
+
+SECRET_KEY=ma_clef_super_secrete
+POSTGRES_DB=stock_manager_db
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+
+/home/administrateur/stock_manager/sauvegarde_stock_manager.sql
+
+# Fichiers d'environnement
+.env
+*.env
+
+# Sauvegardes et bases de données
+*.sql
+sauvegarde_stock_manager.sql
+
+# Dossiers de dépendances
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Autres fichiers sensibles ou inutiles
+*.log
+.DS_Store

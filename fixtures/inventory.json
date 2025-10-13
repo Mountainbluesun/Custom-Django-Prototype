@@ -1,0 +1,249 @@
+[
+{
+  "model": "inventory.movement",
+  "pk": 1,
+  "fields": {
+    "product": 1,
+    "company": 1,
+    "user": 1,
+    "quantity": 50,
+    "kind": "IN",
+    "note": "Essay",
+    "timestamp": "2025-09-28T10:16:16.843Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 2,
+  "fields": {
+    "product": 2,
+    "company": 2,
+    "user": 2,
+    "quantity": 25,
+    "kind": "IN",
+    "note": "International",
+    "timestamp": "2025-09-28T10:18:40.622Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 3,
+  "fields": {
+    "product": 3,
+    "company": 3,
+    "user": 3,
+    "quantity": 35,
+    "kind": "IN",
+    "note": "Sale",
+    "timestamp": "2025-09-28T10:20:44.319Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 4,
+  "fields": {
+    "product": 4,
+    "company": 4,
+    "user": 4,
+    "quantity": 40,
+    "kind": "IN",
+    "note": "Back to school",
+    "timestamp": "2025-09-28T10:23:47.748Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 5,
+  "fields": {
+    "product": 1,
+    "company": 1,
+    "user": 1,
+    "quantity": 15,
+    "kind": "TRANSFER_OUT",
+    "note": "",
+    "timestamp": "2025-09-30T05:48:11.595Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 6,
+  "fields": {
+    "product": 1,
+    "company": 2,
+    "user": 1,
+    "quantity": 15,
+    "kind": "TRANSFER_IN",
+    "note": "",
+    "timestamp": "2025-09-30T05:48:11.604Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 7,
+  "fields": {
+    "product": 2,
+    "company": 4,
+    "user": 1,
+    "quantity": 15,
+    "kind": "OUT",
+    "note": "",
+    "timestamp": "2025-09-30T05:48:53.282Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 8,
+  "fields": {
+    "product": 2,
+    "company": 2,
+    "user": 1,
+    "quantity": 6,
+    "kind": "OUT",
+    "note": "",
+    "timestamp": "2025-09-30T06:09:44.270Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 9,
+  "fields": {
+    "product": 1,
+    "company": 2,
+    "user": 3,
+    "quantity": 20,
+    "kind": "IN",
+    "note": "",
+    "timestamp": "2025-10-05T08:44:41.393Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 10,
+  "fields": {
+    "product": 1,
+    "company": 1,
+    "user": null,
+    "quantity": 12,
+    "kind": "TRANSFER_OUT",
+    "note": "",
+    "timestamp": "2025-10-05T08:45:03.865Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 11,
+  "fields": {
+    "product": 1,
+    "company": 2,
+    "user": null,
+    "quantity": 12,
+    "kind": "TRANSFER_IN",
+    "note": "",
+    "timestamp": "2025-10-05T08:45:03.871Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 12,
+  "fields": {
+    "product": 4,
+    "company": 4,
+    "user": 4,
+    "quantity": 20,
+    "kind": "IN",
+    "note": "",
+    "timestamp": "2025-10-05T08:53:15.784Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 13,
+  "fields": {
+    "product": 3,
+    "company": 1,
+    "user": null,
+    "quantity": 12,
+    "kind": "TRANSFER_OUT",
+    "note": "",
+    "timestamp": "2025-10-05T08:53:33.077Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 14,
+  "fields": {
+    "product": 3,
+    "company": 3,
+    "user": null,
+    "quantity": 12,
+    "kind": "TRANSFER_IN",
+    "note": "",
+    "timestamp": "2025-10-05T08:53:33.081Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 15,
+  "fields": {
+    "product": 1,
+    "company": 2,
+    "user": 4,
+    "quantity": 20,
+    "kind": "IN",
+    "note": "",
+    "timestamp": "2025-10-06T09:26:05.574Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 16,
+  "fields": {
+    "product": 1,
+    "company": 1,
+    "user": 4,
+    "quantity": 12,
+    "kind": "IN",
+    "note": "",
+    "timestamp": "2025-10-08T08:39:02.720Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 17,
+  "fields": {
+    "product": 1,
+    "company": 1,
+    "user": null,
+    "quantity": 5,
+    "kind": "OUT",
+    "note": "",
+    "timestamp": "2025-10-08T08:39:27.419Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 18,
+  "fields": {
+    "product": 1,
+    "company": 1,
+    "user": null,
+    "quantity": 12,
+    "kind": "TRANSFER_OUT",
+    "note": "",
+    "timestamp": "2025-10-08T08:39:40.388Z"
+  }
+},
+{
+  "model": "inventory.movement",
+  "pk": 19,
+  "fields": {
+    "product": 1,
+    "company": 2,
+    "user": null,
+    "quantity": 12,
+    "kind": "TRANSFER_IN",
+    "note": "",
+    "timestamp": "2025-10-08T08:39:40.397Z"
+  }
+}
+]

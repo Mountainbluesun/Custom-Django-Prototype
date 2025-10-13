@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Supprimer une entreprise{% endblock %}
+{% block content %}
+  <h1>Supprimer l’entreprise</h1>
+  <p>Confirmez la suppression de <strong>{{ company.name }}</strong> (#{{ company.id }}) ?</p>
+  <form method="post">{% csrf_token %}
+    <button type="submit">Oui, supprimer</button>
+    <a href="{% url 'companies:list' %}">Annuler</a>
+  </form>
+{% endblock %}

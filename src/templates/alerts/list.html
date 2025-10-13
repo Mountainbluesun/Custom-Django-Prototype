@@ -1,0 +1,38 @@
+<!-- src/templates/alerts/list.html -->
+{% extends "base.html" %}
+{% block title %}Alertes — Stock Manager{% endblock %}
+
+{% block content %}
+<h1>Alertes de seuil</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Produit</th>
+      <th>Entreprise</th>
+      <th>Stock</th>
+      <th>Seuil</th>
+      <th>État</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in alerts %}
+      <tr>
+        <td>#{{ a.product_id }} — {{ a.product_name }}</td>
+        <td>{{ a.company_id }}</td>
+        <td>{{ a.stock }}</td>
+        <td>{{ a.threshold }}</td>
+        <td>
+          {% if a.stock < a.threshold %}
+            ⚠️ Sous seuil
+          {% else %}
+            ✅ OK
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">Aucune alerte.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

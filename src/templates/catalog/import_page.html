@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Importer des produits{% endblock %}
+
+{% block content %}
+  <h1>Importer des produits par CSV</h1>
+
+  <p>Veuillez sélectionner un fichier CSV avec les colonnes : name, sku, company_id, threshold.</p>
+
+  <div class="card">
+    <form action="{% url 'catalog:import_csv' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="csv_file" accept=".csv" required />
+      <button type="submit">⬆️ Lancer l'importation</button>
+    </form>
+  </div>
+{% endblock %}

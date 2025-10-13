@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}un produit{% endblock %}
+{% block content %}
+<h1>
+  {% if mode == "create" %}
+    Créer
+  {% else %}
+    Éditer
+  {% endif %}
+  un produit
+</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label>Nom</label><br>
+    <input name="name" value="{{ product.name|default_if_none:'' }}" required><br><br>
+
+    <label>SKU</label><br>
+    <input name="sku" value="{{ product.sku|default_if_none:'' }}" required><br><br>
+
+    <label>Entreprise</label><br>
+    <select name="company_id" required>
+      {% for c in companies %}
+        <option value="{{ c.id }}" {% if product and product.company_id == c.id %}selected{% endif %}>#{{ c.id }} — {{ c.name }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label>Seuil d’alerte</label><br>
+    <input type="number" name="threshold" value="{{ product.threshold|default_if_none:0 }}"><br><br>
+
+    <button type="submit">Enregistrer</button>
+    <a href="{% url 'catalog:list' %}">Annuler</a>
+  </form>
+{% endblock %}

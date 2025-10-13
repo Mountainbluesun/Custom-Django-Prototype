@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+{% block title %}Entrée de stock{% endblock %}
+{% block content %}
+<h1>Entrée de stock</h1>
+<form method="post">{% csrf_token %}
+  <label>Produit</label><br>
+  <select name="product_id" required>
+    {% for p in products %}
+      <option value="{{ p.id }}">#{{ p.id }} — {{ p.name }} (C{{ p.company_id }})</option>
+    {% endfor %}
+  </select><br><br>
+
+  <label>Entreprise</label><br>
+  <select name="company_id" required>
+    {% for c in companies %}
+      <option value="{{ c.id }}">#{{ c.id }} — {{ c.name }}</option>
+    {% endfor %}
+  </select><br><br>
+
+  <label>Quantité</label><br>
+  <input type="number" name="qty" min="1" required><br><br>
+
+  <label>Note (optionnel)</label><br>
+  <input name="note"><br><br>
+
+  <button type="submit">Enregistrer</button>
+  <a href="{% url 'inventory:list' %}">Annuler</a>
+</form>
+{% endblock %}

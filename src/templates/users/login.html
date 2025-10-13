@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+  <div class="card" style="max-width:420px">
+    <h1>Connexion</h1>
+
+    {% if messages %}
+      <ul class="messages">
+        {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <label>Nom d'utilisateur</label><br />
+      <input name="username" required style="width:100%;padding:.5rem;margin:.3rem 0 1rem" />
+
+      <label>Mot de passe</label><br />
+      <input type="password" name="password" required style="width:100%;padding:.5rem;margin:.3rem 0 1rem" />
+
+      <button type="submit" style="padding:.6rem 1rem;border-radius:.5rem">
+        Se connecter
+      </button>
+    </form>
+
+  </div>
+
+
+<a href="{% url 'users:password_reset' %}">Mot de passe oublié ?</a>
+
+{#<p><a href="{% url 'users:password_reset_request' %}">Mot de passe oublié ?</a></p>#}
+
+
+{% endblock %}

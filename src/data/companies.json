@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Lyon",
+    "owner": "dupont@gmail.com"
+  },
+  {
+    "id": 2,
+    "name": "Bordeaux",
+    "owner": "Johndo@gmail.com"
+  },
+  {
+    "id": 3,
+    "name": "Geneve",
+    "owner": "nature@gmail.com"
+  },
+  {
+    "id": 4,
+    "name": "London",
+    "owner": "everyglade@outlook.com"
+  }
+]

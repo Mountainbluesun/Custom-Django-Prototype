@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Produits en alerte</h2>
+
+{% if alerts %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Entreprise</th>
+        <th>Stock actuel</th>
+        <th>Seuil</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product, stock, threshold in alerts %}
+      <tr class="table-danger">
+        <td>{{ product.name }}</td>
+        <td>{{ product.company_id }}</td>
+        <td>{{ stock }}</td>
+        <td>{{ threshold }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>Aucune alerte pour le moment ✅</p>
+{% endif %}
+{% endblock %}

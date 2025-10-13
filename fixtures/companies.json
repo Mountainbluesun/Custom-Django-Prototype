@@ -1,0 +1,34 @@
+[
+{
+  "model": "companies.company",
+  "pk": 1,
+  "fields": {
+    "name": "Lyon",
+    "owner": "Johndo@gmail.com"
+  }
+},
+{
+  "model": "companies.company",
+  "pk": 2,
+  "fields": {
+    "name": "Geneve",
+    "owner": "dupont@gmail.com"
+  }
+},
+{
+  "model": "companies.company",
+  "pk": 3,
+  "fields": {
+    "name": "Bordeaux",
+    "owner": "nature@gmail.com"
+  }
+},
+{
+  "model": "companies.company",
+  "pk": 4,
+  "fields": {
+    "name": "London",
+    "owner": "caramel@gmail.com"
+  }
+}
+]

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil — Stock Manager{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <h1>Bienvenue 👋</h1>
+    <p>Gérez vos stocks multi-entreprises, produits et mouvements — avec alertes de seuil.</p>
+    <ul>
+        <li><a href="{% url 'companies:list' %}">Entreprises</a></li>
+        <li><a href="{% url 'alerts:list' %}">Voir les alertes</a></li>
+        <li><a href="{% url 'catalog:list' %}">Voir les produits</a></li>
+        <li><a href="{% url 'inventory:list' %}">Voir les stocks</a></li>
+
+        {% if request.user.is_admin %}
+        <li><a href="{% url 'users:list' %}">Gérer les utilisateurs</a></li>
+        {% endif %}
+
+
+    </ul>
+  </div>
+{% endblock %}

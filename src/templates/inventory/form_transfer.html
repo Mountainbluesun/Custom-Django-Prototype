@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Transfert de stock — Stock Manager{% endblock %}
+
+{% block content %}
+<h1>Transfert de stock</h1>
+
+<form method="post">
+  {% csrf_token %}
+
+  <div>
+    {{ form.product_id.label_tag }}
+    {{ form.product_id }}
+    {% if form.product_id.errors %}
+      <div class="error">{{ form.product_id.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div>
+    {{ form.company_from_id.label_tag }}
+    {{ form.company_from_id }}
+    {% if form.company_from_id.errors %}
+      <div class="error">{{ form.company_from_id.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div>
+    {{ form.company_to_id.label_tag }}
+    {{ form.company_to_id }}
+    {% if form.company_to_id.errors %}
+      <div class="error">{{ form.company_to_id.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div>
+    {{ form.quantity.label_tag }}
+    {{ form.quantity }}
+    {% if form.quantity.errors %}
+      <div class="error">{{ form.quantity.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div>
+    {{ form.note.label_tag }}
+    {{ form.note }}
+    {% if form.note.errors %}
+      <div class="error">{{ form.note.errors }}</div>
+    {% endif %}
+  </div>
+
+  <p>
+    <button type="submit">Enregistrer</button>
+    <a href="{% url 'inventory:list' %}">Annuler</a>
+  </p>
+</form>
+{% endblock %}

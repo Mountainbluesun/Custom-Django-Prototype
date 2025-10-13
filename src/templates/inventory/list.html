@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Mouvements de Stock{% endblock %}
+
+{% block content %}
+  <h1>Historique des Mouvements de Stock</h1>
+
+  <div style="margin: 1rem 0;">
+    <a href="{% url 'inventory:stock_in' %}" class="btn btn-success">➕ Nouvelle entrée</a>
+    {# Ajoutez les liens pour la sortie et le transfert quand les vues seront prêtes #}
+    { <a href="{% url 'inventory:stock_out' %}" class="btn btn-warning">➖ Nouvelle sortie</a> }
+    { <a href="{% url 'inventory:transfer' %}" class="btn btn-info">⇄ Nouveau transfert</a> }
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+          <th>Produit</th>
+          <th>Entreprise</th>
+          <th>Utilisateur</th> <th>Type</th>
+          <th>Type</th>
+          <th>Quantité</th>
+          <th>Date</th>
+          <th>Note</th>
+           </tr>
+    </thead>
+    <tbody>
+      {% for movement in movements %}
+        <tr>
+            <td>{{ movement.product_name }}</td>
+            <td>{{ movement.company_name }}</td>
+            <td>{{ movement.user_name }}</td> <td>{{ movement.kind }}</td>
+            <td>{{ movement.kind }}</td>
+            <td>{{ movement.quantity }}</td>
+            <td>{{ movement.timestamp|slice:":19" }}</td> {# Affiche la date et l'heure sans les microsecondes #}
+            <td>{{ movement.note }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6">Aucun mouvement de stock pour le moment.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

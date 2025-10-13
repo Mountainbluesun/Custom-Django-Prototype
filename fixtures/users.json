@@ -1,0 +1,94 @@
+[
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$5wrDLYFKYXVbD04LUf3sL4$6BNwiR+8Ztx8fw9J/F1539xJlCRzAuWDi6t1sqg3340=",
+    "last_login": "2025-10-08T08:44:36.599Z",
+    "is_superuser": true,
+    "username": "administrateur",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-10-03T07:36:28.527Z",
+    "is_admin": true,
+    "reset_token": null,
+    "old_password_hash": null,
+    "groups": [],
+    "user_permissions": [],
+    "companies": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$tA4wH9up7gwRAMZEY8yI87$irKMpRPCsahpNsRorM6SVDTerEZPbOUWim0Cu+ddEdY=",
+    "last_login": "2025-10-06T14:42:30.244Z",
+    "is_superuser": false,
+    "username": "David",
+    "first_name": "",
+    "last_name": "",
+    "email": "davidbeach@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-10-03T07:36:28.527Z",
+    "is_admin": false,
+    "reset_token": null,
+    "old_password_hash": null,
+    "groups": [],
+    "user_permissions": [],
+    "companies": [
+      2
+    ]
+  }
+},
+{
+  "model": "users.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$GOLyDiSkiILxg8QTJI1D5B$RXJ1/crhDOi+9DxXTGsvDK6No8Mmn3zgveDLUhLe3Kw=",
+    "last_login": "2025-10-06T14:42:38.049Z",
+    "is_superuser": false,
+    "username": "Matthew",
+    "first_name": "",
+    "last_name": "",
+    "email": "dupont_bread@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-10-03T07:36:28.527Z",
+    "is_admin": false,
+    "reset_token": null,
+    "old_password_hash": null,
+    "groups": [],
+    "user_permissions": [],
+    "companies": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$jMs57lPrwGWRxo0IdoHJc5$Yftjtzu/cwwjo+dJueI7AtNXoUoV/dNi3zJuOMD+M+c=",
+    "last_login": "2025-10-08T08:38:07.540Z",
+    "is_superuser": false,
+    "username": "Caroline",
+    "first_name": "",
+    "last_name": "",
+    "email": "Carolinebeach@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-10-03T07:36:28.527Z",
+    "is_admin": false,
+    "reset_token": null,
+    "old_password_hash": null,
+    "groups": [],
+    "user_permissions": [],
+    "companies": [
+      1
+    ]
+  }
+}
+]

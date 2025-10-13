@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Produits — Stock Manager{% endblock %}
+
+{% block content %}
+<h1>Produits</h1>
+
+<div style="margin: .5rem 0 1rem; display:flex; gap:.75rem; align-items:center;">
+
+  <!-- Export CSV -->
+  <a href="{% url 'catalog:export_csv' %}">⬇️ Export CSV</a>
+
+  <!-- Créer un produit (visible uniquement pour les admins) -->
+{% if request.session.user and request.session.user.is_authenticated and request.session.user.is_admin %}
+    <a href="{% url 'catalog:create' %}" class="btn btn-primary">➕ Créer un produit</a>
+{% endif %}
+
+
+  <!-- Import CSV -->
+  {% if request.user.is_authenticated and request.user.is_admin %}
+  <form action="{% url 'catalog:import_csv' %}" method="post" enctype="multipart/form-data" style="display:inline-flex; gap:.5rem; align-items:center;">
+    {% csrf_token %}
+    <input type="file" name="csv_file" accept=".csv" required />
+    <button type="submit">⬆️ Import CSV</button>
+  </form>
+  {% endif %}
+
+</div>
+
+{% if products %}
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>SKU</th>
+      <th>Entreprise</th>
+      <th>Seuil</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+      <tr>
+        <td>{{ p.name }}</td>
+        <td>{{ p.sku }}</td>
+        <td>{{ p.company.name }}</td> <!-- Nom de l'entreprise -->
+        <td>{{ p.threshold }}</td>
+        <td>
+          <a href="{% url 'catalog:edit' p.id %}">Modifier</a> |
+          <a href="{% url 'catalog:delete' p.id %}">Supprimer</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Aucun produit disponible.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Stock Manager{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<!-- Chiffres clés -->
+<div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+  <div class="card">
+    <h2>{{ product_count }}</h2>
+    <p>Produits au total</p>
+  </div>
+  <div class="card">
+    <h2>{{ company_count }}</h2>
+    <p>Entreprises</p>
+  </div>
+  <div class="card" style="color: red;">
+    <h2>{{ alert_count }}</h2>
+    <p>Produits en alerte</p>
+  </div>
+</div>
+
+<!-- Graphiques -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+  <!-- Stocks par entreprise -->
+  <div class="card">
+    <h3>Stocks par entreprise</h3>
+    <canvas id="stocksChart"></canvas>
+  </div>
+
+  <!-- Produits en alerte -->
+  <div class="card">
+    <h3>Produits en alerte</h3>
+    <canvas id="alertsChart"></canvas>
+  </div>
+
+  <!-- Activité des 6 derniers mois -->
+  <div class="card" style="grid-column: 1 / -1;">
+    <h3>Activité des 6 derniers mois</h3>
+    <canvas id="monthlyChart"></canvas>
+  </div>
+</div>
+
+<!-- Données JSON -->
+{{ stocks_by_company|json_script:"stocks-data" }}
+{{ alerts_chart|json_script:"alerts-data" }}
+{{ monthly_chart_labels|json_script:"monthly-labels" }}
+{{ monthly_in_data|json_script:"monthly-in" }}
+{{ monthly_out_data|json_script:"monthly-out" }}
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // --- Graphique 1 : Stocks par entreprise ---
+  const stocksData = JSON.parse(document.getElementById('stocks-data').textContent);
+  const stocksCtx = document.getElementById('stocksChart').getContext('2d');
+  new Chart(stocksCtx, {
+    type: 'bar',
+    data: {
+      labels: stocksData.map(c => c.name),
+      datasets: [{
+        label: 'Stock total',
+        data: stocksData.map(c => c.total),
+        backgroundColor: stocksData.map((_, i) => `rgba(${50 + i*40}, 162, 235, 0.7)`),
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false }, tooltip: { enabled: true } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  // --- Graphique 2 : Produits en alerte ---
+  const alertsData = JSON.parse(document.getElementById('alerts-data').textContent);
+  const alertsCtx = document.getElementById('alertsChart').getContext('2d');
+  new Chart(alertsCtx, {
+    type: 'doughnut',
+    data: {
+      labels: alertsData.map(a => a.name),
+      datasets: [{
+        label: 'Stock actuel',
+        data: alertsData.map(a => a.qty),
+        backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)'],
+      }]
+    }
+  });
+
+  // --- Graphique 3 : Activité mensuelle ---
+  const monthlyLabels = JSON.parse(document.getElementById('monthly-labels').textContent);
+  const monthlyInData = JSON.parse(document.getElementById('monthly-in').textContent);
+  const monthlyOutData = JSON.parse(document.getElementById('monthly-out').textContent);
+  const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+  new Chart(monthlyCtx, {
+    type: 'line',
+    data: {
+      labels: monthlyLabels,
+      datasets: [
+        { label: 'Entrées', data: monthlyInData, borderColor: 'green', tension: 0.1 },
+        { label: 'Sorties', data: monthlyOutData, borderColor: 'red', tension: 0.1 }
+      ]
+    }
+  });
+</script>
+{% endblock %}
