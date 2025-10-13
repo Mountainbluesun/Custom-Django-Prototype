@@ -1,6 +1,7 @@
 
 /home/administrateur/stock_manager/.env
-
+.idea/
+/.idea
 ini
 
 SECRET_KEY=ma_clef_super_secrete

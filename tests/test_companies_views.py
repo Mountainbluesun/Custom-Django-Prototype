@@ -1,7 +1,5 @@
 import pytest
 from django.urls import reverse
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.hashers import make_password
 from companies.models import Company
 from users.models import User
 
@@ -9,11 +7,13 @@ from users.models import User
 @pytest.fixture
 def admin_user(db):
     """Crée un utilisateur admin pour les tests et le retourne."""
-    return User.objects.create(
+    user = User.objects.create(
         username="admin_user",
-        password_hash=make_password("password123"),
         is_admin=True
     )
+    user.set_password("password123")
+    user.save()
+    return user
 
 
 @pytest.mark.django_db
