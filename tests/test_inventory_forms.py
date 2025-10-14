@@ -17,7 +17,7 @@ def test_stock_in_and_out_forms(client):
     product = Product.objects.create(name="Produit Test", sku="SKU-TEST", company=company)
     admin_user = User.objects.create(
         username="admin_user",
-        password_hash=make_password("password123"),
+        password=make_password("password123"),
         is_admin=True
     )
     admin_user.companies.add(company)

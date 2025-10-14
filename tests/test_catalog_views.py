@@ -14,7 +14,7 @@ def test_product_list_view_for_logged_in_user(client):
     company1 = Company.objects.create(name="TestCorp 1")
     user = User.objects.create(
         username='testuser',
-        password_hash=make_password('password123'),  # On utilise un mot de passe connu
+        password=make_password('password123'),  # On utilise un mot de passe connu
         is_admin=True
     )
     user.companies.add(company1)

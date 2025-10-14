@@ -12,7 +12,7 @@ def test_create_company_view(client):
     # --- 1. Préparation : on crée un utilisateur admin ---
     User.objects.create(
         username="admin_user",
-        password_hash=make_password("password123"),
+        password=make_password("password123"),
         is_admin=True
     )
 

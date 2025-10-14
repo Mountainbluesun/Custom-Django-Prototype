@@ -12,7 +12,7 @@ def test_admin_can_access_dashboard(client):
     # --- 1. Préparation : On crée un utilisateur admin ---
     User.objects.create(
         username="admin_user",
-        password_hash=make_password("password123"),
+        password=make_password("password123"),
         is_admin=True
     )
 
@@ -36,7 +36,7 @@ def test_non_admin_is_forbidden_from_dashboard(client):
     # --- 1. Préparation : On crée un utilisateur non-admin ---
     User.objects.create(
         username="normal_user",
-        password_hash=make_password("password123"),
+        password=make_password("password123"),
         is_admin=False
     )
 

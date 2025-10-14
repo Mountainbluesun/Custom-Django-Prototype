@@ -15,7 +15,7 @@ def test_alerts_view_shows_product_under_threshold(client):
     company = Company.objects.create(name="Test Co")
     user = User.objects.create(
         username="testuser",
-        password_hash=make_password("password123"),
+        password=make_password("password123"),
         is_admin=True
     )
     user.companies.add(company)

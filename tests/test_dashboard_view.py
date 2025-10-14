@@ -22,7 +22,7 @@ def test_dashboard_view_loads_for_admin(client):
     # On crée un utilisateur admin
     admin_user = User.objects.create(
         username="admin_user",
-        password_hash=make_password("password123"),
+        password=make_password("password123"),
         is_admin=True
     )
     admin_user.companies.add(company)

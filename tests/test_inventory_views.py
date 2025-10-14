@@ -17,7 +17,7 @@ def test_inventory_in_out_transfer_flow(client):
     product = Product.objects.create(name="Produit P1", sku="SKU1", company=company1, threshold=2)
     user = User.objects.create(
         username="test_user",
-        password_hash=make_password("password123"),
+        password=make_password("password123"),
         is_admin=True # On le met admin pour qu'il ait tous les droits
     )
     user.companies.add(company1, company2)

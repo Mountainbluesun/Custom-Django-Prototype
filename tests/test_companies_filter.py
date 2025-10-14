@@ -19,7 +19,7 @@ def test_company_list_is_filtered_by_user_scope(client):
     # On crée un utilisateur non-admin et on l'associe uniquement à Globex
     user = User.objects.create(
         username="user_scoped",
-        password_hash=make_password("password123"),
+        password=make_password("password123"),
         is_admin=False
     )
     user.companies.add(company_globex)

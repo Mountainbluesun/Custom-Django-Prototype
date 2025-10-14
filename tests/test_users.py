@@ -20,14 +20,14 @@ def test_user_crud_database():
     u1 = User.objects.create(
         username="alice",
         email="alice@mail.com",
-        password_hash=make_password("pass1")
+        password=make_password("pass1")
     )
     u1.companies.add(company1)  # On lie alice à l'entreprise 1
 
     u2 = User.objects.create(
         username="bob",
         email="bob@mail.com",
-        password_hash=make_password("pass2")
+        password=make_password("pass2")
     )
     u2.companies.add(company2)  # On lie bob à l'entreprise 2
 

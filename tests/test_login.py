@@ -13,7 +13,7 @@ def test_login_success_redirects_and_sets_session(client):
     # --- 1. Préparation : On crée l'utilisateur dans la base de données de test ---
     User.objects.create(
         username="admin",
-        password_hash=make_password("base20025"),
+        password=make_password("base20025"),
         is_admin=True,
         is_active=True
     )
@@ -47,7 +47,7 @@ def test_login_fail_stays_on_login_and_no_session_user(client):
     # Préparation : On crée l'utilisateur
     User.objects.create(
         username="admin",
-        password_hash=make_password("base20025"),
+        password=make_password("base20025"),
     )
 
     # Action : On essaie de se connecter avec un mauvais mot de passe

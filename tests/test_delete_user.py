@@ -8,8 +8,8 @@ def test_delete_json_user(tmp_path: Path):
     # Prépare un fichier users.json factice
     users_file = tmp_path / "users.json"
     users = [
-        {"id": 1, "username": "alice", "password_hash": "xxx"},
-        {"id": 2, "username": "bob", "password_hash": "yyy"},
+        {"id": 1, "username": "alice", "password": "xxx"},
+        {"id": 2, "username": "bob", "password": "yyy"},
     ]
     users_file.write_text(json.dumps(users))
 

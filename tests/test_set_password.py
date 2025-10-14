@@ -14,11 +14,11 @@ def test_set_password_command():
     # --- 1. Préparation : On crée un utilisateur avec un ancien mot de passe ---
     user = User.objects.create(
         username="alice",
-        password_hash=make_password("ancien_mot_de_passe")
+        password=make_password("ancien_mot_de_passe")
     )
 
     # On vérifie que l'ancien mot de passe fonctionne
-    assert check_password("ancien_mot_de_passe", user.password_hash) is True
+    assert check_password("ancien_mot_de_passe", user.password) is True
 
     # --- 2. Action : On appelle la commande pour changer le mot de passe ---
     new_password = "nouveau_mot_de_passe_123"
@@ -29,6 +29,6 @@ def test_set_password_command():
     user.refresh_from_db()
 
     # On vérifie que le nouveau mot de passe fonctionne
-    assert check_password(new_password, user.password_hash) is True
+    assert check_password(new_password, user.password) is True
     # On vérifie que l'ancien mot de passe ne fonctionne plus
-    assert check_password("ancien_mot_de_passe", user.password_hash) is False
+    assert check_password("ancien_mot_de_passe", user.password) is False
