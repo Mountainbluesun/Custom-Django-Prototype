@@ -1,5 +1,5 @@
 import os
-
+import sys
 import environ
 from pathlib import Path
 
@@ -10,6 +10,8 @@ env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR.parent / '.env')
 
+# 🔧 Ajout du dossier 'src' au path Python pour que Django trouve les apps
+sys.path.append(str(BASE_DIR / "src"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/

@@ -2,7 +2,7 @@ import pytest
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 
-from src.users.models import User
+from users.models import User
 
 
 @pytest.mark.skip(reason="Test désactivé temporairement – fonction à revoir")
