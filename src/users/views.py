@@ -75,6 +75,7 @@ def login_view(request):
         else:
             messages.error(request, "Identifiants invalides ❌")
             print("❌ Connexion échouée")
+            return render(request, "users/login.html", status=401)
 
     return render(request, "users/login.html")
 
@@ -261,10 +262,6 @@ def debug_auth(request):
         "session_data": dict(request.session),
     }
     return HttpResponse(json.dumps(data, indent=2), content_type="application/json")
-
-
-
-
 
 
 
