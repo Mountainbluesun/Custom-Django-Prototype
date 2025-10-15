@@ -19,7 +19,7 @@ class Command(BaseCommand):
         except User.DoesNotExist:
             raise CommandError(f"L'utilisateur '{username}' n'existe pas.")
 
-        user.password_hash = make_password(password)
+        user.password = make_password(password)
         user.save()
 
         self.stdout.write(self.style.SUCCESS(f"Le mot de passe pour l'utilisateur '{username}' a été réinitialisé avec succès."))

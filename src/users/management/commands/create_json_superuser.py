@@ -43,7 +43,7 @@ class Command(BaseCommand):
             "id": _next_id(users),
             "username": username,
             "email": email,
-            "password_hash": make_password(password),  # ✅ hash sécurisé
+            "password": make_password(password),  # ✅ hash sécurisé
             "companies": [],
             "is_admin": True,
             "is_active": True,

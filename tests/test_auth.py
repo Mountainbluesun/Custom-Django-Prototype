@@ -55,3 +55,4 @@ def test_failed_login_with_wrong_password(client):
     soup = BeautifulSoup(response.content, "html.parser")
     alert = soup.select_one(".alert-error")
     assert alert is not None
+

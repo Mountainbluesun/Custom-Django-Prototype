@@ -18,7 +18,7 @@ class Command(BaseCommand):
         User.objects.create(
             username=username,
             email=email,
-            password_hash=make_password(password),
+            password=make_password(password),
             is_admin=True,
             is_active=True
         )

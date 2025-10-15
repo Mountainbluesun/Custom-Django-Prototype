@@ -13,8 +13,8 @@ for old_user in OldUser.objects.all():
     )
 
     # Applique un mot de passe hashé (si c'est du plaintext, set_password le hashe)
-    if old_user.password_hash:
-        user.set_password(old_user.password_hash)
+    if old_user.password:
+        user.set_password(old_user.password)
     else:
         user.set_password("changeme123")  # mot de passe temporaire
 

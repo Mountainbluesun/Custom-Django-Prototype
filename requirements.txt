@@ -1,5 +1,6 @@
 asgiref==3.9.1
 beautifulsoup4==4.14.2
+coverage==7.10.7
 Django==5.2.5
 django-environ==0.12.0
 django-extension==0.1.0
@@ -8,12 +9,13 @@ iniconfig==2.1.0
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
-packaging==25.0
+packaging==25
 pluggy==1.6.0
 psycopg2-binary==2.9.10
 Pygments==2.19.2
 pymongo==4.15.2
 pytest==8.4.1
+pytest-cov==7.0.0
 pytest-django==4.11.1
 rich==14.1.0
 ruff==0.12.8
