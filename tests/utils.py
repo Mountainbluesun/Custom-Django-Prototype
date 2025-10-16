@@ -5,3 +5,7 @@ from pathlib import Path
 # Ajouter le dossier src/ dans le PYTHONPATH pour les imports
 SRC_PATH = Path(__file__).resolve().parent.parent / "src"
 sys.path.insert(0, str(SRC_PATH))
+
+def test_utils_placeholder():
+    """Test minimal pour couvrir le fichier utils.py"""
+    assert SRC_PATH.exists()

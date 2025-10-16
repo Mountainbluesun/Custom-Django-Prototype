@@ -23,7 +23,20 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = True
 
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
+#ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok-free.app', '.ngrok-free.dev']
+
+# Dynamic
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+NGROK_HOST = os.environ.get('NGROK_HOST')
+if NGROK_HOST:
+    ALLOWED_HOSTS.append(NGROK_HOST)
+ALLOWED_HOSTS += ['.ngrok-free.app', '.ngrok-free.dev']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.ngrok-free.app',
+    'https://*.ngrok-free.dev',
+]
 
 
 
