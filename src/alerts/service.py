@@ -2,12 +2,8 @@
 from dataclasses import dataclass
 from typing import Iterable, List, Optional
 
-from catalog.service import list_products
+from catalog.service import list_products, list_products_by_companies
 from inventory.service import compute_stock
-
-from dataclasses import dataclass
-
-from typing import Iterable, List, Optional
 
 
 
@@ -26,10 +22,15 @@ class AlertItem:
 
 
 def compute_alerts(allowed_company_ids: Optional[Iterable[int]] = None) -> List[AlertItem]:
-    ids = set(int(x) for x in (allowed_company_ids or [])) or None
+    # Utilise list_products_by_companies pour filtrer dès la requête SQL
+    if allowed_company_ids is not None:
+        ids = list(int(x) for x in allowed_company_ids)
+        products = list_products_by_companies(ids)
+    else:
+        products = list_products()
+
     alerts: List[AlertItem] = []
-    for p in list_products():
-        if ids is not None and p.company_id not in ids: continue
+    for p in products:
         stock = compute_stock(p.id)
         if stock <= p.threshold:
             alerts.append(AlertItem(

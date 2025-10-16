@@ -1,7 +1,6 @@
-import os
-import sys
 import environ
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
 # Initialise django-environ
 env = environ.Env()
@@ -9,9 +8,6 @@ env = environ.Env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR.parent / '.env')
-
-# 🔧 Ajout du dossier 'src' au path Python pour que Django trouve les apps
-sys.path.append(str(BASE_DIR / "src"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -77,8 +73,8 @@ ROOT_URLCONF = 'config.urls'
 
 LOGIN_URL = 'users:login'
 # URL de redirection après login réussi
-LOGIN_REDIRECT_URL = "/"  # ou "/users/" selon ce que tu veux
-LOGOUT_REDIRECT_URL = "/users/login/"
+LOGIN_REDIRECT_URL = "dashboard:home"
+LOGOUT_REDIRECT_URL = "users:login"
 
 
 
@@ -106,16 +102,24 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'stock_manager_db'),
-        'USER': os.getenv('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
-        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
-        'PORT': os.getenv('POSTGRES_PORT', '5432'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('POSTGRES_DB', 'stock_manager_db'),
+            'USER': env('POSTGRES_USER', 'postgres'),
+            'PASSWORD': env('POSTGRES_PASSWORD', 'postgres'),
+            'HOST': env('POSTGRES_HOST', 'localhost'),
+            'PORT': env('POSTGRES_PORT', '5432'),
+        }
+    }
 
 
 
@@ -160,11 +164,24 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Envoie les mails dans la console (pour tester)
+# Messages configuration for Django messages framework
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'error',
+}
+
 AUTH_USER_MODEL = "users.User"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # pour dev, écrit l'email dans le terminal
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+
+# Fixtures directory
+FIXTURE_DIRS = [
+    BASE_DIR.parent / 'fixtures',
+]
 
 
 

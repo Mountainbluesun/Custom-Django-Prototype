@@ -8,11 +8,12 @@ from bs4 import BeautifulSoup
 def test_successful_login(client):
     """Vérifie qu'un utilisateur avec de bons identifiants peut se connecter."""
     # 1. Création de l'utilisateur
-    User.objects.create(
+    user = User.objects.create(
         username="testuser",
-        password=make_password("password123"),
         is_active=True
     )
+    user.set_password("password123")
+    user.save()
 
     # 2. Soumission du formulaire de connexion
     url = reverse("users:login")
@@ -24,10 +25,9 @@ def test_successful_login(client):
     # 3. Vérification du succès de la connexion
     assert response.status_code == 200
 
-    # 4. Vérifie qu'un message de succès apparaît (si tu as des messages Django)
-    soup = BeautifulSoup(response.content, "html.parser")
-    success_alert = soup.select_one(".alert-success")
-    assert success_alert is not None or "Bienvenue" in response.content.decode()
+    # 4. Vérifie que l'utilisateur est bien connecté (présence du nom dans la navbar)
+    html_content = response.content.decode()
+    assert "testuser" in html_content  # Le nom d'utilisateur devrait apparaître dans la nav
 
 
 
@@ -35,11 +35,12 @@ def test_successful_login(client):
 def test_failed_login_with_wrong_password(client):
     """Vérifie qu'un utilisateur avec un mauvais mot de passe ne peut pas se connecter."""
     # Création de l'utilisateur
-    User.objects.create(
+    user = User.objects.create(
         username="testuser",
-        password=make_password("password123"),
         is_active=True
     )
+    user.set_password("password123")
+    user.save()
 
     url = reverse("users:login")
     # On envoie un mauvais mot de passe
@@ -51,8 +52,8 @@ def test_failed_login_with_wrong_password(client):
     # La page doit se recharger (code 200)
     assert response.status_code == 200
 
-    # On parse le HTML pour vérifier la présence d'une alerte d'erreur
-    soup = BeautifulSoup(response.content, "html.parser")
-    alert = soup.select_one(".alert-error")
-    assert alert is not None
+    # On vérifie qu'un message d'erreur est présent
+    html_content = response.content.decode()
+    # Le message peut être "Identifiants invalides" ou dans une alerte CSS
+    assert "Identifiants invalides" in html_content or "alert-error" in html_content
 

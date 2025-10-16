@@ -5,10 +5,10 @@ from companies.service import list_companies
 from .service import compute_alerts
 
 def _allowed_company_ids(request):
-    user = request.session.get("user") or {}
-    if user.get("is_admin"):
+    """Retourne les IDs des entreprises accessibles par l'utilisateur."""
+    if request.user.is_admin:
         return [c.id for c in list_companies()]
-    return [int(x) for x in (user.get("companies") or [])]
+    return list(request.user.companies.values_list('id', flat=True))
 
 @login_required
 def alerts_list(request):
