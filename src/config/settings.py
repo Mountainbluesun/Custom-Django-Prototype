@@ -1,5 +1,6 @@
 import environ
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
 # Initialise django-environ
 env = environ.Env()
@@ -149,6 +150,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Messages configuration for Django messages framework
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'error',
+}
 
 AUTH_USER_MODEL = "users.User"
 

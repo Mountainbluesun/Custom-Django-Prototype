@@ -14,8 +14,6 @@ from django.http import HttpResponseForbidden
 def login_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        print(">>> EXÉCUTION DU DÉCORATEUR login_required <<<")
-        print(">>> [DÉCORATEUR] request.user :", request.user)
         if not request.user.is_authenticated:
             return redirect("users:login")
         return view_func(request, *args, **kwargs)
@@ -26,7 +24,7 @@ def admin_required(view_func):
     def _wrapped(request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect("users:login")
-        if not request.user.is_admin:  # ⚠️ ton modèle User a bien ce champ
+        if not request.user.is_admin:
             return HttpResponseForbidden("Accès réservé aux administrateurs.")
         return view_func(request, *args, **kwargs)
     return _wrapped
