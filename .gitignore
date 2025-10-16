@@ -30,3 +30,6 @@ __pycache__/
 # Autres fichiers sensibles ou inutiles
 *.log
 .DS_Store
+
+# sqlite
+db.sqlite3
