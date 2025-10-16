@@ -1,5 +1,3 @@
-import os
-import sys
 import environ
 from pathlib import Path
 
@@ -61,8 +59,8 @@ ROOT_URLCONF = 'config.urls'
 
 LOGIN_URL = 'users:login'
 # URL de redirection après login réussi
-LOGIN_REDIRECT_URL = "/"  # ou "/users/" selon ce que tu veux
-LOGOUT_REDIRECT_URL = "/users/login/"
+LOGIN_REDIRECT_URL = "dashboard:home"
+LOGOUT_REDIRECT_URL = "users:login"
 
 
 
@@ -101,11 +99,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('POSTGRES_DB', 'stock_manager_db'),
-            'USER': os.getenv('POSTGRES_USER', 'postgres'),
-            'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
-            'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
-            'PORT': os.getenv('POSTGRES_PORT', '5432'),
+            'NAME': env('POSTGRES_DB', 'stock_manager_db'),
+            'USER': env('POSTGRES_USER', 'postgres'),
+            'PASSWORD': env('POSTGRES_PASSWORD', 'postgres'),
+            'HOST': env('POSTGRES_HOST', 'localhost'),
+            'PORT': env('POSTGRES_PORT', '5432'),
         }
     }
 
@@ -152,7 +150,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Envoie les mails dans la console (pour tester)
 AUTH_USER_MODEL = "users.User"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # pour dev, écrit l'email dans le terminal
