@@ -64,6 +64,7 @@
     <a href="{% url 'catalog:list' %}">Produits</a>
     <a href="{% url 'inventory:list' %}">Stocks</a>
     <a href="{% url 'alerts:list' %}">Alertes</a>
+      <a href="#stack" class="text-gray-700 hover:text-indigo-600 transition">Stack technique</a>
     {% if request.user.is_admin %}
       <a href="{% url 'users:list' %}">Utilisateurs</a>
       {#<a href="{% url 'catalog:import_page' %}">Importer</a>#}
@@ -101,6 +102,64 @@
 <main>
   {% block content %}{% endblock %}
 </main>
+<section class="bg-gray-50 py-16" id="stack">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
+      ⚙️ Stack technique & Workflow DevOps
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Bloc Django -->
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-indigo-600 mb-2">Django & Wagtail</h3>
+        <p class="text-gray-600">
+          Développement full-stack avec Django, gestion de contenu via Wagtail, utilisation des formsets, HTMX et Chart.js pour le front dynamique.
+        </p>
+      </div>
+
+      <!-- Bloc VPS -->
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-indigo-600 mb-2">Déploiement VPS</h3>
+        <p class="text-gray-600">
+          Hébergement sur <strong>Infomaniak VPS</strong> (Ubuntu 24.04), avec Nginx en reverse proxy, Gunicorn comme serveur d’application et PostgreSQL en base de données.
+        </p>
+      </div>
+
+      <!-- Bloc Sécurité -->
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-indigo-600 mb-2">Sécurité & SSL</h3>
+        <p class="text-gray-600">
+          Configuration HTTPS complète via Let’s Encrypt, gestion du firewall Infomaniak, redirections 301 et politique stricte des cookies (CSRF, session sécurisée).
+        </p>
+      </div>
+
+      <!-- Bloc Workflow -->
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-indigo-600 mb-2">Workflow & DevOps</h3>
+        <p class="text-gray-600">
+          Déploiement par <strong>Git & SCP</strong>, environnement virtuel isolé, collectstatic automatisé et redémarrage Gunicorn/Nginx via systemctl.
+        </p>
+      </div>
+
+      <!-- Bloc Outils -->
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-indigo-600 mb-2">Outils & IDE</h3>
+        <p class="text-gray-600">
+          Développement sur <strong>PyCharm</strong> et <strong>TablePlus</strong> pour la base de données. Tests et couverture de code avec pytest et coverage.
+        </p>
+      </div>
+
+      <!-- Bloc CI/CD -->
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-indigo-600 mb-2">CI/CD & Monitoring</h3>
+        <p class="text-gray-600">
+          Utilisation future de GitHub Actions pour la CI/CD, supervision de l’application via les logs Nginx et Gunicorn.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 </body>
 </html>

@@ -12,6 +12,9 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 
 /home/administrateur/stock_manager/sauvegarde_stock_manager.sql
+/home/administrateur/stock_manager/sauvegarde_stock_manager_full.dump
+/home/administrateur/stock_manager/stock_manager_backup.dump
+
 
 # Fichiers d'environnement
 .env
@@ -30,3 +33,11 @@ __pycache__/
 # Autres fichiers sensibles ou inutiles
 *.log
 .DS_Store
+
+
+# Static & media
+staticfiles/
+media/
+
+
+

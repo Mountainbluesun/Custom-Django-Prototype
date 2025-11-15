@@ -1,14 +1,21 @@
 import os
 import sys
+from doctest import debug
+from dotenv import load_dotenv
+
+
 import environ
 from pathlib import Path
 
+
 # Initialise django-environ
-env = environ.Env()
+env = environ.Env(debug=(bool, False))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+#environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR.parent / '.env')
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # 🔧 Ajout du dossier 'src' au path Python pour que Django trouve les apps
 sys.path.append(str(BASE_DIR / "src"))
@@ -20,28 +27,26 @@ sys.path.append(str(BASE_DIR / "src"))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 #ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok-free.app', '.ngrok-free.dev']
 
 # Dynamic
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-NGROK_HOST = os.environ.get('NGROK_HOST')
-if NGROK_HOST:
-    ALLOWED_HOSTS.append(NGROK_HOST)
-ALLOWED_HOSTS += ['.ngrok-free.app', '.ngrok-free.dev']
+ALLOWED_HOSTS = ["www.jeremylebrun.dev",
+                 "jeremylebrun.dev",
+                 "83.228.210.95",
+                 "localhost",
+                 "127.0.0.1"]
+#NGROK_HOST = os.environ.get('NGROK_HOST')
+#if NGROK_HOST:
+    #ALLOWED_HOSTS.append(NGROK_HOST)
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://*.ngrok-free.app',
-    'https://*.ngrok-free.dev',
-]
-
-
-
-
-# Application definition
+#CSRF_TRUSTED_ORIGINS = [
+    #'https://*.ngrok-free.app',
+   # 'https://*.ngrok-free.dev',
+#]
 
 INSTALLED_APPS = [
     #'django.contrib.admin',
@@ -72,6 +77,9 @@ MIDDLEWARE = [
 
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -79,7 +87,6 @@ LOGIN_URL = 'users:login'
 # URL de redirection après login réussi
 LOGIN_REDIRECT_URL = "/"  # ou "/users/" selon ce que tu veux
 LOGOUT_REDIRECT_URL = "/users/login/"
-
 
 
 
@@ -105,8 +112,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-
-DATABASES = {
+# Choisir la base selon l'environnement
+if os.getenv('DJANGO_ENV') == 'vps':
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('POSTGRES_DB', 'stock_manager_db'),
@@ -116,6 +124,18 @@ DATABASES = {
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
+else:
+# environnement local
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB','stockdb'),
+            'USER': os.getenv('POSTGRES_USER','postgres'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD','postgres'),
+            'HOST': os.getenv('POSTGRES_HOST','localhost'),
+            'PORT': os.getenv('POSTGRES_PORT','5432'),
+        }
+    }
 
 
 
@@ -153,7 +173,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # pour ton static global
+STATIC_ROOT = BASE_DIR / 'staticfiles'   # destination collectstatic
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -46,6 +46,7 @@ jobs:
       - name: Set environment variables
         run: |
           echo "DJANGO_SETTINGS_MODULE=config.settings" >> $GITHUB_ENV
+          echo "PYTHONPATH=$PYTHONPATH:./src" >> $GITHUB_ENV
           echo "POSTGRES_DB=test_db" >> $GITHUB_ENV
           echo "POSTGRES_USER=test_user" >> $GITHUB_ENV
           echo "POSTGRES_PASSWORD=test_password" >> $GITHUB_ENV
@@ -61,6 +62,7 @@ jobs:
           done
 
       - name: Run migrations
+        working-directory: ./src
         run: python manage.py migrate --noinput
 
       - name: Run tests with coverage
