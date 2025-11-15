@@ -39,5 +39,23 @@ __pycache__/
 staticfiles/
 media/
 
+# Fichiers d'environnement
+.env
+*.env
+
+# Sauvegardes et bases de données
+*.sql
+*.dump
+
+# Dossiers de dépendances
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Static & media
+static/
+staticfiles/
+media/
 
 
