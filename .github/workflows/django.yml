@@ -46,6 +46,7 @@ jobs:
       - name: Set environment variables
         run: |
           echo "DJANGO_SETTINGS_MODULE=config.settings" >> $GITHUB_ENV
+          echo "PYTHONPATH=$PYTHONPATH:" >> $GITHUB_ENV
           echo "PYTHONPATH=$PYTHONPATH:./src" >> $GITHUB_ENV
           echo "POSTGRES_DB=test_db" >> $GITHUB_ENV
           echo "POSTGRES_USER=test_user" >> $GITHUB_ENV
@@ -58,11 +59,10 @@ jobs:
         run: |
           until pg_isready -h localhost -p 5432 -U test_user; do
             echo "Waiting for postgres..."
-            sleep 2
+            sleep 5
           done
 
       - name: Run migrations
-        working-directory: ./src
         run: python manage.py migrate --noinput
 
       - name: Run tests with coverage
