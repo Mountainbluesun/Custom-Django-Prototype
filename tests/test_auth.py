@@ -1,3 +1,5 @@
+from urllib import response
+
 import pytest
 from django.urls import reverse
 from users.models import User
@@ -30,29 +32,18 @@ def test_successful_login(client):
     assert success_alert is not None or "Bienvenue" in response.content.decode()
 
 
-
 @pytest.mark.django_db
 def test_failed_login_with_wrong_password(client):
-    """Vérifie qu'un utilisateur avec un mauvais mot de passe ne peut pas se connecter."""
-    # Création de l'utilisateur
-    User.objects.create(
-        username="testuser",
-        password=make_password("password123"),
-        is_active=True
-    )
-
-    url = reverse("users:login")
-    # On envoie un mauvais mot de passe
-    response = client.post(url, {
-        "username": "testuser",
-        "password": "wrongpassword"
-    })
+    # ... (Création de l'utilisateur et envoi du formulaire) ...
 
     # La page doit se recharger (code 200)
     assert response.status_code == 200
 
-    # On parse le HTML pour vérifier la présence d'une alerte d'erreur
-    soup = BeautifulSoup(response.content, "html.parser")
-    alert = soup.select_one(".alert-error")
-    assert alert is not None
+    # VÉRIFICATION DU CONTENU TEXTUEL DANS LE TEMPLATE
+    # Le message d'erreur standard de Django pour une mauvaise connexion est le suivant :
+    assert "Veuillez entrer des identifiants valides" in response.content.decode() or \
+           "identifiants invalides" in response.content.decode()
 
+    # OPTIONNEL: Vérifiez que la liste de messages existe
+    soup = BeautifulSoup(response.content, "html.parser")
+    assert soup.select_one(".messages") is not None
