@@ -11,6 +11,11 @@
         <li><a href="{% url 'alerts:list' %}">Voir les alertes</a></li>
         <li><a href="{% url 'catalog:list' %}">Voir les produits</a></li>
         <li><a href="{% url 'inventory:list' %}">Voir les stocks</a></li>
+        <li><a href="{% url 'wagtailadmin_home' %}">Accéder à Wagtail Admin</a></li>
+        <li><a href="/portfolio/">Mon Portfolio</a></li>
+
+
+
 
         {% if request.user.is_admin %}
         <li><a href="{% url 'users:list' %}">Gérer les utilisateurs</a></li>

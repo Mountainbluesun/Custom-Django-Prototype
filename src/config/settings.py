@@ -39,6 +39,12 @@ ALLOWED_HOSTS = ["www.jeremylebrun.dev",
                  "83.228.210.95",
                  "localhost",
                  "127.0.0.1"]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://jeremylebrun.dev",
+    "https://www.jeremylebrun.dev",
+]
+
 #NGROK_HOST = os.environ.get('NGROK_HOST')
 #if NGROK_HOST:
     #ALLOWED_HOSTS.append(NGROK_HOST)
@@ -49,24 +55,49 @@ ALLOWED_HOSTS = ["www.jeremylebrun.dev",
 #]
 
 INSTALLED_APPS = [
-    #'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'users',
-    'companies',
-    'catalog',
-    'inventory',
-    'alerts',
-    'dashboard',
-    'core',
+    # Django apps
+    #"django.contrib.admin", #warning
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+
+    # Tes apps Django
+    "users",
+    "companies",
+    "catalog",
+    "inventory",
+    "alerts",
+    "dashboard",
+    "core",
+    "django_extensions",
+
+    # Tes apps Wagtail
+    "home",
+    #"projects",
+
+    # Apps Wagtail essentielles
+    "wagtail.contrib.forms",
+    "wagtail.contrib.redirects",
+    "wagtail.embeds",
+    "wagtail.sites",
+    "wagtail.users",
+    "wagtail.snippets",
+    "wagtail.documents",
+    "wagtail.images",
+    "wagtail.search",
+    "wagtail.admin",
+    "wagtail",
+    "modelcluster",
+    "taggit",
 ]
+
 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",   # <-- AVANT Common & Csrf
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -175,7 +206,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # pour ton static global
-STATIC_ROOT = BASE_DIR / 'staticfiles'   # destination collectstatic
+STATIC_ROOT = BASE_DIR / 'staticfiles'   # destination
+
+# CONFIGURATION DES MÉDIAS (Pour Wagtail : Images & Documents)
+
+MEDIA_URL = "/media/"
+
+
+MEDIA_ROOT = BASE_DIR / "media"
 
 
 # Default primary key field type
@@ -188,6 +226,12 @@ AUTH_USER_MODEL = "users.User"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # pour dev, écrit l'email dans le terminal
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+
+# Nom du site pour Wagtail admin
+WAGTAIL_SITE_NAME = "Mon CMS"
+
+# URL de base pour Wagtail (utile pour notifications, user bar)
+WAGTAILADMIN_BASE_URL = "http://localhost:8000/site/"
 
 
 

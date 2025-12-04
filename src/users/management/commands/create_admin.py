@@ -20,7 +20,9 @@ class Command(BaseCommand):
             email=email,
             password=make_password(password),
             is_admin=True,
-            is_active=True
+            is_active=True,
+            is_staff=True,  # IMPORTANT pour accéder à /admin/
+            is_superuser=True  # IMPORTANT pour gérer Wagtail entièrement
         )
 
         self.stdout.write(self.style.SUCCESS(f"Utilisateur admin '{username}' créé avec succès."))

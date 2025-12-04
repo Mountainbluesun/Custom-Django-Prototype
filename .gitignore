@@ -1,61 +1,80 @@
+#########################
+#     DJANGO / PYTHON   #
+#########################
 
-/home/administrateur/stock_manager/.env
-.idea/
-/.idea
-ini
-
-SECRET_KEY=ma_clef_super_secrete
-POSTGRES_DB=stock_manager_db
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-
-/home/administrateur/stock_manager/sauvegarde_stock_manager.sql
-/home/administrateur/stock_manager/sauvegarde_stock_manager_full.dump
-/home/administrateur/stock_manager/stock_manager_backup.dump
-
-
-# Fichiers d'environnement
-.env
-*.env
-
-# Sauvegardes et bases de données
-*.sql
-sauvegarde_stock_manager.sql
-
-# Dossiers de dépendances
-venv/
-env/
+# Cache & compilations Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Autres fichiers sensibles ou inutiles
-*.log
-.DS_Store
+# Environnement virtuel
+venv/
+env/
+.venv/
 
-
-# Static & media
-staticfiles/
-media/
-
-# Fichiers d'environnement
+# Fichiers d’environnement (variables secrètes)
 .env
 *.env
 
-# Sauvegardes et bases de données
+#########################
+#       DATABASES       #
+#########################
+
+# Sauvegardes SQL / PostgreSQL
 *.sql
 *.dump
+*.db
+*.sqlite3
 
-# Dossiers de dépendances
-venv/
-env/
-__pycache__/
-*.pyc
+#########################
+#      DJANGO FILES     #
+#########################
 
-# Static & media
-static/
+# Static & media générés
 staticfiles/
 media/
 
+# (optionnel) ignorer les migrations si tu veux un repo très propre
+# */migrations/
+# !*/migrations/__init__.py
 
+#########################
+#        TESTING        #
+#########################
+
+# Pytest
+.pytest_cache/
+.cache/
+.coverage
+htmlcov/
+
+#########################
+#        LOGS           #
+#########################
+
+*.log
+
+#########################
+#         OS            #
+#########################
+
+.DS_Store
+Thumbs.db
+
+#########################
+#        IDE            #
+#########################
+
+# PyCharm / IntelliJ
+.idea/
+
+# VSCode
+.vscode/
+
+#########################
+#     DEPLOY / CI       #
+#########################
+
+# Gunicorn pid files
+*.pid
