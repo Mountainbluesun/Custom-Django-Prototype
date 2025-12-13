@@ -1,5 +1,3 @@
-from urllib import response
-
 import pytest
 from django.urls import reverse
 from users.models import User
@@ -8,42 +6,46 @@ from bs4 import BeautifulSoup
 
 @pytest.mark.django_db
 def test_successful_login(client):
-    """Vérifie qu'un utilisateur avec de bons identifiants peut se connecter."""
-    # 1. Création de l'utilisateur
     User.objects.create(
         username="testuser",
         password=make_password("password123"),
         is_active=True
     )
 
-    # 2. Soumission du formulaire de connexion
     url = reverse("users:login")
-    response = client.post(url, {
+    resp = client.post(url, {
         "username": "testuser",
         "password": "password123"
-    }, follow=True)  # follow=True pour suivre la redirection
+    }, follow=True)
 
-    # 3. Vérification du succès de la connexion
-    assert response.status_code == 200
+    assert resp.status_code == 200
 
-    # 4. Vérifie qu'un message de succès apparaît (si tu as des messages Django)
-    soup = BeautifulSoup(response.content, "html.parser")
+    soup = BeautifulSoup(resp.content, "html.parser")
     success_alert = soup.select_one(".alert-success")
-    assert success_alert is not None or "Bienvenue" in response.content.decode()
+    assert success_alert is not None or "Bienvenue" in resp.content.decode()
 
 
 @pytest.mark.django_db
 def test_failed_login_with_wrong_password(client):
-    # ... (Création de l'utilisateur et envoi du formulaire) ...
+    User.objects.create(
+        username="testuser",
+        password=make_password("password123"),
+        is_active=True
+    )
 
-    # La page doit se recharger (code 200)
-    assert response.status_code == 200
+    url = reverse("users:login")
+    resp = client.post(url, {
+        "username": "testuser",
+        "password": "WRONGPASS"
+    }, follow=True)
 
-    # VÉRIFICATION DU CONTENU TEXTUEL DANS LE TEMPLATE
-    # Le message d'erreur standard de Django pour une mauvaise connexion est le suivant :
-    assert "Veuillez entrer des identifiants valides" in response.content.decode() or \
-           "identifiants invalides" in response.content.decode()
+    assert resp.status_code == 200
 
-    # OPTIONNEL: Vérifiez que la liste de messages existe
-    soup = BeautifulSoup(response.content, "html.parser")
+    assert (
+        "Veuillez entrer des identifiants valides" in resp.content.decode()
+        or "identifiants invalides" in resp.content.decode()
+    )
+
+    soup = BeautifulSoup(resp.content, "html.parser")
     assert soup.select_one(".messages") is not None
+
