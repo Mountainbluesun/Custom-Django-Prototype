@@ -2,7 +2,8 @@ Custom Django Prototype
 
 Prototype Django full-stack pour la gestion de stock multi-entreprises, développé comme projet de démonstration technique.
 
-🔗 Demo
+> Projet personnel Django, en évolution continue.
+ Demo
 
 👉 https://www.jeremylebrun.dev
 
