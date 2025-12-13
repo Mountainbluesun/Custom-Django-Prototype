@@ -1,34 +1,93 @@
-# 🧭 Custom Django Prototype
+Custom Django Prototype
 
-Prototype full-stack Django avec gestion multi-entreprises, dashboard dynamique et workflow DevOps complet sur VPS Infomaniak.
+Prototype Django full-stack pour la gestion de stock multi-entreprises, développé comme projet de démonstration technique.
 
-## 🚀 Stack technique
+🔗 Demo
 
-- **Framework :** Django 5 + HTMX + Chart.js
-- **Base de données :** PostgreSQL
-- **Serveur d’app :** Gunicorn
-- **Reverse proxy :** Nginx
-- **Hébergement :** VPS Ubuntu 24.04 (Infomaniak)
-- **Sécurité :** HTTPS Let’s Encrypt, Firewall Infomaniak, sessions sécurisées
-- **CI/CD :** Git, SCP, systemctl
-- **Outils :** PyCharm, TablePlus
+👉 https://www.jeremylebrun.dev
 
-## 💻 Fonctionnalités
+## 📸 Screenshots
 
-- Gestion des produits, stocks et mouvements
-- Alertes automatiques sur seuil critique
-- Dashboard avec graphiques dynamiques (Chart.js)
-- Authentification et espace utilisateur
-- Multi-entreprise (Lyon, Londres, Bordeaux, Genève)
+### Dashboard (environnement Linux)
+![Dashboard](screenshots/dashboard.png)
 
-## 🛠️ Installation
+### Gestion des produits
+![Produits](screenshots/products.png)
 
-```bash
+
+🛠 Stack
+
+Python 3
+
+Django 5
+
+PostgreSQL
+
+HTMX
+
+Chart.js
+
+Gunicorn
+
+Nginx
+
+Ubuntu 24.04 (VPS)
+
+✨ Fonctionnalités
+
+Authentification utilisateur
+
+Gestion multi-entreprises / multi-sites
+
+Produits et stocks par site
+
+Mouvements de stock (entrée / sortie)
+
+Dashboard avec indicateurs et graphiques
+
+Interface dynamique avec HTMX
+
+🗂 Modèle de données (simplifié)
+
+Product
+
+Location
+
+Stock (Product × Location)
+
+Movement (IN / OUT)
+
+🚀 Installation (local)
 git clone https://github.com/Mountainbluesun/Custom-Django-Prototype.git
 cd Custom-Django-Prototype
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
 python manage.py migrate
+python manage.py createsuperuser
 python manage.py runserver
+
+🧪 Tests
+pytest
+
+🌐 Déploiement
+
+Déploiement manuel sur VPS Ubuntu
+
+Gunicorn + Nginx
+
+PostgreSQL
+
+HTTPS (Let’s Encrypt)
+
+Variables sensibles via .env (non versionné)
+
+🔐 Sécurité
+
+DEBUG = False en production
+
+HTTPS obligatoire
+
+Accès base de données local uniquement
+
+Pare-feu UFW
