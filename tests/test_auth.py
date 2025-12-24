@@ -22,7 +22,7 @@ def test_successful_login(client):
 
     soup = BeautifulSoup(resp.content, "html.parser")
     success_alert = soup.select_one(".alert-success")
-    assert success_alert is not None or "Bienvenue" in resp.content.decode()
+    assert "_auth_user_id" in client.session
 
 
 @pytest.mark.django_db
