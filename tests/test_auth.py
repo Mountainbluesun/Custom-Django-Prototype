@@ -41,10 +41,7 @@ def test_failed_login_with_wrong_password(client):
 
     assert resp.status_code == 200
 
-    assert (
-        "Veuillez entrer des identifiants valides" in resp.content.decode()
-        or "identifiants invalides" in resp.content.decode()
-    )
+    assert "_auth_user_id" not in client.session
 
     soup = BeautifulSoup(resp.content, "html.parser")
     assert soup.select_one(".messages") is not None
