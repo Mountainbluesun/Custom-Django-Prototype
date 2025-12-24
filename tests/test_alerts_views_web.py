@@ -89,4 +89,5 @@ def test_alerts_no_products(client):
     assert response.status_code == 200
     html_content = response.content.decode()
     # Pas d'alertes affichées
-    assert "Produit" not in html_content
+    assert "Aucune alerte." in html_content
+
