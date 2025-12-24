@@ -2,7 +2,9 @@ import pytest
 from django.urls import reverse
 from users.models import User
 from django.contrib.auth.hashers import make_password
-@pytest.mark.skip(reason="Test désactivé temporairement – fonction à revoir")
+
+
+@pytest.mark.xfail(reason="Test désactivé temporairement – fonction à revoir")
 @pytest.mark.django_db
 def test_logout_clears_session(client):
     """

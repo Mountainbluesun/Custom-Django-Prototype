@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.contrib.auth.hashers import make_password, check_password
 from users.models import User
 
-@pytest.mark.skip(reason="Désactivé temporairement – service à corriger")
+@pytest.mark.xfail(reason="Désactivé temporairement – service à corriger")
 @pytest.mark.django_db
 def test_set_password_command():
     """

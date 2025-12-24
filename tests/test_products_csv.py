@@ -6,7 +6,7 @@ from companies.models import Company
 from users.models import User
 from catalog.models import Product
 
-@pytest.mark.skip(reason="Test désactivé temporairement – fonction à revoir")
+@pytest.mark.xfail(reason="Test désactivé temporairement – fonction à revoir")
 @pytest.mark.django_db
 def test_export_and_import_products_csv(client):
     """
