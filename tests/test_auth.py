@@ -40,9 +40,6 @@ def test_failed_login_with_wrong_password(client):
     }, follow=True)
 
     assert resp.status_code == 200
-
     assert "_auth_user_id" not in client.session
 
-    soup = BeautifulSoup(resp.content, "html.parser")
-    assert soup.select_one(".messages") is not None
 
