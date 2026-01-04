@@ -92,3 +92,17 @@ HTTPS obligatoire
 Accès base de données local uniquement
 
 Pare-feu UFW
+
+## Configuration backups
+
+The files below are intentional backups of stable production configurations:
+
+- `src/config/settings.py.stable`
+- `src/config/urls.py.stable`
+
+They were created before production routing changes related to Nginx and
+the portfolio project page integration.
+
+These files are **not used by Django at runtime** and are kept only
+for reference and rollback purposes.
+
