@@ -1,10 +1,16 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Accueil — Stock Manager{% endblock %}
 
 {% block content %}
   <div class="card">
-    <h1>Bienvenue 👋</h1>
+
+      <!-- PHOTO TEST (SIMPLE) -->
+    <img src="{% static 'dashboard/img/profile.png' %}" alt="Photo" width="200">
+
+
+      <h1>Bienvenue 👋</h1>
     <p>Gérez vos stocks multi-entreprises, produits et mouvements — avec alertes de seuil.</p>
     <ul>
         <li><a href="{% url 'companies:list' %}">Entreprises</a></li>
@@ -13,9 +19,6 @@
         <li><a href="{% url 'inventory:list' %}">Voir les stocks</a></li>
         <li><a href="{% url 'wagtailadmin_home' %}">Accéder à Wagtail Admin</a></li>
         <li><a href="/portfolio/">Mon Portfolio</a></li>
-
-
-
 
         {% if request.user.is_admin %}
         <li><a href="{% url 'users:list' %}">Gérer les utilisateurs</a></li>

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="project">
+
+    <h1>Custom Laravel Prototype</h1>
+
+    <p>
+        Ce projet a été réalisé dans le cadre de mon apprentissage de Laravel.
+        Il m’a permis de comprendre la structure MVC, la gestion des routes,
+        les contrôleurs et les vues Blade.
+    </p>
+
+    <h2>Fonctionnalités</h2>
+    <ul>
+        <li>Structure MVC Laravel</li>
+        <li>Routes et contrôleurs</li>
+        <li>Vues Blade</li>
+        <li>Versionnement GitHub</li>
+    </ul>
+
+    <h2>Technologies</h2>
+    <ul>
+        <li>Laravel</li>
+        <li>PHP</li>
+        <li>Blade</li>
+        <li>Git / GitHub</li>
+        <li>Linux</li>
+    </ul>
+
+    <h2>Liens</h2>
+    <p>
+        <a href="https://github.com/Mountainbluesun/custom_laravel_prototype" target="_blank">
+            🔗 Voir le projet sur GitHub
+        </a>
+    </p>
+</section>
+{% endblock %}

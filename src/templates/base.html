@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{% block title %}Stock Manager{% endblock %}</title>
+  {% block extra_css %}{% endblock %}
     <style>
 .btn-admin {
   background-color: #fbbf24;
@@ -126,6 +127,10 @@ nav .links a:hover, nav .session a:hover {
   <div class="links">
       <a href="{% url 'wagtailadmin_home'%}" class="btn-admin">Wagtail Admin</a>
      <li><a href="/portfolio/">Mon Portfolio</a></li>
+    <li class="nav-item">
+    <a class="nav-link" href="/projets/laravel/">Mon Projet Laravel</a>
+    </li>
+
 
 
 
