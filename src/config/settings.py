@@ -3,7 +3,6 @@ import sys
 from doctest import debug
 from dotenv import load_dotenv
 
-
 import environ
 from pathlib import Path
 
@@ -72,7 +71,7 @@ INSTALLED_APPS = [
     "dashboard",
     "core",
     "django_extensions",
-    "portfolio",
+    #"portfolio",
 
     # Tes apps Wagtail
     "home",
@@ -224,15 +223,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Envoie les mails dans la console (pour tester)
 AUTH_USER_MODEL = "users.User"
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # pour dev, écrit l'email dans le terminal
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.infomaniak.com'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False  # Désactive TLS
+EMAIL_USE_SSL = True   # Active SSL
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
 
 # Nom du site pour Wagtail admin
 WAGTAIL_SITE_NAME = "Mon CMS"
 
 # URL de base pour Wagtail (utile pour notifications, user bar)
-WAGTAILADMIN_BASE_URL = "http://localhost:8000/site/"
+WAGTAILADMIN_BASE_URL = "https://www.jeremylebrun.dev/site/"
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
 
 
 
