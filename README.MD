@@ -72,20 +72,25 @@ python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
 
-🧪 Tests
-pytest
+🧪 Tests & Validation
+Tests unitaires avec pytest.
 
-🌐 Déploiement
+Script de validation SMTP dédié (test_mail.py) pour vérifier la connectivité en production.
 
-Déploiement manuel sur VPS Ubuntu
+[!IMPORTANT]
+Fichiers de secours (.stable) :
+Les fichiers settings.py.stable et urls.py.stable sont des sauvegardes de configurations de production stables. Ils sont conservés à titre de référence et ne sont pas utilisés par Django au runtime.
 
-Gunicorn + Nginx
 
-PostgreSQL
+🌐 Déploiement & Communication
+Serveur : Déploiement manuel sur VPS Ubuntu 24.04 (Gunicorn + Nginx).
 
-HTTPS (Let’s Encrypt)
+Sécurité : HTTPS (Let’s Encrypt), Pare-feu UFW, PostgreSQL
 
-Variables sensibles via .env (non versionné)
+Emails : Configuration SMTP professionnelle (Infomaniak) pour la récupération de mots de passe et notifications.
+
+Variables : Gestion des secrets via .env (non versionné).
+
 
 🔐 Sécurité
 
