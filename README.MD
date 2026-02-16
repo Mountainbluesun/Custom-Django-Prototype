@@ -15,6 +15,10 @@ Prototype Django full-stack pour la gestion de stock multi-entreprises, dévelop
 ### Gestion des produits
 ![Produits](screenshots/products.png)
 
+### Test successful token
+![Reset_password](screenshots/token.png)
+
+
 
 🛠 Stack
 
