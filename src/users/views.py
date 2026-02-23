@@ -1,6 +1,3 @@
-# Fichier : src/users/views.py
-
-
 from django.http import Http404
 
 from django.http import HttpResponse
@@ -40,6 +37,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from .models import User
+from core.forms import ContactForm
 
 def login_view(request):
     if request.method == "POST":
@@ -77,7 +75,7 @@ def login_view(request):
             print("❌ Connexion échouée")
             return render(request, "users/login.html", status=401)
 
-    return render(request, "users/login.html")
+    return render(request, "users/login.html",{"contact_form": ContactForm()})
 
 
 def logout_view(request):
@@ -89,7 +87,8 @@ def logout_view(request):
 
 @login_required
 def home_view(request):
-    return render(request, "home.html")
+    return render(request, 'home.html')
+
 
 @admin_required
 def user_list_view(request):

@@ -12,6 +12,9 @@ urlpatterns = [
     # ---------------------
     path("", dashboard_view, name="home"),
     path('', include('portfolio.urls')),
+    path('', include('core.urls')),
+    path('captcha/', include('captcha.urls')),
+
 
     # ---------------------
     # Apps de votre projet

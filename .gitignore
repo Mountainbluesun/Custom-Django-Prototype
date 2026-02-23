@@ -78,3 +78,9 @@ Thumbs.db
 
 # Gunicorn pid files
 *.pid
+
+*.json
+# Ou plus spécifiquement :
+complet_prod.json
+portfolio_full.json
+mes_acces.json

@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "core",
     "django_extensions",
     #"portfolio",
+    "captcha",
 
     # Tes apps Wagtail
     "home",

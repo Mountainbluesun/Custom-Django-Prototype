@@ -22,7 +22,7 @@ Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
     <h1 style="margin:0;"></h1>
   </div>
 </div>
-
+<div style="display: flex; gap: 2rem; flex-wrap: wrap;">
   <div class="card" style="max-width:420px">
     <h1>Connexion</h1>
 
@@ -45,12 +45,57 @@ Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
       </button>
     </form>
 
-  </div>
-
-
+<div style="margin-top: 1rem;">
 <a href="{% url 'users:password_reset' %}">Mot de passe oublié ?</a>
 
 {#<p><a href="{% url 'users:password_reset_request' %}">Mot de passe oublié ?</a></p>#}
+</div>
+
+</div>
+  <div class="card" style="max-width:420px; flex: 1; min-width: 300px; border-top: 4px solid #4f46e5;">
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding: 10px; margin-bottom: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; font-size: 0.9rem;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <h1>Me contacter 🚀</h1>
+<form method="post" action="{% url 'contact' %}" novalidate>
+    {% csrf_token %}
+
+    <div style="margin-bottom: 1rem;">
+        <label style="font-weight: bold; display: block;">Votre nom</label>
+        {{ contact_form.nom }}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label style="font-weight: bold; display: block;">Votre Email</label>
+        {{ contact_form.email }}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label style="font-weight: bold; display: block;">Sujet</label>
+        {{ contact_form.sujet }}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label style="font-weight: bold; display: block;">Message</label>
+        {{ contact_form.message }}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label style="font-weight: bold; display: block;">Vérification (anti-spam)</label>
+        {{ contact_form.captcha }}
+    </div>
+
+    <button type="submit" style="padding:.6rem 1rem; border-radius:.5rem; background:#4f46e5; color:white; border:none; cursor:pointer; width:100%;">
+        🚀 Envoyer le message
+    </button>
+</form>
+
+</div>
+</div>
 
 
 {% endblock %}
