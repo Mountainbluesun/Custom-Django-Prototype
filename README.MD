@@ -83,13 +83,13 @@ Les fichiers settings.py.stable et urls.py.stable sont des sauvegardes de config
 
 
 🌐 Déploiement & Communication
-Serveur : Déploiement manuel sur VPS Ubuntu 24.04 (Gunicorn + Nginx).
 
-Sécurité : HTTPS (Let’s Encrypt), Pare-feu UFW, PostgreSQL
-
-Emails : Configuration SMTP professionnelle (Infomaniak) pour la récupération de mots de passe et notifications.
-
-Variables : Gestion des secrets via .env (non versionné).
+- Serveur : Déploiement manuel sur VPS Ubuntu 24.04 (Gunicorn + Nginx en reverse proxy).
+- Sécurité : HTTPS (Let’s Encrypt), Pare-feu UFW, isolation de la base PostgreSQL.
+- Anti-Spam : Intégration de Captcha sur les formulaires publics.
+- UX : Gestion des erreurs de routage avec des templates 404 personnalisés.
+- Emails : Configuration SMTP professionnelle (Infomaniak) avec gestion des files d'attente pour les notifications et la récupération de mot de passe.
+- Variables : Gestion des secrets via .env (non versionné).
 
 
 🔐 Sécurité
