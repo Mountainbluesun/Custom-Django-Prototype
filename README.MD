@@ -2,11 +2,11 @@ Custom Django Prototype
 
 Prototype Django full-stack pour la gestion de stock multi-entreprises, développé comme projet de démonstration technique.
 
-> Projet personnel Django, en évolution continue.
- Demo
-
-👉 https://www.jeremylebrun.dev
-
+Ce site n'est plus en ligne. > 
+J'ai éteint mon projet personnel #wwwjeremylebrun.dev pour me consacrer
+à la création de nouveaux projets. 
+Je laisse ce dépôt accessible
+pour l'historique du travail accompli sur l'architecture Django.
 ## 📸 Screenshots
 
 ### Dashboard (environnement Linux)
