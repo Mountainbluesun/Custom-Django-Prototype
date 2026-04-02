@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<div style="text-align: center; padding: 50px;">
+<div style="text-align: center; padding: 50px; min-height: 60vh;">
     <h1>404 - Page non trouvée</h1>
-    <p>Désolé, la page que vous cherchez n'existe pas ou a été déplacée.</p>
-    <a href="/" style="color: #007bff; text-decoration: underline;">Retourner à l'accueil</a>
+    <p style="font-size: 1.2em; margin-bottom: 20px;">Désolé, la page que vous cherchez n'existe pas ou a été déplacée.</p>
+
+    <a href="/" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Retourner à l'accueil</a>
+
+    <hr style="width: 50%; margin: 50px auto 20px; border: 0; border-top: 1px solid #eee;">
+
+    <p style="font-size: 0.85em; color: #888; font-style: italic; max-width: 600px; margin: 0 auto;">
+        <strong>Note technique pour les recruteurs :</strong><br>
+        Cette page d'erreur est gérée dynamiquement par Django (lorsque <code>DEBUG=False</code>).
+        Elle démontre ma maîtrise du workflow DevOps, de la configuration du serveur Gunicorn/Nginx et de la gestion personnalisée de l'expérience utilisateur (UX).
+    </p>
 </div>
 {% endblock %}

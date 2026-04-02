@@ -25,7 +25,7 @@ urlpatterns = [
     path('alerts/', include('alerts.urls')),
     path('users/', include('users.urls')),
     path('dashboard/', include('dashboard.urls')),
-    path("portfolio/", include("home.urls")),
+   # path("portfolio/", include("home.urls")),
 
     # ---------------------
     # Wagtail Admin et CMS

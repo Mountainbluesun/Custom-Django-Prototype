@@ -84,3 +84,9 @@ Thumbs.db
 complet_prod.json
 portfolio_full.json
 mes_acces.json
+
+# Archives et Sauvegardes
+*.tar.gz
+*.zip
+*.rar
+stock_manager.tar.gz

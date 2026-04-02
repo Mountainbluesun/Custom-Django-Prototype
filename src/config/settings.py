@@ -35,7 +35,7 @@ DEBUG = False
 # Dynamic
 ALLOWED_HOSTS = ["www.jeremylebrun.dev",
                  "jeremylebrun.dev",
-                 "83.228.210.95",
+                 "83.228.243.130",
                  "localhost",
                  "127.0.0.1"]
 
@@ -71,7 +71,7 @@ INSTALLED_APPS = [
     "dashboard",
     "core",
     "django_extensions",
-    #"portfolio",
+    "portfolio",
     "captcha",
 
     # Tes apps Wagtail
@@ -242,6 +242,4 @@ WAGTAILADMIN_BASE_URL = "https://www.jeremylebrun.dev/site/"
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
-
-
 
