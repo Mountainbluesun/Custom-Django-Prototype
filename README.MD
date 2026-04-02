@@ -1,12 +1,39 @@
-Custom Django Prototype
+Custom Django Prototype - Stock Manager
+Prototype Django full-stack pour la gestion de stock multi-entreprises, développé comme projet de démonstration technique et vitrine de compétences DevOps.
 
-Prototype Django full-stack pour la gestion de stock multi-entreprises, développé comme projet de démonstration technique.
+🔗 Site en production : https://www.jeremylebrun.dev
+Site en évolution continue (CI/CD)
 
-Ce site n'est plus en ligne. > 
-J'ai éteint mon projet personnel #wwwjeremylebrun.dev pour me consacrer
-à la création de nouveaux projets. 
-Je laisse ce dépôt accessible
-pour l'historique du travail accompli sur l'architecture Django.
+🚀 Actualité du Projet (Avril 2026)
+Le projet a récemment fait l'objet d'une migration d'infrastructure majeure :
+
+Nouvel Hébergement : Passage sur un VPS sous Ubuntu 24.04.
+
+Serveur Web : Configuration optimisée de Nginx et Gunicorn.
+
+Expérience Utilisateur : Mise en place d'une gestion personnalisée des erreurs (Pages 404/500) pour une navigation fluide en mode production (DEBUG=False).
+
+Sécurité : Gestion rigoureuse des variables d'environnement (.env) et des accès SSH par clés.
+
+🛠️ Stack Technique
+Framework : Django 5.x
+
+CMS : Intégration de Wagtail pour la gestion de contenu.
+
+Base de données : PostgreSQL (Production) / SQLite (Développement).
+
+Frontend : Templates Django, Intégration de projets externes (Laravel).
+
+DevOps : Git, Gunicorn, Nginx, Linux (Ubuntu).
+
+📋 Fonctionnalités clés
+Multi-entreprises : Gestion cloisonnée des stocks par entité.
+
+Dashboard : Vue d'ensemble des indicateurs de performance.
+
+Système d'Alertes : Notification en cas de stock critique.
+
+Portfolio Intégré : Zone dédiée à la présentation d'autres projets techniques.
 ## 📸 Screenshots
 
 ### Dashboard (environnement Linux)
