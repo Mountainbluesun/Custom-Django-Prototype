@@ -3,6 +3,7 @@ Prototype Django full-stack pour la gestion de stock multi-entreprises, dévelop
 
 🔗 Site en production : https://www.jeremylebrun.dev
 Site en évolution continue (CI/CD)
+![Status](https://img.shields.io/badge/Status-Production-green)
 
 🚀 Actualité du Projet (Avril 2026)
 Le projet a récemment fait l'objet d'une migration d'infrastructure majeure :
@@ -15,7 +16,13 @@ Expérience Utilisateur : Mise en place d'une gestion personnalisée des erreurs
 
 Sécurité : Gestion rigoureuse des variables d'environnement (.env) et des accès SSH par clés.
 
-🛠️ Stack Technique
+### 🎥 Gestion Media & Streaming (Avril 2026)
+L'infrastructure a été mise à jour pour supporter le streaming vidéo haute performance :
+- **Optimisation Nginx :** Configuration du support `Accept-Ranges` pour permettre le "seeking" (déplacement dans la barre de lecture) sans recharger toute la vidéo.
+- **Mime-Types :** Gestion explicite des types MIME (`video/mp4`) au niveau de Django et du serveur web pour une compatibilité multi-navigateurs.
+- **Sécurisation des Médias :** Séparation stricte entre les fichiers statiques (assets design) et les fichiers médias (uploads/contenus), servies de manière isolée pour plus de performance.
+
+- 🛠️ Stack Technique
 Framework : Django 5.x
 
 CMS : Intégration de Wagtail pour la gestion de contenu.
