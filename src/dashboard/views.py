@@ -4,6 +4,7 @@ from django.utils import timezone
 from collections import defaultdict
 import datetime
 import json
+from django.shortcuts import render
 
 from core.auth_decorators import admin_required
 from companies.service import list_companies
@@ -59,3 +60,10 @@ def home(request):
     context["monthly_out_data"] = [monthly_data[m]['out'] for m in sorted_months]
 
     return render(request, "dashboard/home.html", context)
+
+
+def test_video(request):
+    """
+    Vue pour afficher la page de test vidéo
+    """
+    return render(request, 'video_test.html')

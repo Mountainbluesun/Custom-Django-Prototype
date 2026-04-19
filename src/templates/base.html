@@ -126,11 +126,12 @@ nav .links a:hover, nav .session a:hover {
 <nav>
   <div class="links">
       <a href="{% url 'wagtailadmin_home'%}" class="btn-admin">Wagtail Admin</a>
-     <li><a href="/portfolio/">Mon Portfolio</a></li>
+     <li><a href="/portfolio/">Mon Portfolio géré par Wagtail</a></li>
     <li class="nav-item">
     <a class="nav-link" href="/projets/laravel/">Mon Projet Laravel</a>
 
-
+      <li class="nav-item">
+    <a class="nav-link" href="{% url 'test_video' %}">📺 Voir la démo vidéo</a>
 
     <a href="{% url 'companies:list' %}">Entreprises</a>
     <a href="{% url 'catalog:list' %}">Produits</a>

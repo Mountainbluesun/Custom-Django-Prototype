@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 20px auto; text-align: center;">
+    <div style="margin-bottom: 20px;">
+    <a href="{% url 'home' %}" class="btn-retour">
+        ⬅️ Retour à l'accueil
+    </a>
+</div>
+
+    <h1>Ma Vidéo de Test</h1>
+    <video controls width="100%" preload="metadata" playsinline>
+    <source src="/media/test_nature.mp4" type="video/mp4">
+    <p>Votre navigateur ne supporte pas la lecture.
+       <a href="/media/test_nature.mp4">Télécharger la vidéo</a>
+    </p>
+</video>
+
+    <p style="margin-top: 10px;">
+        Chemin testé : <code>/media/test_nature.mp4</code>
+    </p>
+</div>
+{% endblock %}

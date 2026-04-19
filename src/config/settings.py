@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 
 import environ
 from pathlib import Path
-
+import mimetypes
+mimetypes.add_type("video/mp4", ".mp4", True)
 
 # Initialise django-environ
 env = environ.Env(debug=(bool, False))
@@ -211,9 +212,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'   # destination
 # CONFIGURATION DES MÉDIAS (Pour Wagtail : Images & Documents)
 
 MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-MEDIA_ROOT = BASE_DIR / "media"
+#MEDIA_ROOT = BASE_DIR / "media"
 
 
 # Default primary key field type
@@ -242,4 +244,3 @@ WAGTAILADMIN_BASE_URL = "https://www.jeremylebrun.dev/site/"
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
-
