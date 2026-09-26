@@ -6,11 +6,11 @@
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h2 class="mb-0">Contactez-moi</h2>
+                    <h2 class="mb-0">Contact Me</h2>
                 </div>
                 <div class="card-body">
 
-                    {# Affichage des messages (Succès / Erreur) #}
+                    {# Display messages (Success / Error) #}
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}">
@@ -22,7 +22,7 @@
                     <form method="post" action="{% url 'contact' %}">
                         {% csrf_token %}
 
-                        {# On boucle sur les champs du formulaire #}
+                        {# Loop over the form fields #}
                         {% for field in form %}
                             <div class="mb-3">
                                 <label class="form-label">{{ field.label }}</label>
@@ -36,7 +36,7 @@
                         {% endfor %}
 
                         <button type="submit" class="btn btn-primary w-100">
-                            🚀 Envoyer le message
+                            🚀 Send Message
                         </button>
                     </form>
 

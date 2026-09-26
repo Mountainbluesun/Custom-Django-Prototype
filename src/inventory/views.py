@@ -1,16 +1,16 @@
-# Fichier : src/inventory/views.py
+# File: src/inventory/views.py
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 
 from core.auth_decorators import login_required
-from .forms import StockInForm, StockOutForm, StockTransferForm  # On utilisera des formulaires dédiés
+from .forms import StockInForm, StockOutForm, StockTransferForm  # We'll use dedicated forms
 from . import service as inventory_service
 from companies import service as company_service
 from catalog import service as catalog_service
 from users import service as user_service
 
-# Fichier : src/inventory/views.py
+# File: src/inventory/views.py
 from django.shortcuts import render
 from core.auth_decorators import login_required
 from . import service as inventory_service
@@ -21,7 +21,7 @@ from users import service as user_service
 
 @login_required
 def stock_list(request):
-    """Affiche l'historique des mouvements de stock."""
+    """Displays the stock movement history."""
     user = request.session.get("user") or {}
     allowed_company_ids = user.get("companies", [])
 
@@ -30,18 +30,18 @@ def stock_list(request):
     else:
         movements = inventory_service.list_movements(company_ids=allowed_company_ids)
 
-    # --- On enrichit les données ici ---
+    # --- Enrich the data here ---
 
-    # 1. On crée des dictionnaires pour trouver les noms facilement
+    # 1. Build dictionaries to look up names easily
     products = {p.id: p.name for p in catalog_service.list_products()}
     companies = {c.id: c.name for c in company_service.list_companies()}
     users = {u.id: u.username for u in user_service.list_users()}
 
-    # 2. On ajoute les noms à chaque mouvement
+    # 2. Attach the names to each movement
     for movement in movements:
-        movement.product_name = products.get(movement.product_id, "Produit Inconnu")
+        movement.product_name = products.get(movement.product_id, "Unknown Product")
         movement.company_name = companies.get(movement.company_id, "N/A")
-        movement.user_name = users.get(movement.user_id, "Système")  # <-- La ligne qui manquait
+        movement.user_name = users.get(movement.user_id, "System")  # <-- The line that was missing
 
     context = {
         "movements": movements
@@ -51,7 +51,7 @@ def stock_list(request):
 
 @login_required
 def stock_in(request):
-    """Gère le formulaire d'entrée de stock."""
+    """Handles the stock-in form."""
     user = request.session.get("user") or {}
     if request.method == "POST":
         form = StockInForm(request.POST, user=user)
@@ -61,10 +61,10 @@ def stock_in(request):
                 product_id=data['product_id'],
                 quantity=data['quantity'],
                 company_id=data['company_id'],
-                user_id=data.get('user_id') or user.get('id'),  # Prend l'utilisateur du formulaire ou le connecté
+                user_id=data.get('user_id') or user.get('id'),  # Use the form's user or the logged-in one
                 note=data.get('note')
             )
-            messages.success(request, "Entrée de stock enregistrée.")
+            messages.success(request, "Stock in recorded.")
             return redirect("inventory:list")
     else:
         form = StockInForm(user=user)
@@ -74,7 +74,7 @@ def stock_in(request):
 
 @login_required
 def stock_out(request):
-    """Gère le formulaire de sortie de stock."""
+    """Handles the stock-out form."""
     user = request.session.get("user") or {}
     if request.method == "POST":
         form = StockOutForm(request.POST, user=user)
@@ -88,9 +88,9 @@ def stock_out(request):
                     user_id=user.get('id'),
                     note=data.get('note')
                 )
-                messages.success(request, "Sortie de stock enregistrée.")
+                messages.success(request, "Stock out recorded.")
             except ValueError as e:
-                messages.error(request, str(e))  # Affiche l'erreur "Stock insuffisant"
+                messages.error(request, str(e))  # Shows the "Insufficient stock" error
             return redirect("inventory:list")
     else:
         form = StockOutForm(user=user)
@@ -100,7 +100,7 @@ def stock_out(request):
 
 @login_required
 def stock_transfer(request):
-    """Gère le formulaire de transfert de stock."""
+    """Handles the stock transfer form."""
     user = request.session.get("user") or {}
     if request.method == "POST":
         form = StockTransferForm(request.POST, user=user)
@@ -115,7 +115,7 @@ def stock_transfer(request):
                     user_id=user.get('id'),
                     note=data.get('note')
                 )
-                messages.success(request, "Transfert enregistré.")
+                messages.success(request, "Transfer recorded.")
             except ValueError as e:
                 messages.error(request, str(e))
             return redirect("inventory:list")

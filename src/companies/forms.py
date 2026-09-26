@@ -3,11 +3,11 @@ from django import forms
 
 class CompanyForm(forms.Form):
     name = forms.CharField(
-        label="Nom de l'entreprise",
+        label="Company name",
         max_length=100,
-        required=True  # Django vérifiera que ce n'est pas vide
+        required=True  # Django will verify that it's not empty
     )
     owner = forms.CharField(
-        label="Propriétaire (email)",
-        required=False # Ce champ est optionnel
+        label="Owner (email)",
+        required=False # This field is optional
     )

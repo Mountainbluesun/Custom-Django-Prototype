@@ -1,3 +1,3 @@
 def current_user(request):
-    # renvoie l’utilisateur JSON stocké en session, ou None
+    # returns the JSON user stored in the session, or None
     return {"current_user": request.session.get("user")}

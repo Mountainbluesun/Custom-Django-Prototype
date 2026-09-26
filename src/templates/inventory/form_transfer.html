@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Transfert de stock — Stock Manager{% endblock %}
+{% block title %}Stock Transfer — Stock Manager{% endblock %}
 
 {% block content %}
-<h1>Transfert de stock</h1>
+<h1>Stock Transfer</h1>
 
 <form method="post">
   {% csrf_token %}
@@ -49,8 +49,8 @@
   </div>
 
   <p>
-    <button type="submit">Enregistrer</button>
-    <a href="{% url 'inventory:list' %}">Annuler</a>
+    <button type="submit">Save</button>
+    <a href="{% url 'inventory:list' %}">Cancel</a>
   </p>
 </form>
 {% endblock %}

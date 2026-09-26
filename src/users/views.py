@@ -1,65 +1,42 @@
-from django.http import Http404
+import json
 
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import make_password, check_password
+
 from core.auth_decorators import login_required, admin_required
+from core.forms import ContactForm
 from .forms import UserCreationForm, UserEditForm, PasswordResetRequestForm, PasswordResetConfirmForm
 from .models import User, Company
 from . import service
-
-from django.utils.crypto import get_random_string
-
-
-
-from django.contrib.auth.hashers import make_password,check_password
-
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from .models import User
-from .forms import PasswordResetRequestForm
-
-
-
-from django.contrib.auth import authenticate, login, logout
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.hashers import check_password, make_password
-from .models import User
-from .forms import UserCreationForm, UserEditForm
-
 from .service import list_users, create_user, get_user, update_user, delete_user
-from core.auth_decorators import login_required, admin_required
 
 # ---------------- LOGIN / LOGOUT ----------------
-
-# src/users/views.py
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.hashers import check_password
-from .models import User
-from core.forms import ContactForm
 
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "")
 
-        print("--- TENTATIVE DE CONNEXION ---")
-        print(f"Username reçu : '{username}'")
-        print(f"Password reçu : '{password}'")
+        print("--- LOGIN ATTEMPT ---")
+        print(f"Username received: '{username}'")
+        print(f"Password received: '{password}'")
 
         user = User.objects.filter(username=username).first()
 
         if user:
-            print(f"Utilisateur trouvé dans la BDD : {user.username}")
+            print(f"User found in DB: {user.username}")
             password_is_valid = check_password(password, user.password_hash)
-            print(f"Le mot de passe est-il valide ? : {password_is_valid}")
+            print(f"Is the password valid?: {password_is_valid}")
         else:
-            print("Utilisateur non trouvé dans la BDD.")
+            print("User not found in DB.")
             password_is_valid = False
 
         if user and password_is_valid:
-            # Stockage sécurisé dans la session
+            # Secure storage in the session
             request.session["user"] = {
                 "id": user.id,
                 "username": user.username,
@@ -67,23 +44,23 @@ def login_view(request):
                 "companies": list(user.companies.values_list('id', flat=True)),
                 "is_authenticated": True
             }
-            messages.success(request, "Connexion réussie ✅")
-            print("✅ Connexion réussie, session créée :", request.session["user"])
+            messages.success(request, "Login successful ✅")
+            print("✅ Login successful, session created:", request.session["user"])
             return redirect("home")
         else:
-            messages.error(request, "Identifiants invalides ❌")
-            print("❌ Connexion échouée")
+            messages.error(request, "Invalid credentials ❌")
+            print("❌ Login failed")
             return render(request, "users/login.html", status=401)
 
     return render(request, "users/login.html",{"contact_form": ContactForm()})
 
 
 def logout_view(request):
-    request.session.flush()  # Supprime toutes les données de session
-    messages.info(request, "Vous êtes déconnecté.")
+    request.session.flush()  # Clears all session data
+    messages.info(request, "You have been logged out.")
     return redirect("users:login")
 
-# ---------------- EXEMPLES DE VUES ----------------
+# ---------------- EXAMPLE VIEWS ----------------
 
 @login_required
 def home_view(request):
@@ -96,7 +73,7 @@ def user_list_view(request):
     return render(request, "users/list.html", {"users": users})
 
 
-# --- Vues de gestion des utilisateurs (CRUD) ---
+# --- User management views (CRUD) ---
 
 @admin_required
 def user_list(request):
@@ -110,7 +87,7 @@ def user_create(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             service.create_user(form.cleaned_data)
-            messages.success(request, "Utilisateur créé avec succès.")
+            messages.success(request, "User created successfully.")
             return redirect("users:list")
     else:
         form = UserCreationForm()
@@ -121,13 +98,13 @@ def user_create(request):
 def user_edit(request, pk):
     user = service.get_user(pk)
     if not user:
-        raise Http404("Utilisateur non trouvé")
+        raise Http404("User not found")
 
     if request.method == "POST":
         form = UserEditForm(request.POST)
         if form.is_valid():
             service.update_user(pk, form.cleaned_data)
-            messages.success(request, f"L'utilisateur '{user.username}' a été mis à jour.")
+            messages.success(request, f"User '{user.username}' has been updated.")
             return redirect("users:list")
     else:
         form = UserEditForm(initial={'username': user.username, 'email': user.email})
@@ -140,29 +117,29 @@ def user_edit(request, pk):
 def user_delete(request, pk):
     user = service.get_user(pk)
     if not user:
-        raise Http404("Utilisateur non trouvé.")
+        raise Http404("User not found.")
 
     if request.method == "POST":
         service.delete_user(pk)
-        messages.success(request, f"L'utilisateur '{user.username}' a été supprimé.")
+        messages.success(request, f"User '{user.username}' has been deleted.")
         return redirect(reverse("users:list"))
 
     return render(request, "users/confirm_delete.html", {"user": user})
 
 
-# Les vues pour le mot de passe oublié ne changent presque pas,
-# car elles utilisaient déjà une logique qui s'adapte bien.
-# Assurez-vous simplement que les imports et les appels de service sont corrects.
+# The forgot-password views barely change,
+# since they already used logic that adapts well.
+# Just make sure the imports and service calls are correct.
 
 
 def debug_users_view(request):
-    """Affiche les utilisateurs que le serveur voit dans la base de données."""
+    """Displays the users the server sees in the database."""
     from .models import User
     users = User.objects.all()
 
-    html = "<h1>Utilisateurs dans la base de données :</h1><ul>"
+    html = "<h1>Users in the database:</h1><ul>"
     if not users:
-        html += "<li>Aucun utilisateur trouvé. La table est vide.</li>"
+        html += "<li>No users found. The table is empty.</li>"
     else:
         for user in users:
             html += f"<li>ID: {user.id}, Username: {user.username}</li>"
@@ -170,84 +147,32 @@ def debug_users_view(request):
 
     return HttpResponse(html)
 
-#def password_reset_request(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            return render(request, "password_reset_request.html", {"error": "Email inconnu"})
-
-        token = get_random_string(64)
-        PasswordResetToken.objects.create(user=user, token=token)
-
-        reset_url = request.build_absolute_uri(
-            reverse("password_reset_confirm", args=[token])
-        )
-
-        send_mail(
-            "Réinitialisation du mot de passe",
-            f"Cliquez ici pour réinitialiser : {reset_url}",
-            "no-reply@tonsite.com",
-            [email],
-        )
-        return render(request, "password_reset_done.html")
-
-    return render(request, "password_reset_request.html")
-
-
-#def password_reset_confirm(request, token):
-    try:
-        token_obj = PasswordResetToken.objects.get(token=token)
-    except PasswordResetToken.DoesNotExist:
-        return render(request, "password_reset_invalid.html")
-
-    if request.method == "POST":
-        new_password = request.POST.get("password")
-        token_obj.user.password = make_password(new_password)
-        token_obj.user.save()
-        token_obj.delete()
-        return redirect("login")
-
-    return render(request, "password_reset_confirm.html", {"token": token})
-
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib import messages
-
 def login_debug_view(request):
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "")
         print("--- DEBUG LOGIN ---")
-        print(f"Username reçu : {username}")
-        print(f"Password reçu : {password}")
+        print(f"Username received: {username}")
+        print(f"Password received: {password}")
 
-        # Utiliser l'authentification Django
+        # Use Django's authentication
         user = authenticate(request, username=username, password=password)
 
         if user:
-            print(f"Utilisateur authentifié : {user.username}, is_active: {user.is_active}")
+            print(f"Authenticated user: {user.username}, is_active: {user.is_active}")
             login(request, user)
-            messages.success(request, f"Connexion réussie ✅ Bienvenue {user.username}")
+            messages.success(request, f"Login successful ✅ Welcome {user.username}")
             return redirect("home")
         else:
-            print("❌ Échec de l'authentification")
-            messages.error(request, "Identifiants invalides ❌")
+            print("❌ Authentication failed")
+            messages.error(request, "Invalid credentials ❌")
 
     return render(request, "users/login.html")
 
 
-
-from django.contrib import messages
-from django.core.mail import send_mail
-from django.http import HttpResponse
-
 def session_debug(request):
-    return HttpResponse(f"Session : {request.session.get('user')}")
+    return HttpResponse(f"Session: {request.session.get('user')}")
 
-import json
-from django.http import JsonResponse, HttpResponse
 
 def debug_auth(request):
     data = {
@@ -261,20 +186,3 @@ def debug_auth(request):
         "session_data": dict(request.session),
     }
     return HttpResponse(json.dumps(data, indent=2), content_type="application/json")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

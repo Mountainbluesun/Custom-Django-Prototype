@@ -1,4 +1,4 @@
-# Fichier : src/dashboard/views.py
+# File: src/dashboard/views.py
 from django.shortcuts import render
 from django.utils import timezone
 from collections import defaultdict
@@ -15,7 +15,7 @@ from alerts.service import compute_alerts
 
 @admin_required
 def home(request):
-    # --- Données pour les chiffres clés (KPIs) ---
+    # --- Data for the key figures (KPIs) ---
     all_products = list_products()
     all_companies = list_companies()
     allowed_ids = [c.id for c in all_companies]
@@ -27,7 +27,7 @@ def home(request):
         "alert_count": len(alerts),
     }
 
-    # --- Données pour le Graphique 1 : Stocks par entreprise ---
+    # --- Data for Chart 1: Stock by company ---
     stocks_by_company_data = []
     for company in all_companies:
         total_stock = 0
@@ -37,10 +37,10 @@ def home(request):
         stocks_by_company_data.append({"name": company.name, "total": total_stock})
     context["stocks_by_company"] = stocks_by_company_data
 
-    # --- Données pour le Graphique 2 : Produits en alerte ---
+    # --- Data for Chart 2: Products on alert ---
     context["alerts_chart"] = [{"name": a.product_name, "qty": a.stock} for a in alerts]
 
-    # --- Données pour le Graphique 3 : Activité mensuelle ---
+    # --- Data for Chart 3: Monthly activity ---
     movements = list_movements()
     monthly_data = defaultdict(lambda: {'in': 0, 'out': 0})
     six_months_ago = timezone.now() - datetime.timedelta(days=180)
@@ -64,6 +64,6 @@ def home(request):
 
 def test_video(request):
     """
-    Vue pour afficher la page de test vidéo
+    View to display the video test page
     """
     return render(request, 'video_test.html')

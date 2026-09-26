@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Accueil — Stock Manager{% endblock %}
+{% block title %}Home — Stock Manager{% endblock %}
 
 {% block content %}
   <div class="card">
@@ -10,19 +10,19 @@
     <img src="{% static 'dashboard/img/profile.png' %}" alt="Photo" width="200">
 
 
-      <h1>Bienvenue 👋</h1>
-    <p>Gérez vos stocks multi-entreprises, produits et mouvements — avec alertes de seuil.</p>
+      <h1>Welcome 👋</h1>
+    <p>Manage your multi-company stock, products and movements — with threshold alerts.</p>
     <ul>
-        <li><a href="{% url 'companies:list' %}">Entreprises</a></li>
-        <li><a href="{% url 'alerts:list' %}">Voir les alertes</a></li>
-        <li><a href="{% url 'catalog:list' %}">Voir les produits</a></li>
-        <li><a href="{% url 'inventory:list' %}">Voir les stocks</a></li>
-        <li><a href="{% url 'wagtailadmin_home' %}">Accéder à Wagtail Admin</a></li>
-        <li><a href="/portfolio/">Mon Portfolio</a></li>
-        <li><a href={% url ':'%}">Me contacter</a></li>,
+        <li><a href="{% url 'companies:list' %}">Companies</a></li>
+        <li><a href="{% url 'alerts:list' %}">View alerts</a></li>
+        <li><a href="{% url 'catalog:list' %}">View products</a></li>
+        <li><a href="{% url 'inventory:list' %}">View inventory</a></li>
+        <li><a href="{% url 'wagtailadmin_home' %}">Go to Wagtail Admin</a></li>
+        <li><a href="/portfolio/">My Portfolio</a></li>
+        <li><a href="{% url 'contact' %}">Contact me</a></li>
 
         {% if request.user.is_admin %}
-        <li><a href="{% url 'users:list' %}">Gérer les utilisateurs</a></li>
+        <li><a href="{% url 'users:list' %}">Manage users</a></li>
         {% endif %}
 
     </ul>

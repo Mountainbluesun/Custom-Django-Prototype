@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block title %}
-  {% if mode == "create" %}Créer{% else %}Éditer{% endif %} un utilisateur
+  {% if mode == "create" %}Create{% else %}Edit{% endif %} a user
 {% endblock %}
 
 {% block content %}
-  <h1>{% if mode == "create" %}Créer{% else %}Éditer{% endif %} un utilisateur</h1>
+  <h1>{% if mode == "create" %}Create{% else %}Edit{% endif %} a user</h1>
 
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Enregistrer</button>
+    <button type="submit">Save</button>
   </form>
 
 {% endblock %}

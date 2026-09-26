@@ -4,26 +4,23 @@ from companies.models import Company
 
 class User(AbstractUser):
     """
-    Modèle utilisateur personnalisé basé sur Django.
-    On hérite d'AbstractUser pour profiter de tous les mécanismes
-    d'authentification, de hashing de mot de passe, permissions, etc.
+    Custom user model based on Django.
+    We inherit from AbstractUser to benefit from all the built-in
+    authentication mechanisms, password hashing, permissions, etc.
     """
 
-    # Ajouter un champ is_admin si nécessaire (facultatif car AbstractUser a is_staff et is_superuser)
+    # Add an is_admin field if needed (optional since AbstractUser already has is_staff and is_superuser)
     is_admin = models.BooleanField(default=True)
 
-    # Lien vers les entreprises
+    # Link to companies
     companies = models.ManyToManyField(Company, blank=True)
-    # On peut ajouter d'autres champs personnalisés ici si besoin
-    # exemple : reset_token si tu veux gérer des tokens custom
+    # Other custom fields can be added here if needed
+    # example: reset_token if you want to manage custom tokens
     reset_token = models.CharField(max_length=64, blank=True, null=True)
 
-    # Champ temporaire pour récupérer l'ancien hash
+    # Temporary field to recover the old hash
     old_password_hash = models.CharField(max_length=128, blank=True, null=True)
 
 
     def __str__(self):
         return self.username
-
-
-

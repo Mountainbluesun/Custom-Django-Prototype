@@ -7,20 +7,20 @@
     <div style="max-width: 800px; margin: 20px auto; text-align: center;">
     <div style="margin-bottom: 20px;">
     <a href="{% url 'home' %}" class="btn-retour">
-        ⬅️ Retour à l'accueil
+        ⬅️ Back to Home
     </a>
 </div>
 
     <h1>{{ page.title }}</h1>
 
-    {# --- DESCRIPTION : RichTextField --- #}
+    {# --- DESCRIPTION: RichTextField --- #}
     {% if page.description %}
         <section style="margin: 20px 0;">
             {{ page.description|richtext }}
         </section>
     {% endif %}
 
-    {# --- HERO IMAGE : StreamField [image] --- #}
+    {# --- HERO IMAGE: StreamField [image] --- #}
     {% if page.hero_image %}
         {% for block in page.hero_image %}
             {% if block.block_type == "image" %}
@@ -32,7 +32,7 @@
         {% endfor %}
     {% endif %}
 
-    {# --- CONTENT : StreamField texte + titre --- #}
+    {# --- CONTENT: StreamField text + title --- #}
     {% if page.content %}
         <section style="margin-top: 40px;">
             {% for block in page.content %}

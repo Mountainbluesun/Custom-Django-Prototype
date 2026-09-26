@@ -8,7 +8,7 @@ from pathlib import Path
 import mimetypes
 mimetypes.add_type("video/mp4", ".mp4", True)
 
-# Initialise django-environ
+# Initialize django-environ
 env = environ.Env(debug=(bool, False))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR.parent / '.env')
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-# 🔧 Ajout du dossier 'src' au path Python pour que Django trouve les apps
+# 🔧 Add the 'src' folder to the Python path so Django can find the apps
 sys.path.append(str(BASE_DIR / "src"))
 
 # Quick-start development settings - unsuitable for production
@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # Tes apps Django
+    # Your Django apps
     "users",
     "companies",
     "catalog",
@@ -75,11 +75,11 @@ INSTALLED_APPS = [
     "portfolio",
     "captcha",
 
-    # Tes apps Wagtail
+    # Your Wagtail apps
     "home",
     #"projects",
 
-    # Apps Wagtail essentielles
+    # Essential Wagtail apps
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -100,7 +100,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",   # <-- AVANT Common & Csrf
+    "django.contrib.sessions.middleware.SessionMiddleware",   # <-- BEFORE Common & Csrf
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -117,8 +117,8 @@ CSRF_COOKIE_SECURE = True
 ROOT_URLCONF = 'config.urls'
 
 LOGIN_URL = 'users:login'
-# URL de redirection après login réussi
-LOGIN_REDIRECT_URL = "/"  # ou "/users/" selon ce que tu veux
+# Redirect URL after a successful login
+LOGIN_REDIRECT_URL = "/"  # or "/users/" depending on what you want
 LOGOUT_REDIRECT_URL = "/users/login/"
 
 
@@ -144,7 +144,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Choisir la base selon l'environnement
+# Choose the database depending on the environment
 if os.getenv('DJANGO_ENV') == 'vps':
     DATABASES = {
     'default': {
@@ -157,7 +157,7 @@ if os.getenv('DJANGO_ENV') == 'vps':
     }
 }
 else:
-# environnement local
+# local environment
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -206,10 +206,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # pour ton static global
+STATICFILES_DIRS = [BASE_DIR / 'static']  # for your global static files
 STATIC_ROOT = BASE_DIR / 'staticfiles'   # destination
 
-# CONFIGURATION DES MÉDIAS (Pour Wagtail : Images & Documents)
+# MEDIA CONFIGURATION (For Wagtail: Images & Documents)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -223,23 +223,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Envoie les mails dans la console (pour tester)
+# Sends emails via SMTP (production)
 AUTH_USER_MODEL = "users.User"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.infomaniak.com'
 EMAIL_PORT = 465
-EMAIL_USE_TLS = False  # Désactive TLS
-EMAIL_USE_SSL = True   # Active SSL
+EMAIL_USE_TLS = False  # Disable TLS
+EMAIL_USE_SSL = True   # Enable SSL
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 
-# Nom du site pour Wagtail admin
-WAGTAIL_SITE_NAME = "Mon CMS"
+# Site name for Wagtail admin
+WAGTAIL_SITE_NAME = "My CMS"
 
-# URL de base pour Wagtail (utile pour notifications, user bar)
+# Base URL for Wagtail (used for notifications, user bar)
 WAGTAILADMIN_BASE_URL = "https://www.jeremylebrun.dev/site/"
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

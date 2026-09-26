@@ -7,28 +7,28 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # On récupère les données nettoyées
-            nom = form.cleaned_data['nom']
-            email_utilisateur = form.cleaned_data['email']
-            sujet = form.cleaned_data['sujet']
-            message_contenu = form.cleaned_data['message']
+            # Retrieve the cleaned data
+            name = form.cleaned_data['name']
+            user_email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message_content = form.cleaned_data['message']
 
-            # Préparation de l'email
-            sujet_mail = f"Nouveau contact : {sujet}"
-            corps_mail = f"De: {nom} ({email_utilisateur})\n\nMessage:\n{message_contenu}"
+            # Prepare the email
+            email_subject = f"New contact: {subject}"
+            email_body = f"From: {name} ({user_email})\n\nMessage:\n{message_content}"
 
             try:
                 send_mail(
-                    sujet_mail,
-                    corps_mail,
-                    'no-reply@jeremylebrun.dev', # L'expéditeur configuré dans settings
-                    ['contact@jeremylebrun.dev'], # Ton adresse de réception
+                    email_subject,
+                    email_body,
+                    'no-reply@jeremylebrun.dev', # Sender configured in settings
+                    ['contact@jeremylebrun.dev'], # Your receiving address
                     fail_silently=False,
                 )
-                messages.success(request, "Votre message a bien été envoyé !")
+                messages.success(request, "Your message has been sent successfully!")
                 return redirect('users:login')
             except Exception as e:
-                messages.error(request, f"Erreur lors de l'envoi : {e}")
+                messages.error(request, f"Error while sending: {e}")
     else:
         form = ContactForm()
 

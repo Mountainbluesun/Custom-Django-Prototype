@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Produits — Stock Manager{% endblock %}
+{% block title %}Products — Stock Manager{% endblock %}
 
 {% block content %}
-<h1>Produits</h1>
+<h1>Products</h1>
 
 <div style="margin: .5rem 0 1rem; display:flex; gap:.75rem; align-items:center;">
 
   <!-- Export CSV -->
   <a href="{% url 'catalog:export_csv' %}">⬇️ Export CSV</a>
 
-  <!-- Créer un produit (visible uniquement pour les admins) -->
+  <!-- Create a product (visible to admins only) -->
 {% if request.session.user and request.session.user.is_authenticated and request.session.user.is_admin %}
-    <a href="{% url 'catalog:create' %}" class="btn btn-primary">➕ Créer un produit</a>
+    <a href="{% url 'catalog:create' %}" class="btn btn-primary">➕ Create a product</a>
 {% endif %}
 
 
@@ -30,10 +30,10 @@
 <table>
   <thead>
     <tr>
-      <th>Nom</th>
+      <th>Name</th>
       <th>SKU</th>
-      <th>Entreprise</th>
-      <th>Seuil</th>
+      <th>Company</th>
+      <th>Threshold</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -42,18 +42,18 @@
       <tr>
         <td>{{ p.name }}</td>
         <td>{{ p.sku }}</td>
-        <td>{{ p.company.name }}</td> <!-- Nom de l'entreprise -->
+        <td>{{ p.company.name }}</td> <!-- Company name -->
         <td>{{ p.threshold }}</td>
         <td>
-          <a href="{% url 'catalog:edit' p.id %}">Modifier</a> |
-          <a href="{% url 'catalog:delete' p.id %}">Supprimer</a>
+          <a href="{% url 'catalog:edit' p.id %}">Edit</a> |
+          <a href="{% url 'catalog:delete' p.id %}">Delete</a>
         </td>
       </tr>
     {% endfor %}
   </tbody>
 </table>
 {% else %}
-<p>Aucun produit disponible.</p>
+<p>No products available.</p>
 {% endif %}
 
 {% endblock %}

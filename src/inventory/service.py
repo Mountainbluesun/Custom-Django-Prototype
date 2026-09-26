@@ -1,11 +1,11 @@
-# Fichier : src/inventory/service.py
+# File: src/inventory/service.py
 from typing import List, Optional, Iterable
 from django.db.models import Sum
 from .models import Movement, Product, Company, User
 
 
 def list_movements(company_ids: Optional[Iterable[int]] = None, product_id: Optional[int] = None) -> List[Movement]:
-    """Retourne une liste de mouvements de stock, potentiellement filtrée."""
+    """Returns a list of stock movements, optionally filtered."""
     queryset = Movement.objects.select_related('product', 'company', 'user').order_by('-timestamp')
 
     if company_ids:
@@ -17,14 +17,14 @@ def list_movements(company_ids: Optional[Iterable[int]] = None, product_id: Opti
 
 
 def compute_stock(product_id: int) -> int:
-    """Calcule le stock actuel d'un produit en sommant tous ses mouvements."""
-    # On calcule la somme des entrées
+    """Computes the current stock of a product by summing all its movements."""
+    # Sum of stock-in movements
     total_in = Movement.objects.filter(
         product_id=product_id,
         kind__in=['IN', 'TRANSFER_IN']
     ).aggregate(total=Sum('quantity'))['total'] or 0
 
-    # On calcule la somme des sorties
+    # Sum of stock-out movements
     total_out = Movement.objects.filter(
         product_id=product_id,
         kind__in=['OUT', 'TRANSFER_OUT']
@@ -34,7 +34,7 @@ def compute_stock(product_id: int) -> int:
 
 
 def add_in(product_id: int, quantity: int, company_id: int, user_id: Optional[int] = None, note: str = "") -> Movement:
-    """Ajoute une entrée de stock."""
+    """Adds a stock-in movement."""
     return Movement.objects.create(
         product_id=product_id,
         company_id=company_id,
@@ -46,10 +46,10 @@ def add_in(product_id: int, quantity: int, company_id: int, user_id: Optional[in
 
 
 def add_out(product_id: int, quantity: int, company_id: int, user_id: Optional[int] = None, note: str = "") -> Movement:
-    """Ajoute une sortie de stock, en vérifiant si le stock est suffisant."""
+    """Adds a stock-out movement, checking that stock is sufficient."""
     current_stock = compute_stock(product_id)
     if current_stock < quantity:
-        raise ValueError("Stock insuffisant pour cette sortie.")
+        raise ValueError("Insufficient stock for this withdrawal.")
 
     return Movement.objects.create(
         product_id=product_id,
@@ -64,30 +64,30 @@ def add_out(product_id: int, quantity: int, company_id: int, user_id: Optional[i
 def add_transfer(product_id: int, quantity: int, company_from_id: int, company_to_id: int,
                  user_id: Optional[int] = None, note: str = ""):
     """
-    Crée un transfert en générant deux mouvements : une sortie de transfert et une entrée de transfert.
+    Creates a transfer by generating two movements: a transfer-out and a transfer-in.
     """
-    # On vérifie d'abord si le stock est suffisant (comme le faisait add_out)
-    # Note : ce calcul est global. Pour être plus précis, il faudrait calculer le stock par entreprise.
+    # First check whether stock is sufficient (same as add_out)
+    # Note: this calculation is global. For more accuracy, stock should be computed per company.
     current_stock = compute_stock(product_id)
     if current_stock < quantity:
-        raise ValueError("Stock insuffisant pour réaliser le transfert.")
+        raise ValueError("Insufficient stock to complete the transfer.")
 
-    # On crée le mouvement de SORTIE de transfert
+    # Create the transfer-OUT movement
     Movement.objects.create(
         product_id=product_id,
         company_id=company_from_id,
         user_id=user_id,
         quantity=quantity,
-        kind='TRANSFER_OUT',  # <-- Le bon type
+        kind='TRANSFER_OUT',  # <-- The correct type
         note=note
     )
 
-    # On crée le mouvement d'ENTRÉE de transfert
+    # Create the transfer-IN movement
     Movement.objects.create(
         product_id=product_id,
         company_id=company_to_id,
         user_id=user_id,
         quantity=quantity,
-        kind='TRANSFER_IN',  # <-- Le bon type
+        kind='TRANSFER_IN',  # <-- The correct type
         note=note
     )

@@ -15,7 +15,3 @@ def alerts_list(request):
     ids = _allowed_company_ids(request)
     data = compute_alerts(allowed_company_ids=ids)
     return render(request, "alerts/list.html", {"alerts": data})
-
-
-
-

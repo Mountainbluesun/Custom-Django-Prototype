@@ -5,24 +5,14 @@ from typing import Iterable, List, Optional
 from catalog.service import list_products
 from inventory.service import compute_stock
 
-from dataclasses import dataclass
-
-from typing import Iterable, List, Optional
-
-
-
 
 @dataclass
-
 class AlertItem:
     product_id: int
     product_name: str
     company_id: int
     threshold: int
     stock: int
-
-
-
 
 
 def compute_alerts(allowed_company_ids: Optional[Iterable[int]] = None) -> List[AlertItem]:

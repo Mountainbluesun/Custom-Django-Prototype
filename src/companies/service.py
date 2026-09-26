@@ -1,13 +1,10 @@
-# Fichier : src/companies/service.py
+# File: src/companies/service.py
 from typing import List, Optional
-
-
-
 from .models import Company
 
 # companies/service.py
 def list_companies(company_ids=None):
-    """Retourne la liste des entreprises accessibles selon les IDs autorisés."""
+    """Returns the list of companies accessible for the given allowed IDs."""
     if company_ids is None:
         return Company.objects.all()
     if not company_ids:
@@ -18,16 +15,16 @@ def list_companies(company_ids=None):
 
 
 def create_company(name: str, owner: Optional[str] = None) -> Company:
-    """Crée une nouvelle entreprise dans la base de données."""
+    """Creates a new company in the database."""
     new_company = Company.objects.create(name=name, owner=owner)
     return new_company
 
 def get_company(company_id: int) -> Optional[Company]:
-    """Récupère une entreprise par son ID."""
+    """Retrieves a company by its ID."""
     return Company.objects.filter(id=company_id).first()
 
 def update_company(company_id: int, name: str, owner: Optional[str] = None) -> Optional[Company]:
-    """Met à jour une entreprise."""
+    """Updates a company."""
     company = get_company(company_id)
     if company:
         company.name = name
@@ -36,7 +33,7 @@ def update_company(company_id: int, name: str, owner: Optional[str] = None) -> O
     return company
 
 def delete_company(company_id: int) -> bool:
-    """Supprime une entreprise."""
+    """Deletes a company."""
     company = get_company(company_id)
     if company:
         company.delete()

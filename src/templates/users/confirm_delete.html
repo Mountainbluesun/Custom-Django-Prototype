@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Confirmer la suppression{% endblock %}
+{% block title %}Confirm Deletion{% endblock %}
 
 {% block content %}
-  <h1>Confirmer la suppression</h1>
+  <h1>Confirm Deletion</h1>
 
-  <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong>{{ user.username }}</strong> ?</p>
-  <p>Cette action est irréversible.</p>
+  <p>Are you sure you want to delete user <strong>{{ user.username }}</strong>?</p>
+  <p>This action cannot be undone.</p>
 
   <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Oui, supprimer</button>
-    <a href="{% url 'users:list' %}" class="btn btn-secondary">Annuler</a>
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'users:list' %}" class="btn btn-secondary">Cancel</a>
   </form>
 
 {% endblock %}

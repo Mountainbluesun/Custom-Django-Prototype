@@ -3,14 +3,14 @@ from django import forms
 from companies.service import list_companies
 
 class ProductForm(forms.Form):
-    name = forms.CharField(label="Nom du produit", max_length=100)
-    sku = forms.CharField(label="SKU (code produit)", max_length=50)
-    company_id = forms.ChoiceField(label="Entreprise")
-    threshold = forms.IntegerField(label="Seuil d'alerte", required=False)
-    # Ajoutez d'autres champs si nécessaire (description, prix...)
+    name = forms.CharField(label="Product name", max_length=100)
+    sku = forms.CharField(label="SKU (product code)", max_length=50)
+    company_id = forms.ChoiceField(label="Company")
+    threshold = forms.IntegerField(label="Alert threshold", required=False)
+    # Add other fields if needed (description, price...)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # On charge dynamiquement la liste des entreprises pour le champ 'company_id'
+        # Dynamically load the list of companies for the 'company_id' field
         companies = list_companies()
         self.fields['company_id'].choices = [(c.id, c.name) for c in companies]

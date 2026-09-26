@@ -6,19 +6,19 @@ from . import views
 app_name = "users"
 
 urlpatterns = [
-    # Authentification
+    # Authentication
     path("login/", auth_views.LoginView.as_view(template_name="users/login.html"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(next_page=reverse_lazy("users:login")), name="logout"),
     path("login/debug/", views.login_debug_view, name="login_debug"),
     path("debug-auth/", views.debug_auth, name="debug_auth"),
 
-    # Gestion des utilisateurs (à implémenter ou commenter dans les templates)
+    # User management (to implement or comment out in the templates)
     path("", views.user_list, name="list"),
     path("create/", views.user_create, name="create"),
     path("<int:pk>/edit/", views.user_edit, name="edit"),
     path("<int:pk>/delete/", views.user_delete, name="delete"),
 
-    # Réinitialisation de mot de passe
+    # Password reset
     path(
         "password_reset/",
         auth_views.PasswordResetView.as_view(

@@ -3,18 +3,18 @@
 
 
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
 <h1>Welcome to my site 👋</h1>
-<a href="/projets/laravel/">Projet Laravel</a>
+<a href="/projets/laravel/">Laravel Project</a>
 <h1> Developer with a strong interest in logic and structure, I mainly work on backend applications and practical projects.
 Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
 
 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
   <img
     src="{% static 'dashboard/img/profile.png' %}"
-    alt="Photo de profil"
+    alt="Profile photo"
     style="width:72px; height:112px; border-radius:50%; object-fit:cover; display:block;"
 
   />
@@ -24,7 +24,7 @@ Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
 </div>
 <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
   <div class="card" style="max-width:420px">
-    <h1>Connexion</h1>
+    <h1>Login</h1>
 
     {% if messages %}
       <ul class="messages">
@@ -34,21 +34,21 @@ Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
 
     <form method="post">
       {% csrf_token %}
-      <label>Nom d'utilisateur</label><br />
+      <label>Username</label><br />
       <input name="username" required style="width:100%;padding:.5rem;margin:.3rem 0 1rem" />
 
-      <label>Mot de passe</label><br />
+      <label>Password</label><br />
       <input type="password" name="password" required style="width:100%;padding:.5rem;margin:.3rem 0 1rem" />
 
       <button type="submit" style="padding:.6rem 1rem;border-radius:.5rem">
-        Se connecter
+        Log In
       </button>
     </form>
 
 <div style="margin-top: 1rem;">
-<a href="{% url 'users:password_reset' %}">Mot de passe oublié ?</a>
+<a href="{% url 'users:password_reset' %}">Forgot your password?</a>
 
-{#<p><a href="{% url 'users:password_reset_request' %}">Mot de passe oublié ?</a></p>#}
+{#<p><a href="{% url 'users:password_reset_request' %}">Forgot your password?</a></p>#}
 </div>
 
 </div>
@@ -60,23 +60,23 @@ Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
             </div>
         {% endfor %}
     {% endif %}
-    <h1>Me contacter 🚀</h1>
+    <h1>Contact Me 🚀</h1>
 <form method="post" action="{% url 'contact' %}" novalidate>
     {% csrf_token %}
 
     <div style="margin-bottom: 1rem;">
-        <label style="font-weight: bold; display: block;">Votre nom</label>
-        {{ contact_form.nom }}
+        <label style="font-weight: bold; display: block;">Your Name</label>
+        {{ contact_form.name }}
     </div>
 
     <div style="margin-bottom: 1rem;">
-        <label style="font-weight: bold; display: block;">Votre Email</label>
+        <label style="font-weight: bold; display: block;">Your Email</label>
         {{ contact_form.email }}
     </div>
 
     <div style="margin-bottom: 1rem;">
-        <label style="font-weight: bold; display: block;">Sujet</label>
-        {{ contact_form.sujet }}
+        <label style="font-weight: bold; display: block;">Subject</label>
+        {{ contact_form.subject }}
     </div>
 
     <div style="margin-bottom: 1rem;">
@@ -85,12 +85,12 @@ Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
     </div>
 
     <div style="margin-bottom: 1rem;">
-        <label style="font-weight: bold; display: block;">Vérification (anti-spam)</label>
+        <label style="font-weight: bold; display: block;">Verification (anti-spam)</label>
         {{ contact_form.captcha }}
     </div>
 
     <button type="submit" style="padding:.6rem 1rem; border-radius:.5rem; background:#4f46e5; color:white; border:none; cursor:pointer; width:100%;">
-        🚀 Envoyer le message
+        🚀 Send Message
     </button>
 </form>
 

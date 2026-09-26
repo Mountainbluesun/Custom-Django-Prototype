@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Produits en alerte</h2>
+<h2>Products on Alert</h2>
 
 {% if alerts %}
   <table class="table">
     <thead>
       <tr>
-        <th>Produit</th>
-        <th>Entreprise</th>
-        <th>Stock actuel</th>
-        <th>Seuil</th>
+        <th>Product</th>
+        <th>Company</th>
+        <th>Current Stock</th>
+        <th>Threshold</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +25,6 @@
     </tbody>
   </table>
 {% else %}
-  <p>Aucune alerte pour le moment ✅</p>
+  <p>No alerts at the moment ✅</p>
 {% endif %}
 {% endblock %}

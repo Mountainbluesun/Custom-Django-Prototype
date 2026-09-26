@@ -8,7 +8,7 @@
 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
   <img
     src="{% static 'dashboard/img/profile.png' %}"
-    alt="Photo de profil"
+    alt="Profile photo"
     style="width:72px; height:102px; border-radius:50%; object-fit:cover;"
   />
   <div>
@@ -18,44 +18,44 @@
 
 <h1>Dashboard</h1>
 
-<!-- Chiffres clés -->
+<!-- Key figures -->
 <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
   <div class="card">
     <h2>{{ product_count }}</h2>
-    <p>Produits au total</p>
+    <p>Total products</p>
   </div>
   <div class="card">
     <h2>{{ company_count }}</h2>
-    <p>Entreprises</p>
+    <p>Companies</p>
   </div>
   <div class="card" style="color: red;">
     <h2>{{ alert_count }}</h2>
-    <p>Produits en alerte</p>
+    <p>Products on alert</p>
   </div>
 </div>
 
-<!-- Graphiques -->
+<!-- Charts -->
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-  <!-- Stocks par entreprise -->
+  <!-- Stock by company -->
   <div class="card">
-    <h3>Stocks par entreprise</h3>
+    <h3>Stock by Company</h3>
     <canvas id="stocksChart"></canvas>
   </div>
 
-  <!-- Produits en alerte -->
+  <!-- Products on alert -->
   <div class="card">
-    <h3>Produits en alerte</h3>
+    <h3>Products on Alert</h3>
     <canvas id="alertsChart"></canvas>
   </div>
 
-  <!-- Activité des 6 derniers mois -->
+  <!-- Activity over the last 6 months -->
   <div class="card" style="grid-column: 1 / -1;">
-    <h3>Activité des 6 derniers mois</h3>
+    <h3>Activity Over the Last 6 Months</h3>
     <canvas id="monthlyChart"></canvas>
   </div>
 </div>
 
-<!-- Données JSON -->
+<!-- JSON data -->
 {{ stocks_by_company|json_script:"stocks-data" }}
 {{ alerts_chart|json_script:"alerts-data" }}
 {{ monthly_chart_labels|json_script:"monthly-labels" }}
@@ -65,7 +65,7 @@
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  // --- Graphique 1 : Stocks par entreprise ---
+  // --- Chart 1: Stock by company ---
   const stocksData = JSON.parse(document.getElementById('stocks-data').textContent);
   const stocksCtx = document.getElementById('stocksChart').getContext('2d');
   new Chart(stocksCtx, {
@@ -73,7 +73,7 @@
     data: {
       labels: stocksData.map(c => c.name),
       datasets: [{
-        label: 'Stock total',
+        label: 'Total stock',
         data: stocksData.map(c => c.total),
         backgroundColor: stocksData.map((_, i) => `rgba(${50 + i*40}, 162, 235, 0.7)`),
         borderColor: 'rgba(54, 162, 235, 1)',
@@ -86,7 +86,7 @@
     }
   });
 
-  // --- Graphique 2 : Produits en alerte ---
+  // --- Chart 2: Products on alert ---
   const alertsData = JSON.parse(document.getElementById('alerts-data').textContent);
   const alertsCtx = document.getElementById('alertsChart').getContext('2d');
   new Chart(alertsCtx, {
@@ -94,14 +94,14 @@
     data: {
       labels: alertsData.map(a => a.name),
       datasets: [{
-        label: 'Stock actuel',
+        label: 'Current stock',
         data: alertsData.map(a => a.qty),
         backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)'],
       }]
     }
   });
 
-  // --- Graphique 3 : Activité mensuelle ---
+  // --- Chart 3: Monthly activity ---
   const monthlyLabels = JSON.parse(document.getElementById('monthly-labels').textContent);
   const monthlyInData = JSON.parse(document.getElementById('monthly-in').textContent);
   const monthlyOutData = JSON.parse(document.getElementById('monthly-out').textContent);
@@ -111,8 +111,8 @@
     data: {
       labels: monthlyLabels,
       datasets: [
-        { label: 'Entrées', data: monthlyInData, borderColor: 'green', tension: 0.1 },
-        { label: 'Sorties', data: monthlyOutData, borderColor: 'red', tension: 0.1 }
+        { label: 'Stock In', data: monthlyInData, borderColor: 'green', tension: 0.1 },
+        { label: 'Stock Out', data: monthlyOutData, borderColor: 'red', tension: 0.1 }
       ]
     }
   });

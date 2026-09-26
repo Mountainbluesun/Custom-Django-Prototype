@@ -13,7 +13,7 @@ def company_list(request):
     print("DEBUG allowed_company_ids:", ids)
 
     companies = list_companies(ids)
-    print(f"DEBUG entreprises trouvées: {companies.count()}")
+    print(f"DEBUG companies found: {companies.count()}")
     for c in companies:
         print(f" - {c.name} (ID: {c.id})")
 
@@ -29,16 +29,12 @@ def _allowed_company_ids(request):
     if user is None or not user.is_authenticated:
         return []
 
-    # Si l'utilisateur est admin
+    # If the user is an admin
     if getattr(user, "is_admin", False) or user.is_superuser:
         return list(Company.objects.values_list('id', flat=True))
 
-    # Sinon, récupérer les entreprises associées à l'utilisateur
+    # Otherwise, get the companies associated with the user
     return list(user.companies.values_list('id', flat=True))
-
-
-
-
 
 
 @admin_required
@@ -50,7 +46,7 @@ def company_create(request):
                 name=form.cleaned_data['name'],
                 owner=form.cleaned_data.get('owner')
             )
-            messages.success(request, "Entreprise créée.")
+            messages.success(request, "Company created.")
             return redirect("companies:list")
     else:
         form = CompanyForm()
@@ -61,7 +57,7 @@ def company_create(request):
 def company_edit(request, company_id: int):
     company = get_company(company_id)
     if not company:
-        raise Http404("Entreprise introuvable.")
+        raise Http404("Company not found.")
 
     if request.method == "POST":
         form = CompanyForm(request.POST)
@@ -71,7 +67,7 @@ def company_edit(request, company_id: int):
                 name=form.cleaned_data['name'],
                 owner=form.cleaned_data.get('owner')
             )
-            messages.success(request, "Entreprise mise à jour.")
+            messages.success(request, "Company updated.")
             return redirect("companies:list")
     else:
         form = CompanyForm(initial={'name': company.name, 'owner': company.owner})
@@ -83,11 +79,11 @@ def company_edit(request, company_id: int):
 def company_delete(request, company_id: int):
     company = get_company(company_id)
     if not company:
-        raise Http404("Entreprise introuvable.")
+        raise Http404("Company not found.")
 
     if request.method == "POST":
         delete_company(company_id)
-        messages.success(request, "Entreprise supprimée.")
+        messages.success(request, "Company deleted.")
         return redirect("companies:list")
 
     return render(request, "companies/confirm_delete.html", {"company": company})

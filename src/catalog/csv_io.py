@@ -7,8 +7,8 @@ CSV_FIELDS = ["name", "sku", "company_id", "threshold"]
 
 def write_products_csv(fh: IO[str], rows: Iterable[Dict]) -> None:
     """
-    Écrit les produits en CSV.
-    rows: dicts avec clés CSV_FIELDS (company_id, threshold en int).
+    Writes products to CSV.
+    rows: dicts with CSV_FIELDS keys (company_id, threshold as int).
     """
     writer = csv.DictWriter(fh, fieldnames=CSV_FIELDS)
     writer.writeheader()
@@ -22,16 +22,16 @@ def write_products_csv(fh: IO[str], rows: Iterable[Dict]) -> None:
 
 def read_products_csv(uploaded_file) -> List[Dict]:
     """
-    Lit un CSV uploadé (Django InMemoryUploadedFile / TemporaryUploadedFile).
-    Retourne une liste de dicts prêts pour create_product / update_product.
+    Reads an uploaded CSV (Django InMemoryUploadedFile / TemporaryUploadedFile).
+    Returns a list of dicts ready for create_product / update_product.
     """
-    # uploaded_file est binaire -> TextIOWrapper en utf-8
+    # uploaded_file is binary -> TextIOWrapper in utf-8
     wrapper = TextIOWrapper(uploaded_file.file, encoding="utf-8")
     reader = csv.DictReader(wrapper, delimiter= ";")
     out: List[Dict] = []
     for row in reader:
         if not row.get("name") or not row.get("sku") or not row.get("company_id"):
-            # on ignore lignes incomplètes
+            # skip incomplete rows
             continue
         out.append({
             "name": row["name"].strip(),

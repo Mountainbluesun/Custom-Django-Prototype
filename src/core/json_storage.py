@@ -4,25 +4,25 @@ from pathlib import Path
 from threading import Lock
 from typing import Any, Union
 
-# Dossier "data" par défaut (prod/dev)
+# Default "data" folder (prod/dev)
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
-LOCK = Lock()  # évite les accès concurrents
+LOCK = Lock()  # prevents concurrent access
 
 def _ensure_dir(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
 
 def _resolve_path(filename_or_path: Union[str, Path], base_dir: Path) -> Path:
     """
-    Accepte soit un nom de fichier (ex: 'users.json') soit un chemin absolu/relatif.
-    Si c'est un nom, on le résout dans base_dir. Si c'est déjà un chemin, on le normalise.
+    Accepts either a filename (e.g. 'users.json') or an absolute/relative path.
+    If it's a name, resolve it within base_dir. If it's already a path, normalize it.
     """
     p = Path(filename_or_path)
     return p if p.is_absolute() else (base_dir / p)
 
 def load_json(filename_or_path: Union[str, Path], base_dir: Path = DATA_DIR) -> Any:
     """
-    Charge du JSON depuis base_dir/filename (ou depuis un chemin complet si fourni).
-    Retourne [] si le fichier n'existe pas.
+    Loads JSON from base_dir/filename (or from a full path if provided).
+    Returns [] if the file does not exist.
     """
     filepath = _resolve_path(filename_or_path, base_dir)
     if not filepath.exists():
@@ -33,8 +33,8 @@ def load_json(filename_or_path: Union[str, Path], base_dir: Path = DATA_DIR) -> 
 
 def save_json(filename_or_path: Union[str, Path], data: Any, base_dir: Path = DATA_DIR) -> None:
     """
-    Sauvegarde data au format JSON dans base_dir/filename (ou chemin complet).
-    Écriture atomique: écrit d'abord *.tmp puis remplace.
+    Saves data as JSON to base_dir/filename (or a full path).
+    Atomic write: writes to *.tmp first, then replaces.
     """
     filepath = _resolve_path(filename_or_path, base_dir)
     _ensure_dir(filepath.parent)
@@ -43,4 +43,3 @@ def save_json(filename_or_path: Union[str, Path], data: Any, base_dir: Path = DA
         with tmp_path.open("w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         tmp_path.replace(filepath)
-

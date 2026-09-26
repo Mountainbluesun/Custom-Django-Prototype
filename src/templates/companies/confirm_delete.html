@@ -1,10 +1,10 @@
-{% extends "base.html" %}
-{% block title %}Supprimer une entreprise{% endblock %}
+% extends "base.html" %}
+{% block title %}Delete a Product{% endblock %}
 {% block content %}
-  <h1>Supprimer l’entreprise</h1>
-  <p>Confirmez la suppression de <strong>{{ company.name }}</strong> (#{{ company.id }}) ?</p>
+  <h1>Delete Product</h1>
+  <p>Confirm deletion of <strong>{{ product.name }}</strong> (#{{ product.id }})?</p>
   <form method="post">{% csrf_token %}
-    <button type="submit">Oui, supprimer</button>
-    <a href="{% url 'companies:list' %}">Annuler</a>
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'catalog:list' %}">Cancel</a>
   </form>
 {% endblock %}

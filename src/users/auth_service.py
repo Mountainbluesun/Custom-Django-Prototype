@@ -5,12 +5,12 @@ from .models import User
 
 def authenticate(username: str, password: str) -> Optional[User]:
     """
-    Retourne l'objet User si les identifiants sont valides, sinon None.
+    Returns the User object if the credentials are valid, otherwise None.
     """
-    # On cherche l'utilisateur dans la base de données
+    # Look up the user in the database
     user = User.objects.filter(username=username).first()
 
-    # On vérifie si l'utilisateur existe et si le mot de passe est correct
+    # Check that the user exists and the password is correct
     if user and check_password(password, user.password_hash):
         return user
 

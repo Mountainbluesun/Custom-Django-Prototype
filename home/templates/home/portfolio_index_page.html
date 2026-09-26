@@ -7,7 +7,7 @@
     <div style="max-width: 800px; margin: 20px auto; text-align: center;">
     <div style="margin-bottom: 20px;">
     <a href="{% url 'home' %}" class="btn-retour">
-        ⬅️ Retour à l'accueil
+        ⬅️ Back to Home
     </a>
 </div>
 
@@ -20,7 +20,7 @@
         </section>
     {% endif %}
 
-    {# --- LISTE DES PROJETS --- #}
+    {# --- PROJECT LIST --- #}
     <div style="margin-top: 40px;">
         {% for project in page.get_children.live %}
             <h2 style="margin-bottom:5px;">

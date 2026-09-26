@@ -12,12 +12,8 @@ urlpatterns = [
 # CSV:
     path("import/", views.products_import_csv, name="import_csv"),
     path("export/", views.products_export_csv, name="export_csv"),
-    path("import-page/", views.product_import_page_view, name="import_page"), # <-- Ajoutez cette ligne
+    path("import-page/", views.product_import_page_view, name="import_page"), # <-- Add this line
 ]
-
-
-
-
 
 
 

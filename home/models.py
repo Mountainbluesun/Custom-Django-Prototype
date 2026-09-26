@@ -9,7 +9,7 @@ from django.db import models
 
 
 class HomePage(Page):
-
+    template = "home/portfolio_home.html"
     subtitle = RichTextField(blank=True, features=["bold", "italic"])
 
     hero_image = StreamField(

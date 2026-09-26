@@ -1,26 +1,26 @@
-# Fichier : src/catalog/service.py
+# File: src/catalog/service.py
 from typing import List, Optional, Iterable
 from .models import Product, Company
 
 from .models import Product
 
 def list_products():
-    # Ajoute select_related pour que company soit chargé en mémoire
+    # Add select_related so company is loaded in memory
     return Product.objects.select_related('company').all()
 
 def list_products_by_companies(company_ids):
-    if not company_ids:
+    if not company_ids: #warning security
         return Product.objects.all()
     return Product.objects.filter(company_id__in=company_ids)
 
 
 def get_product(product_id: int) -> Optional[Product]:
-    """Récupère un produit par son ID."""
+    """Retrieves a product by its ID."""
     return Product.objects.filter(id=product_id).first()
 
 def create_product(name: str, sku: str, company_id: int, threshold: int = 0) -> Product:
-    """Crée un nouveau produit."""
-    # On récupère l'objet Company correspondant à l'ID
+    """Creates a new product."""
+    # Get the Company object matching the ID
     company = Company.objects.get(id=company_id)
     new_product = Product.objects.create(
         name=name,
@@ -31,7 +31,7 @@ def create_product(name: str, sku: str, company_id: int, threshold: int = 0) -> 
     return new_product
 
 def update_product(product_id: int, data: dict) -> Optional[Product]:
-    """Met à jour un produit."""
+    """Updates a product."""
     product = get_product(product_id)
     if product:
         product.name = data['name']
@@ -42,7 +42,7 @@ def update_product(product_id: int, data: dict) -> Optional[Product]:
     return product
 
 def delete_product(product_id: int) -> bool:
-    """Supprime un produit."""
+    """Deletes a product."""
     product = get_product(product_id)
     if product:
         product.delete()

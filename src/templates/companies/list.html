@@ -1,24 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Entreprises — Stock Manager{% endblock %}
+{% block title %}Companies — Stock Manager{% endblock %}
 
 {% block content %}
-  <h1>Entreprises</h1>
+  <h1>Companies</h1>
 
   {% if request.user.is_authenticated and request.user.is_admin %}
     <div style="margin-bottom: 1rem;">
-      <a href="{% url 'companies:create' %}" class="btn btn-primary">➕ Créer une entreprise</a>
+      <a href="{% url 'companies:create' %}" class="btn btn-primary">➕ Create a company</a>
     </div>
   {% endif %}
-
-  <p>DEBUG: {{ companies|length }} entreprises trouvées.</p>
 
   {% if companies %}
   <table>
     <thead>
       <tr>
-        <th>Nom</th>
-        <th>Ville</th>
-        <th>Adresse</th>
+        <th>Name</th>
+        <th>City</th>
+        <th>Address</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -29,14 +27,14 @@
           <td>{{ company.city }}</td>
           <td>{{ company.address }}</td>
           <td>
-            <a href="{% url 'companies:edit' company.id %}">Modifier</a> |
-            <a href="{% url 'companies:delete' company.id %}">Supprimer</a>
+            <a href="{% url 'companies:edit' company.id %}">Edit</a> |
+            <a href="{% url 'companies:delete' company.id %}">Delete</a>
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
   {% else %}
-    <p>Aucune entreprise enregistrée.</p>
+    <p>No companies registered.</p>
   {% endif %}
 {% endblock %}

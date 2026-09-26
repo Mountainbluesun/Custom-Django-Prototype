@@ -1,26 +1,24 @@
-
 {% extends "base.html" %}
 
-{% block title %}Mouvements de Stock{% endblock %}
+{% block title %}Stock Movements{% endblock %}
 
 {% block content %}
-  <h1>Historique des Mouvements de Stock</h1>
+  <h1>Stock Movement History</h1>
 
   <div style="margin: 1rem 0;">
-    <a href="{% url 'inventory:stock_in' %}" class="btn btn-success">➕ Nouvelle entrée</a>
-    {# Ajoutez les liens pour la sortie et le transfert quand les vues seront prêtes #}
-    { <a href="{% url 'inventory:stock_out' %}" class="btn btn-warning">➖ Nouvelle sortie</a> }
-    { <a href="{% url 'inventory:transfer' %}" class="btn btn-info">⇄ Nouveau transfert</a> }
+    <a href="{% url 'inventory:stock_in' %}" class="btn btn-success">➕ New Stock In</a>
+    <a href="{% url 'inventory:stock_out' %}" class="btn btn-warning">➖ New Stock Out</a>
+    <a href="{% url 'inventory:transfer' %}" class="btn btn-info">⇄ New Transfer</a>
   </div>
 
   <table>
     <thead>
       <tr>
-          <th>Produit</th>
-          <th>Entreprise</th>
-          <th>Utilisateur</th> <th>Type</th>
+          <th>Product</th>
+          <th>Company</th>
+          <th>User</th>
           <th>Type</th>
-          <th>Quantité</th>
+          <th>Quantity</th>
           <th>Date</th>
           <th>Note</th>
            </tr>
@@ -30,15 +28,15 @@
         <tr>
             <td>{{ movement.product_name }}</td>
             <td>{{ movement.company_name }}</td>
-            <td>{{ movement.user_name }}</td> <td>{{ movement.kind }}</td>
+            <td>{{ movement.user_name }}</td>
             <td>{{ movement.kind }}</td>
             <td>{{ movement.quantity }}</td>
-            <td>{{ movement.timestamp|slice:":19" }}</td> {# Affiche la date et l'heure sans les microsecondes #}
+            <td>{{ movement.timestamp|slice:":19" }}</td> {# Displays date and time without microseconds #}
             <td>{{ movement.note }}</td>
         </tr>
       {% empty %}
         <tr>
-          <td colspan="6">Aucun mouvement de stock pour le moment.</td>
+          <td colspan="7">No stock movements yet.</td>
         </tr>
       {% endfor %}
     </tbody>
