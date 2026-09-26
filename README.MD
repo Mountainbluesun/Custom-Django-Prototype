@@ -1,53 +1,53 @@
 Custom Django Prototype - Stock Manager
-Prototype Django full-stack pour la gestion de stock multi-entreprises, développé comme projet de démonstration technique et vitrine de compétences DevOps.
+Full-stack Django prototype for multi-company stock management, built as a technical demo project and DevOps skills showcase.
 
-🔗 Site en production : https://www.jeremylebrun.dev
-Site en évolution continue (CI/CD)
+🔗 Live site: https://www.jeremylebrun.dev
+Site under continuous improvement (CI/CD)
 ![Status](https://img.shields.io/badge/Status-Production-green)
 
-🚀 Actualité du Projet (Avril 2026)
-Le projet a récemment fait l'objet d'une migration d'infrastructure majeure :
+🚀 Project News (April 2026)
+The project recently went through a major infrastructure migration:
 
-Nouvel Hébergement : Passage sur un VPS sous Ubuntu 24.04.
+New Hosting: Moved to a VPS running Ubuntu 24.04.
 
-Serveur Web : Configuration optimisée de Nginx et Gunicorn.
+Web Server: Optimized Nginx and Gunicorn configuration.
 
-Expérience Utilisateur : Mise en place d'une gestion personnalisée des erreurs (Pages 404/500) pour une navigation fluide en mode production (DEBUG=False).
+User Experience: Custom error handling (404/500 pages) for smooth navigation in production mode (DEBUG=False).
 
-Sécurité : Gestion rigoureuse des variables d'environnement (.env) et des accès SSH par clés.
+Security: Rigorous management of environment variables (.env) and SSH key-based access.
 
-### 🎥 Gestion Media & Streaming (Avril 2026)
-L'infrastructure a été mise à jour pour supporter le streaming vidéo haute performance :
-- **Optimisation Nginx :** Configuration du support `Accept-Ranges` pour permettre le "seeking" (déplacement dans la barre de lecture) sans recharger toute la vidéo.
-- **Mime-Types :** Gestion explicite des types MIME (`video/mp4`) au niveau de Django et du serveur web pour une compatibilité multi-navigateurs.
-- **Sécurisation des Médias :** Séparation stricte entre les fichiers statiques (assets design) et les fichiers médias (uploads/contenus), servies de manière isolée pour plus de performance.
+### 🎥 Media & Streaming (April 2026)
+The infrastructure was updated to support high-performance video streaming:
+- **Nginx Optimization:** Configured `Accept-Ranges` support to allow seeking (moving the playback bar) without reloading the entire video.
+- **Mime-Types:** Explicit MIME type handling (`video/mp4`) at both the Django and web server level for cross-browser compatibility.
+- **Media Security:** Strict separation between static files (design assets) and media files (uploads/content), served in isolation for better performance.
 
-- 🛠️ Stack Technique
-Framework : Django 5.x
+- 🛠️ Tech Stack
+Framework: Django 5.x
 
-CMS : Intégration de Wagtail pour la gestion de contenu.
+CMS: Wagtail integration for content management.
 
-Base de données : PostgreSQL (Production) / SQLite (Développement).
+Database: PostgreSQL (Production) / SQLite (Development).
 
-Frontend : Templates Django, Intégration de projets externes (Laravel).
+Frontend: Django templates, integration of external projects (Laravel).
 
-DevOps : Git, Gunicorn, Nginx, Linux (Ubuntu).
+DevOps: Git, Gunicorn, Nginx, Linux (Ubuntu).
 
-📋 Fonctionnalités clés
-Multi-entreprises : Gestion cloisonnée des stocks par entité.
+📋 Key Features
+Multi-company: Siloed stock management per entity.
 
-Dashboard : Vue d'ensemble des indicateurs de performance.
+Dashboard: Overview of key performance indicators.
 
-Système d'Alertes : Notification en cas de stock critique.
+Alert System: Notifications when stock is critically low.
 
-Portfolio Intégré : Zone dédiée à la présentation d'autres projets techniques.
+Integrated Portfolio: Dedicated area for showcasing other technical projects.
 ## 📸 Screenshots
 
-### Dashboard (environnement Linux)
+### Dashboard (Linux environment)
 ![Dashboard](screenshots/dashboard.png)
 
-### Gestion des produits
-![Produits](screenshots/products.png)
+### Product management
+![Products](screenshots/products.png)
 
 ### Test successful token
 ![Reset_password](screenshots/token.png)
@@ -72,21 +72,21 @@ Nginx
 
 Ubuntu 24.04 (VPS)
 
-✨ Fonctionnalités
+✨ Features
 
-Authentification utilisateur
+User authentication
 
-Gestion multi-entreprises / multi-sites
+Multi-company / multi-site management
 
-Produits et stocks par site
+Products and stock per site
 
-Mouvements de stock (entrée / sortie)
+Stock movements (in / out)
 
-Dashboard avec indicateurs et graphiques
+Dashboard with metrics and charts
 
-Interface dynamique avec HTMX
+Dynamic interface with HTMX
 
-🗂 Modèle de données (simplifié)
+🗂 Data Model (simplified)
 
 Product
 
@@ -107,45 +107,31 @@ python manage.py createsuperuser
 python manage.py runserver
 
 🧪 Tests & Validation
-Tests unitaires avec pytest.
+Unit tests with pytest.
 
-Script de validation SMTP dédié (test_mail.py) pour vérifier la connectivité en production.
+Dedicated SMTP validation script (test_mail.py) to verify connectivity in production.
 
 [!IMPORTANT]
-Fichiers de secours (.stable) :
-Les fichiers settings.py.stable et urls.py.stable sont des sauvegardes de configurations de production stables. Ils sont conservés à titre de référence et ne sont pas utilisés par Django au runtime.
+Configuration backups (`.stable` files):
+The files `src/config/settings.py.stable` and `src/config/urls.py.stable` are intentional backups of stable production configurations. They were created before production routing changes related to Nginx and the portfolio project page integration. They are kept for reference and rollback purposes only, and are **not used by Django at runtime**.
 
 
-🌐 Déploiement & Communication
+🌐 Deployment & Communication
 
-- Serveur : Déploiement manuel sur VPS Ubuntu 24.04 (Gunicorn + Nginx en reverse proxy).
-- Sécurité : HTTPS (Let’s Encrypt), Pare-feu UFW, isolation de la base PostgreSQL.
-- Anti-Spam : Intégration de Captcha sur les formulaires publics.
-- UX : Gestion des erreurs de routage avec des templates 404 personnalisés.
-- Emails : Configuration SMTP professionnelle (Infomaniak) avec gestion des files d'attente pour les notifications et la récupération de mot de passe.
-- Variables : Gestion des secrets via .env (non versionné).
+- Server: Manual deployment on a Ubuntu 24.04 VPS (Gunicorn + Nginx as reverse proxy).
+- Security: HTTPS (Let's Encrypt), UFW firewall, isolated PostgreSQL database.
+- Anti-Spam: Captcha integration on public forms.
+- UX: Custom 404 templates for routing error handling.
+- Emails: Professional SMTP setup (Infomaniak) with queued delivery for notifications and password recovery.
+- Variables: Secrets managed via .env (not version-controlled).
 
 
-🔐 Sécurité
+🔐 Security
 
-DEBUG = False en production
+DEBUG = False in production
 
-HTTPS obligatoire
+HTTPS required
 
-Accès base de données local uniquement
+Local-only database access
 
-Pare-feu UFW
-
-## Configuration backups
-
-The files below are intentional backups of stable production configurations:
-
-- `src/config/settings.py.stable`
-- `src/config/urls.py.stable`
-
-They were created before production routing changes related to Nginx and
-the portfolio project page integration.
-
-These files are **not used by Django at runtime** and are kept only
-for reference and rollback purposes.
-
+UFW firewall
