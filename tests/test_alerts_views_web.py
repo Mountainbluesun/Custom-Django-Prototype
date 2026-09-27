@@ -12,14 +12,14 @@ from inventory.models import Movement
 @pytest.mark.xfail(reason="User-company scoping not implemented yet")
 def test_alerts_user_scoped(client):
     """
-    Vérifie qu'un utilisateur non-admin voit uniquement les alertes
-    des entreprises auxquelles il a accès.
+    Checks that a non-admin user only sees alerts for the
+    companies they have access to.
     """
-    # --- 1. Création des entreprises ---
+    # --- 1. Create the companies ---
     company1 = Company.objects.create(name="ACME")
     company2 = Company.objects.create(name="Globex")
 
-    # --- 2. Création d'un utilisateur non-admin ---
+    # --- 2. Create a non-admin user ---
     user = User.objects.create(
         username="user_scoped",
         password=make_password("password123"),
@@ -27,41 +27,41 @@ def test_alerts_user_scoped(client):
     )
     user.companies.add(company1)
 
-    # --- 3. Création des produits ---
-    product1 = Product.objects.create(name="Produit ACME", sku="P1", company=company1, threshold=5)
-    product2 = Product.objects.create(name="Produit Globex", sku="P2", company=company2, threshold=5)
+    # --- 3. Create the products ---
+    product1 = Product.objects.create(name="ACME Product", sku="P1", company=company1, threshold=5)
+    product2 = Product.objects.create(name="Globex Product", sku="P2", company=company2, threshold=5)
 
-    # --- 4. Création des mouvements (alerte) ---
+    # --- 4. Create the movements (alert) ---
     Movement.objects.create(product=product1, company=company1, quantity=1, kind='IN')
     Movement.objects.create(product=product2, company=company2, quantity=2, kind='IN')
 
-    # --- 5. Connexion de l'utilisateur ---
+    # --- 5. Log the user in ---
     login_url = reverse('users:login')
     client.post(login_url, {"username": "user_scoped", "password": "password123"})
 
-    # --- 6. Accès à la page des alertes ---
+    # --- 6. Access the alerts page ---
     alerts_url = reverse('alerts:list')
     response = client.get(alerts_url)
     assert response.status_code == 200
     html_content = response.content.decode()
 
-    # --- 7. Vérification du contenu ---
-    assert "Produit ACME" in html_content
-    assert "Produit Globex" not in html_content
+    # --- 7. Content verification ---
+    assert "ACME Product" in html_content
+    assert "Globex Product" not in html_content
 
 
 @pytest.mark.django_db
 def test_alerts_admin_sees_all(client):
     """
-    Vérifie qu'un utilisateur admin voit toutes les alertes,
-    peu importe l'entreprise.
+    Checks that an admin user sees all alerts,
+    regardless of company.
     """
     company1 = Company.objects.create(name="ACME")
     company2 = Company.objects.create(name="Globex")
     admin = User.objects.create(username="admin", password=make_password("admin123"), is_admin=True)
 
-    product1 = Product.objects.create(name="Produit ACME", sku="P1", company=company1, threshold=5)
-    product2 = Product.objects.create(name="Produit Globex", sku="P2", company=company2, threshold=5)
+    product1 = Product.objects.create(name="ACME Product", sku="P1", company=company1, threshold=5)
+    product2 = Product.objects.create(name="Globex Product", sku="P2", company=company2, threshold=5)
 
     Movement.objects.create(product=product1, company=company1, quantity=1, kind='IN')
     Movement.objects.create(product=product2, company=company2, quantity=1, kind='IN')
@@ -72,14 +72,14 @@ def test_alerts_admin_sees_all(client):
     response = client.get(reverse('alerts:list'))
     assert response.status_code == 200
     html_content = response.content.decode()
-    assert "Produit ACME" in html_content
-    assert "Produit Globex" in html_content
+    assert "ACME Product" in html_content
+    assert "Globex Product" in html_content
 
 
 @pytest.mark.django_db
 def test_alerts_no_products(client):
     """
-    Vérifie le comportement lorsque aucune alerte n'existe.
+    Checks the behavior when there are no alerts.
     """
     user = User.objects.create(username="user_empty", password=make_password("password123"), is_admin=False)
     login_url = reverse('users:login')
@@ -88,6 +88,5 @@ def test_alerts_no_products(client):
     response = client.get(reverse('alerts:list'))
     assert response.status_code == 200
     html_content = response.content.decode()
-    # Pas d'alertes affichées
-    assert "Aucune alerte." in html_content
-
+    # No alerts displayed
+    assert "No alerts." in html_content
