@@ -10,6 +10,7 @@ from django.db import models
 
 class HomePage(Page):
     template = "home/portfolio_home.html"
+
     subtitle = RichTextField(blank=True, features=["bold", "italic"])
 
     hero_image = StreamField(
@@ -36,7 +37,7 @@ class HomePage(Page):
     ]
 
 class ProjectPage(Page):
-    """Page pour chaque projet du portfolio."""
+    """Page for each portfolio project."""
 
     template = "home/project_page.html"
 
@@ -57,9 +58,9 @@ class ProjectPage(Page):
         use_json_field=True,
     )
 
-    # ⚡ Limiter où cette page peut être créée
+    # ⚡ Restrict where this page can be created
     parent_page_types = ["home.PortfolioIndexPage"]
-    subpage_types = []  # Les projets n'auront pas d'enfants
+    subpage_types = []  # Projects won't have any children
 
     content_panels = Page.content_panels + [
         FieldPanel("description"),
@@ -69,7 +70,7 @@ class ProjectPage(Page):
 
 
 class PortfolioIndexPage(Page):
-    """Page d'accueil du portfolio, liste tous les projets."""
+    """Portfolio home page, lists all the projects."""
 
     template = "home/portfolio_index_page.html"
 
@@ -86,8 +87,6 @@ class PortfolioIndexPage(Page):
         context = super().get_context(request)
         context["projects"] = ProjectPage.objects.child_of(self).live()
         return context
-
-
 
 
 

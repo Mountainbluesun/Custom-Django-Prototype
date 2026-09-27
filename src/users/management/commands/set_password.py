@@ -1,14 +1,14 @@
-# Fichier : src/users/management/commands/set_password.py
+# File: src/users/management/commands/set_password.py
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.hashers import make_password
 from users.models import User
 
 class Command(BaseCommand):
-    help = 'Réinitialise le mot de passe pour un utilisateur existant.'
+    help = 'Resets the password for an existing user.'
 
     def add_arguments(self, parser):
-        parser.add_argument('username', type=str, help='Le nom de l\'utilisateur à modifier.')
-        parser.add_argument('password', type=str, help='Le nouveau mot de passe.')
+        parser.add_argument('username', type=str, help='The username to update.')
+        parser.add_argument('password', type=str, help='The new password.')
 
     def handle(self, *args, **options):
         username = options['username']
@@ -17,9 +17,9 @@ class Command(BaseCommand):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
-            raise CommandError(f"L'utilisateur '{username}' n'existe pas.")
+            raise CommandError(f"User '{username}' does not exist.")
 
         user.password = make_password(password)
         user.save()
 
-        self.stdout.write(self.style.SUCCESS(f"Le mot de passe pour l'utilisateur '{username}' a été réinitialisé avec succès."))
+        self.stdout.write(self.style.SUCCESS(f"Password for user '{username}' has been reset successfully."))
