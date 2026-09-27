@@ -10,11 +10,11 @@ from django.contrib.auth.hashers import make_password
 @pytest.mark.django_db
 def test_alerts_view_shows_product_under_threshold(client):
     """
-    Vérifie que la page des alertes affiche un produit dont le stock est sous le seuil.
+    Checks that the alerts page displays a product whose stock is below threshold.
     """
-    # --- 1. On crée les données directement dans la base de données de test ---
+    # --- 1. Create the data directly in the test database ---
 
-    # On crée une entreprise et un utilisateur admin
+    # Create a company and an admin user
     company = Company.objects.create(name="Test Co")
     user = User.objects.create(
         username="testuser",
@@ -23,29 +23,30 @@ def test_alerts_view_shows_product_under_threshold(client):
     )
     user.companies.add(company)
 
-    # On crée un produit avec un seuil d'alerte de 10
+    # Create a product with an alert threshold of 10
     product = Product.objects.create(
-        name="Produit en Alerte",
+        name="Product on Alert",
         sku="SKU-ALERT",
         company=company,
         threshold=10
     )
-    # On fait une entrée de 5, ce qui est inférieur au seuil de 10
+    # Add a stock-in of 5, which is below the threshold of 10
     Movement.objects.create(product=product, company=company, quantity=5, kind='IN')
 
-    # --- 2. On se connecte en utilisant le formulaire de connexion ---
+    # --- 2. Log in using the login form ---
     login_url = reverse('users:login')
     client.post(login_url, {'username': 'testuser', 'password': 'password123'})
 
-    # --- 3. On visite la page des alertes ---
+    # --- 3. Visit the alerts page ---
     alerts_url = reverse('alerts:list')
     response = client.get(alerts_url)
 
-    # --- 4. On vérifie les résultats ---
+    # --- 4. Check the results ---
     assert response.status_code == 200
-    # On vérifie que le nom du produit est bien sur la page
-    assert "Produit en Alerte" in response.content.decode()
-    # On vérifie que le stock (5) et le seuil (10) sont bien affichés dans le tableau
-    # Note: la recherche "<td>5</td>" est simple mais peut être fragile. C'est suffisant pour commencer.
-    assert "<td>5</td>" in response.content.decode()
-    assert "<td>10</td>" in response.content.decode()
+    html_content = response.content.decode()
+    # Check that the product name is indeed on the page
+    assert "Product on Alert" in html_content
+    # Check that the stock (5) and the threshold (10) are correctly displayed in the table
+    # Note: the "<td>5</td>" search is simple but can be fragile. Good enough to start with.
+    assert "<td>5</td>" in html_content
+    assert "<td>10</td>" in html_content

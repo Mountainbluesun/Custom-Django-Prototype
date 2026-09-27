@@ -8,12 +8,12 @@ from core.paths import data_dir
 
 
 class Command(BaseCommand):
-    help = "Supprime un utilisateur JSON par son username (avec backup avant suppression)."
+    help = "Deletes a JSON user by username (with backup before deletion)."
 
     def add_arguments(self, parser):
-        parser.add_argument("--username", required=True, help="Nom d'utilisateur à supprimer")
-        parser.add_argument("--base-dir", default=None, help="Dossier data (défaut: <projet>/data)")
-        parser.add_argument("--force", action="store_true", help="Supprime sans demander confirmation")
+        parser.add_argument("--username", required=True, help="Username to delete")
+        parser.add_argument("--base-dir", default=None, help="Data folder (default: <project>/data)")
+        parser.add_argument("--force", action="store_true", help="Delete without asking for confirmation")
 
     def handle(self, *args, **options):
         username: str = options["username"].strip()
@@ -24,28 +24,28 @@ class Command(BaseCommand):
 
         users_path = base / "users.json"
         if not users_path.exists():
-            raise CommandError(f"Aucun fichier users.json trouvé dans {base}")
+            raise CommandError(f"No users.json file found in {base}")
 
         users: List[Dict] = load_json(users_path.name, base_dir=base) or []
 
         if not any(u.get("username") == username for u in users):
-            raise CommandError(f"L’utilisateur '{username}' n’existe pas.")
+            raise CommandError(f"User '{username}' does not exist.")
 
-        # Confirmation si pas --force
+        # Confirmation if --force is not set
         if not options["force"]:
-            confirm = input(f"Voulez-vous vraiment supprimer '{username}' ? (o/N) ").lower()
-            if confirm != "o":
-                self.stdout.write(self.style.WARNING("Suppression annulée."))
+            confirm = input(f"Are you sure you want to delete '{username}'? (y/N) ").lower()
+            if confirm != "y":
+                self.stdout.write(self.style.WARNING("Deletion cancelled."))
                 return
 
-        # Backup avant suppression
+        # Backup before deletion
         backup_path = users_path.with_suffix(".json.bak")
         shutil.copy(users_path, backup_path)
 
-        # Supprimer
+        # Delete
         new_users = [u for u in users if u.get("username") != username]
         save_json(users_path.name, new_users, base_dir=base)
 
         self.stdout.write(self.style.SUCCESS(
-            f"✅ Utilisateur '{username}' supprimé (backup → {backup_path})"
+            f"✅ User '{username}' deleted (backup → {backup_path})"
         ))

@@ -5,7 +5,7 @@ from users.models import User
 
 @pytest.mark.django_db
 def test_authenticate_success():
-    """Vérifie qu'un utilisateur avec un mot de passe correct est authentifié."""
+    """Checks that a user with the correct password is authenticated."""
     User.objects.create(
         username="alice",
         password=make_password("secret123"),
@@ -16,7 +16,7 @@ def test_authenticate_success():
 
 @pytest.mark.django_db
 def test_authenticate_wrong_password():
-    """Vérifie qu'un mot de passe incorrect échoue."""
+    """Checks that an incorrect password fails."""
     User.objects.create(
         username="alice",
         password=make_password("secret123"),
@@ -26,6 +26,6 @@ def test_authenticate_wrong_password():
 
 @pytest.mark.django_db
 def test_authenticate_unknown_user():
-    """Vérifie qu'un utilisateur inconnu échoue."""
+    """Checks that an unknown user fails."""
     user = authenticate(username="charlie", password="whatever")
     assert user is None

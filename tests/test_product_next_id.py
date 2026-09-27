@@ -5,37 +5,37 @@ from companies.models import Company
 @pytest.mark.django_db
 def test_product_crud_database():
     """
-    Teste le cycle complet (CRUD) pour le modèle Product avec la base de données.
+    Tests the full CRUD cycle for the Product model with the database.
     """
-    # --- Préparation : On a besoin d'une entreprise pour y lier le produit ---
-    company = Company.objects.create(name="Entreprise Test")
+    # --- Setup: we need a company to link the product to ---
+    company = Company.objects.create(name="Test Company")
 
-    # 1. Vérification initiale : La table des produits doit être vide
+    # 1. Initial check: the product table should be empty
     assert Product.objects.count() == 0
 
-    # 2. CREATE : On crée un produit
+    # 2. CREATE: create a product
     Product.objects.create(
-        name="Produit A",
+        name="Product A",
         sku="SKU-A",
         company=company,
         threshold=10
     )
     assert Product.objects.count() == 1
 
-    # 3. READ : On récupère le produit et on vérifie ses attributs
+    # 3. READ: retrieve the product and check its attributes
     product = Product.objects.first()
     assert product is not None
-    assert product.name == "Produit A"
-    assert product.company.name == "Entreprise Test"
+    assert product.name == "Product A"
+    assert product.company.name == "Test Company"
 
-    # 4. UPDATE : On met à jour le produit
-    product.name = "Produit A modifié"
+    # 4. UPDATE: update the product
+    product.name = "Product A modified"
     product.save()
 
-    # On recharge le produit depuis la base de données pour être sûr
+    # Reload the product from the database to make sure
     product.refresh_from_db()
-    assert product.name == "Produit A modifié"
+    assert product.name == "Product A modified"
 
-    # 5. DELETE : On supprime le produit
+    # 5. DELETE: delete the product
     product.delete()
     assert Product.objects.count() == 0

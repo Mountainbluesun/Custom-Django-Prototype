@@ -6,7 +6,7 @@ from users.models import User
 
 @pytest.fixture
 def admin_user(db):
-    """Crée un utilisateur admin pour les tests et le retourne."""
+    """Creates an admin user for the tests and returns it."""
     user = User.objects.create(
         username="admin_user",
         is_admin=True
@@ -18,14 +18,14 @@ def admin_user(db):
 
 @pytest.mark.django_db
 def test_company_list_view(client, admin_user):
-    """Vérifie que la page de liste des entreprises s'affiche."""
-    # On connecte l'admin
+    """Checks that the company list page displays correctly."""
+    # Log in the admin
     client.post(reverse('users:login'), {"username": "admin_user", "password": "password123"})
 
-    # On crée une entreprise pour qu'elle apparaisse dans la liste
+    # Create a company so it shows up in the list
     Company.objects.create(name="ACME Corp")
 
-    # On visite la page
+    # Visit the page
     url = reverse('companies:list')
     response = client.get(url)
 
@@ -35,44 +35,44 @@ def test_company_list_view(client, admin_user):
 
 @pytest.mark.django_db
 def test_company_create_view(client, admin_user):
-    """Vérifie que le formulaire de création ajoute bien une entreprise."""
+    """Checks that the creation form correctly adds a company."""
     client.post(reverse('users:login'), {"username": "admin_user", "password": "password123"})
 
     url = reverse('companies:create')
-    # On soumet le formulaire de création
-    client.post(url, {"name": "Nouvelle Entreprise", "owner": "alice"})
+    # Submit the creation form
+    client.post(url, {"name": "New Company", "owner": "alice"})
 
-    # On vérifie que l'entreprise a bien été créée dans la base de données
+    # Check that the company was created in the database
     assert Company.objects.count() == 1
-    assert Company.objects.first().name == "Nouvelle Entreprise"
+    assert Company.objects.first().name == "New Company"
 
 
 @pytest.mark.django_db
 def test_company_edit_view(client, admin_user):
-    """Vérifie que le formulaire d'édition modifie bien une entreprise."""
+    """Checks that the edit form correctly updates a company."""
     client.post(reverse('users:login'), {"username": "admin_user", "password": "password123"})
-    company = Company.objects.create(name="Ancien Nom")
+    company = Company.objects.create(name="Old Name")
 
     url = reverse('companies:edit', kwargs={'company_id': company.id})
-    # On soumet le formulaire d'édition
-    client.post(url, {"name": "Nouveau Nom", "owner": "bob"})
+    # Submit the edit form
+    client.post(url, {"name": "New Name", "owner": "bob"})
 
-    # On recharge l'objet depuis la base de données pour vérifier la modification
+    # Reload the object from the database to check the change
     company.refresh_from_db()
-    assert company.name == "Nouveau Nom"
+    assert company.name == "New Name"
 
 
 @pytest.mark.django_db
 def test_company_delete_view(client, admin_user):
-    """Vérifie que la suppression fonctionne."""
+    """Checks that deletion works."""
     client.post(reverse('users:login'), {"username": "admin_user", "password": "password123"})
-    company = Company.objects.create(name="À Supprimer")
+    company = Company.objects.create(name="To Delete")
 
     assert Company.objects.count() == 1
 
     url = reverse('companies:delete', kwargs={'company_id': company.id})
-    # On soumet la suppression
+    # Submit the deletion
     client.post(url)
 
-    # On vérifie que l'entreprise a bien été supprimée
+    # Check that the company was correctly deleted
     assert Company.objects.count() == 0

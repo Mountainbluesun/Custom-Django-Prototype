@@ -1,12 +1,12 @@
-# Version pytest fonctionnelle
+# Working pytest version
 import pytest
 from django.urls import reverse
 
 
-# Pas besoin de @pytest.mark.django_db car on ne touche pas à la base de données
+# No need for @pytest.mark.django_db since we don't touch the database
 def test_alerts_view_redirects_anonymous_user(client):
     """
-    Vérifie qu'un visiteur anonyme est redirigé depuis la page des alertes.
+    Checks that an anonymous visitor is redirected from the alerts page.
     """
     url = reverse('alerts:list')
     response = client.get(url)

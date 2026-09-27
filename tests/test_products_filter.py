@@ -8,16 +8,16 @@ from catalog.models import Product
 @pytest.mark.django_db
 def test_products_are_filtered_by_user_scope(client):
     """
-    Vérifie qu'un utilisateur non-admin ne voit que les produits
-    des entreprises auxquelles il a accès.
+    Checks that a non-admin user only sees products from the
+    companies they have access to.
     """
-    # --- 1. Préparation : On crée les données dans la base de données de test ---
+    # --- 1. Setup: create the data in the test database ---
 
-    # On crée deux entreprises
+    # Create two companies
     company_acme = Company.objects.create(name="ACME")
     company_globex = Company.objects.create(name="Globex")
 
-    # On crée un utilisateur NON-ADMIN et on l'associe uniquement à Globex
+    # Create a NON-ADMIN user and assign them only to Globex
     user = User.objects.create(
         username="user_scoped",
         password=make_password("password123"),
@@ -25,23 +25,23 @@ def test_products_are_filtered_by_user_scope(client):
     )
     user.companies.add(company_globex)
 
-    # On crée deux produits, un dans chaque entreprise
-    Product.objects.create(name="Produit ACME", sku="P1", company=company_acme, threshold=0)
-    Product.objects.create(name="Produit Globex", sku="P2", company=company_globex, threshold=0)
+    # Create two products, one in each company
+    Product.objects.create(name="ACME Product", sku="P1", company=company_acme, threshold=0)
+    Product.objects.create(name="Globex Product", sku="P2", company=company_globex, threshold=0)
 
-    # --- 2. Action : On se connecte en tant qu'utilisateur restreint ---
+    # --- 2. Action: log in as the restricted user ---
     login_url = reverse('users:login')
     client.post(login_url, {"username": "user_scoped", "password": "password123"})
 
-    # --- 3. Action : On visite la page de la liste des produits ---
+    # --- 3. Action: visit the product list page ---
     products_url = reverse('catalog:list')
     response = client.get(products_url)
 
-    # --- 4. Vérification ---
+    # --- 4. Verification ---
     assert response.status_code == 200
     html_content = response.content.decode()
 
-    # L'utilisateur doit voir le produit de son entreprise (Globex)
-    assert "Produit Globex" in html_content
-    # L'utilisateur ne doit PAS voir le produit de l'autre entreprise (ACME)
-    assert "Produit ACME" not in html_content
+    # The user should see the product from their company (Globex)
+    assert "Globex Product" in html_content
+    # The user should NOT see the product from the other company (ACME)
+    assert "ACME Product" not in html_content

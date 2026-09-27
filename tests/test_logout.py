@@ -4,13 +4,13 @@ from users.models import User
 from django.contrib.auth.hashers import make_password
 
 
-@pytest.mark.xfail(reason="Test désactivé temporairement – fonction à revoir")
+@pytest.mark.xfail(reason="Test temporarily disabled - function to be revisited")
 @pytest.mark.django_db
 def test_logout_clears_session(client):
     """
-    Vérifie que la vue de déconnexion vide bien la session de l'utilisateur.
+    Checks that the logout view correctly clears the user's session.
     """
-    # --- 1. Préparation : On crée un utilisateur et on le connecte ---
+    # --- 1. Setup: create a user and log them in ---
     User.objects.create(
         username="testuser",
         password=make_password("password123"),
@@ -18,15 +18,15 @@ def test_logout_clears_session(client):
     login_url = reverse('users:login')
     client.post(login_url, {"username": "testuser", "password": "password123"})
 
-    # On vérifie que la connexion a bien fonctionné et que la session est remplie
+    # Check that the login worked and the session is populated
     assert "user" in client.session
 
-    # --- 2. Action : On appelle l'URL de déconnexion ---
+    # --- 2. Action: call the logout URL ---
     logout_url = reverse('users:logout')
-    response = client.get(logout_url, follow=True) # follow=True suit la redirection vers la page de login
+    response = client.get(logout_url, follow=True) # follow=True follows the redirect to the login page
 
-    # --- 3. Vérification ---
-    # On vérifie qu'on arrive bien sur une page (celle de login) après la déconnexion
+    # --- 3. Verification ---
+    # Check that we land on a page (the login page) after logging out
     assert response.status_code == 200
-    # On vérifie que la clé 'user' a bien été supprimée de la session
+    # Check that the 'user' key was correctly removed from the session
     assert "user" not in client.session

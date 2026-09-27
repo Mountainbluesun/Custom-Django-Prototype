@@ -1,34 +1,34 @@
-# Fichier : src/tests/test_management_commands.py (vous pouvez l'ajouter à un fichier existant)
+# File: src/tests/test_management_commands.py (you can add this to an existing file)
 import pytest
 from io import StringIO
 from django.core.management import call_command
 from django.contrib.auth.hashers import make_password, check_password
 from users.models import User
 
-@pytest.mark.xfail(reason="Désactivé temporairement – service à corriger")
+@pytest.mark.xfail(reason="Temporarily disabled - service needs fixing")
 @pytest.mark.django_db
 def test_set_password_command():
     """
-    Teste la nouvelle commande set_password qui modifie le mot de passe dans la base de données.
+    Tests the new set_password command that changes the password in the database.
     """
-    # --- 1. Préparation : On crée un utilisateur avec un ancien mot de passe ---
+    # --- 1. Setup: create a user with an old password ---
     user = User.objects.create(
         username="alice",
-        password=make_password("ancien_mot_de_passe")
+        password=make_password("old_password")
     )
 
-    # On vérifie que l'ancien mot de passe fonctionne
-    assert check_password("ancien_mot_de_passe", user.password) is True
+    # Check that the old password works
+    assert check_password("old_password", user.password) is True
 
-    # --- 2. Action : On appelle la commande pour changer le mot de passe ---
-    new_password = "nouveau_mot_de_passe_123"
+    # --- 2. Action: call the command to change the password ---
+    new_password = "new_password_123"
     call_command('set_password', user.username, new_password)
 
-    # --- 3. Vérification ---
-    # On recharge l'utilisateur depuis la base de données pour avoir les dernières infos
+    # --- 3. Verification ---
+    # Reload the user from the database to get the latest info
     user.refresh_from_db()
 
-    # On vérifie que le nouveau mot de passe fonctionne
+    # Check that the new password works
     assert check_password(new_password, user.password) is True
-    # On vérifie que l'ancien mot de passe ne fonctionne plus
-    assert check_password("ancien_mot_de_passe", user.password) is False
+    # Check that the old password no longer works
+    assert check_password("old_password", user.password) is False

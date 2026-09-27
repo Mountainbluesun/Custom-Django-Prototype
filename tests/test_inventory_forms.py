@@ -10,11 +10,11 @@ from inventory import service as inventory_service
 @pytest.mark.django_db
 def test_stock_in_and_out_forms(client):
     """
-    Teste le flux complet de soumission des formulaires d'entrée et de sortie de stock.
+    Tests the full submission flow of the stock-in and stock-out forms.
     """
-    # --- 1. Préparation : On crée les données dans la base de données de test ---
+    # --- 1. Setup: create the data in the test database ---
     company = Company.objects.create(name="Test Corp")
-    product = Product.objects.create(name="Produit Test", sku="SKU-TEST", company=company)
+    product = Product.objects.create(name="Test Product", sku="SKU-TEST", company=company)
     admin_user = User.objects.create(
         username="admin_user",
         password=make_password("password123"),
@@ -22,32 +22,32 @@ def test_stock_in_and_out_forms(client):
     )
     admin_user.companies.add(company)
 
-    # --- 2. Action : On se connecte en tant qu'admin ---
+    # --- 2. Action: log in as admin ---
     login_url = reverse('users:login')
     client.post(login_url, {"username": "admin_user", "password": "password123"})
 
-    # --- 3. Test du formulaire d'entrée de stock (IN) ---
+    # --- 3. Test the stock-in form (IN) ---
     stock_in_url = reverse('inventory:stock_in')
     client.post(stock_in_url, {
         "product_id": product.id,
         "company_id": company.id,
         "quantity": 10,
-        "note": "Entrée initiale"
+        "note": "Initial stock-in"
     })
 
-    # Vérification : le stock doit être à 10
+    # Verification: stock should be at 10
     assert inventory_service.compute_stock(product_id=product.id) == 10
     assert Movement.objects.filter(kind='IN').count() == 1
 
-    # --- 4. Test du formulaire de sortie de stock (OUT) ---
+    # --- 4. Test the stock-out form (OUT) ---
     stock_out_url = reverse('inventory:stock_out')
     client.post(stock_out_url, {
         "product_id": product.id,
         "company_id": company.id,
         "quantity": 3,
-        "note": "Vente client"
+        "note": "Customer sale"
     })
 
-    # Vérification : le stock doit être à 7 (10 - 3)
+    # Verification: stock should be at 7 (10 - 3)
     assert inventory_service.compute_stock(product_id=product.id) == 7
     assert Movement.objects.filter(kind='OUT').count() == 1
