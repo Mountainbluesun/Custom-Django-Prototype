@@ -10,16 +10,16 @@ from inventory.models import Movement
 @pytest.mark.django_db
 def test_dashboard_view_loads_for_admin(client):
     """
-    Vérifie que le dashboard se charge correctement pour un utilisateur admin.
+    Checks that the dashboard loads correctly for an admin user.
     """
-    # --- 1. Préparation : On crée les données dans la base de données de test ---
+    # --- 1. Setup: create the data in the test database ---
 
-    # On crée une entreprise, un produit, et un mouvement de stock
+    # Create a company, a product, and a stock movement
     company = Company.objects.create(name="ACME")
-    product = Product.objects.create(name="Produit Test", sku="SKU1", company=company)
+    product = Product.objects.create(name="Test Product", sku="SKU1", company=company)
     Movement.objects.create(product=product, company=company, quantity=10, kind='IN')
 
-    # On crée un utilisateur admin
+    # Create an admin user
     admin_user = User.objects.create(
         username="admin_user",
         password=make_password("password123"),
@@ -27,18 +27,18 @@ def test_dashboard_view_loads_for_admin(client):
     )
     admin_user.companies.add(company)
 
-    # --- 2. Action : On se connecte en tant qu'admin et on visite le dashboard ---
+    # --- 2. Action: log in as admin and visit the dashboard ---
     login_url = reverse('users:login')
     client.post(login_url, {"username": "admin_user", "password": "password123"})
 
     dashboard_url = reverse('dashboard:home')
     response = client.get(dashboard_url)
 
-    # --- 3. Vérification ---
+    # --- 3. Verification ---
     assert response.status_code == 200
     html_content = response.content.decode()
 
-    # On vérifie que les titres des graphiques sont bien présents
+    # Check that the chart titles are present
     assert "Dashboard" in html_content
-    assert "Stocks par entreprise" in html_content
-    assert "Activité des 6 derniers mois" in html_content
+    assert "Stock by Company" in html_content
+    assert "Activity Over the Last 6 Months" in html_content

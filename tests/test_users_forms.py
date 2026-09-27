@@ -1,4 +1,4 @@
-# Fichier : tests/test_users_forms.py
+# File: tests/test_users_forms.py
 import pytest
 from src.users.forms import (
     UserCreationForm,
@@ -8,11 +8,11 @@ from src.users.forms import (
 )
 
 # -------------------------------
-# Tests pour UserCreationForm
+# Tests for UserCreationForm
 # -------------------------------
 @pytest.mark.django_db
 def test_user_creation_form_valid():
-    """Form valide si les deux mots de passe correspondent."""
+    """Form is valid when both passwords match."""
     form = UserCreationForm(data={
         "username": "alice",
         "email": "alice@example.com",
@@ -23,7 +23,7 @@ def test_user_creation_form_valid():
 
 @pytest.mark.django_db
 def test_user_creation_form_invalid_password_mismatch():
-    """Form invalide si les mots de passe ne correspondent pas."""
+    """Form is invalid when the passwords don't match."""
     form = UserCreationForm(data={
         "username": "bob",
         "email": "bob@example.com",
@@ -31,15 +31,15 @@ def test_user_creation_form_invalid_password_mismatch():
         "password_confirm": "xyz999"
     })
     assert not form.is_valid()
-    assert "Les mots de passe ne correspondent pas." in str(form.errors)
+    assert "Passwords do not match." in str(form.errors)
 
 # -------------------------------
-# Tests pour UserEditForm
+# Tests for UserEditForm
 # -------------------------------
 
 @pytest.mark.django_db
 def test_user_edit_form_valid():
-    """UserEditForm est valide avec un username et un email."""
+    """UserEditForm is valid with a username and an email."""
     form = UserEditForm(data={
         "username": "carol",
         "email": "carol@example.com"
@@ -48,32 +48,32 @@ def test_user_edit_form_valid():
 
 @pytest.mark.django_db
 def test_user_edit_form_email_optional():
-    """UserEditForm reste valide même sans email."""
+    """UserEditForm stays valid even without an email."""
     form = UserEditForm(data={"username": "carol"})
     assert form.is_valid()
 
 # -------------------------------
-# Tests pour PasswordResetRequestForm
+# Tests for PasswordResetRequestForm
 # -------------------------------
 
 @pytest.mark.django_db
 def test_password_reset_request_form_valid():
-    """Form valide avec une adresse e-mail correcte."""
+    """Form is valid with a correct email address."""
     form = PasswordResetRequestForm(data={"email": "test@example.com"})
     assert form.is_valid()
 
 @pytest.mark.django_db
 def test_password_reset_request_form_invalid():
-    """Form invalide avec un e-mail incorrect."""
+    """Form is invalid with an incorrect email."""
     form = PasswordResetRequestForm(data={"email": "not-an-email"})
     assert not form.is_valid()
 
 # -------------------------------
-# Tests pour PasswordResetConfirmForm
+# Tests for PasswordResetConfirmForm
 # -------------------------------
 @pytest.mark.django_db
 def test_password_reset_confirm_form_valid():
-    """Form valide si les deux mots de passe correspondent."""
+    """Form is valid when both passwords match."""
     form = PasswordResetConfirmForm(data={
         "new_password": "secure123",
         "confirm_password": "secure123"
@@ -82,10 +82,10 @@ def test_password_reset_confirm_form_valid():
 
 @pytest.mark.django_db
 def test_password_reset_confirm_form_invalid():
-    """Form invalide si les mots de passe ne correspondent pas."""
+    """Form is invalid when the passwords don't match."""
     form = PasswordResetConfirmForm(data={
         "new_password": "abc",
         "confirm_password": "xyz"
     })
     assert not form.is_valid()
-    assert "Les mots de passe ne correspondent pas." in str(form.errors)
+    assert "Passwords do not match." in str(form.errors)
