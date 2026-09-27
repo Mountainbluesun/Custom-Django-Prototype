@@ -44,10 +44,10 @@ Integrated Portfolio: Dedicated area for showcasing other technical projects.
 ## 📸 Screenshots
 
 ### Dashboard (Linux environment)
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/Dashboard.png)
 
-### Product management
-![Products](screenshots/products.png)
+### Stock Movement History
+![Stock_movements](screenshots/Stock_movements.png)
 
 ### Test successful token
 ![Reset_password](screenshots/token.png)
