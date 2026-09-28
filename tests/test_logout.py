@@ -1,10 +1,10 @@
 import pytest
+from django.contrib.auth import SESSION_KEY
 from django.urls import reverse
 from users.models import User
 from django.contrib.auth.hashers import make_password
 
 
-@pytest.mark.xfail(reason="Test temporarily disabled - function to be revisited")
 @pytest.mark.django_db
 def test_logout_clears_session(client):
     """
@@ -18,15 +18,15 @@ def test_logout_clears_session(client):
     login_url = reverse('users:login')
     client.post(login_url, {"username": "testuser", "password": "password123"})
 
-    # Check that the login worked and the session is populated
-    assert "user" in client.session
+    # Check that the login worked (the session holds the user's id)
+    assert SESSION_KEY in client.session
 
     # --- 2. Action: call the logout URL ---
     logout_url = reverse('users:logout')
-    response = client.get(logout_url, follow=True) # follow=True follows the redirect to the login page
+    response = client.post(logout_url, follow=True) # Django 5 logout requires POST; follow=True follows the redirect
 
     # --- 3. Verification ---
     # Check that we land on a page (the login page) after logging out
     assert response.status_code == 200
-    # Check that the 'user' key was correctly removed from the session
-    assert "user" not in client.session
+    # Check that the user is no longer authenticated
+    assert SESSION_KEY not in client.session
