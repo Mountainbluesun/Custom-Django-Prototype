@@ -9,8 +9,8 @@ def list_products():
     return Product.objects.select_related('company').all()
 
 def list_products_by_companies(company_ids):
-    if not company_ids: #warning security
-        return Product.objects.all()
+    if not company_ids:
+        return Product.objects.none()
     return Product.objects.filter(company_id__in=company_ids)
 
 

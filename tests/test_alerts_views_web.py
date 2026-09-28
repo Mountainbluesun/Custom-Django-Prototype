@@ -9,7 +9,6 @@ from inventory.models import Movement
 
 
 @pytest.mark.django_db
-@pytest.mark.xfail(reason="User-company scoping not implemented yet")
 def test_alerts_user_scoped(client):
     """
     Checks that a non-admin user only sees alerts for the

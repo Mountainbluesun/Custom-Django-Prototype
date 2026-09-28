@@ -1,14 +1,14 @@
 # src/alerts/views.py
 from django.shortcuts import render
 from core.auth_decorators import login_required
-from companies.service import list_companies
+from core.scope import scope_for
 from .service import compute_alerts
 
 def _allowed_company_ids(request):
-    user = request.session.get("user") or {}
+    user = scope_for(request)
     if user.get("is_admin"):
-        return [c.id for c in list_companies()]
-    return [int(x) for x in (user.get("companies") or [])]
+        return None  # admins are not filtered
+    return user.get("companies", [])
 
 @login_required
 def alerts_list(request):

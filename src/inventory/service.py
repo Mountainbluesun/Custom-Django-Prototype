@@ -8,7 +8,8 @@ def list_movements(company_ids: Optional[Iterable[int]] = None, product_id: Opti
     """Returns a list of stock movements, optionally filtered."""
     queryset = Movement.objects.select_related('product', 'company', 'user').order_by('-timestamp')
 
-    if company_ids:
+    # None means "no filter"; an empty list means "no company allowed"
+    if company_ids is not None:
         queryset = queryset.filter(company_id__in=company_ids)
     if product_id:
         queryset = queryset.filter(product_id=product_id)

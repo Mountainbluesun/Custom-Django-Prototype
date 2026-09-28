@@ -4,15 +4,8 @@ from django.contrib import messages
 from django.urls import reverse
 
 from core.auth_decorators import login_required
+from core.scope import scope_for
 from .forms import StockInForm, StockOutForm, StockTransferForm  # We'll use dedicated forms
-from . import service as inventory_service
-from companies import service as company_service
-from catalog import service as catalog_service
-from users import service as user_service
-
-# File: src/inventory/views.py
-from django.shortcuts import render
-from core.auth_decorators import login_required
 from . import service as inventory_service
 from companies import service as company_service
 from catalog import service as catalog_service
@@ -22,13 +15,12 @@ from users import service as user_service
 @login_required
 def stock_list(request):
     """Displays the stock movement history."""
-    user = request.session.get("user") or {}
-    allowed_company_ids = user.get("companies", [])
+    user = scope_for(request)
 
-    if user.get("is_admin"):
-        movements = inventory_service.list_movements()
-    else:
-        movements = inventory_service.list_movements(company_ids=allowed_company_ids)
+    # Admins are not filtered (None); other users only see their own companies
+    # (an empty list means "no company allowed", so no movements at all).
+    company_ids = None if user.get("is_admin") else user.get("companies", [])
+    movements = inventory_service.list_movements(company_ids=company_ids)
 
     # --- Enrich the data here ---
 
@@ -52,7 +44,7 @@ def stock_list(request):
 @login_required
 def stock_in(request):
     """Handles the stock-in form."""
-    user = request.session.get("user") or {}
+    user = scope_for(request)
     if request.method == "POST":
         form = StockInForm(request.POST, user=user)
         if form.is_valid():
@@ -75,7 +67,7 @@ def stock_in(request):
 @login_required
 def stock_out(request):
     """Handles the stock-out form."""
-    user = request.session.get("user") or {}
+    user = scope_for(request)
     if request.method == "POST":
         form = StockOutForm(request.POST, user=user)
         if form.is_valid():
@@ -101,7 +93,7 @@ def stock_out(request):
 @login_required
 def stock_transfer(request):
     """Handles the stock transfer form."""
-    user = request.session.get("user") or {}
+    user = scope_for(request)
     if request.method == "POST":
         form = StockTransferForm(request.POST, user=user)
         if form.is_valid():

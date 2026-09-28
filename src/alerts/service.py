@@ -16,7 +16,8 @@ class AlertItem:
 
 
 def compute_alerts(allowed_company_ids: Optional[Iterable[int]] = None) -> List[AlertItem]:
-    ids = set(int(x) for x in (allowed_company_ids or [])) or None
+    # None means "no filter"; an empty collection means "no company allowed"
+    ids = None if allowed_company_ids is None else set(int(x) for x in allowed_company_ids)
     alerts: List[AlertItem] = []
     for p in list_products():
         if ids is not None and p.company_id not in ids: continue
