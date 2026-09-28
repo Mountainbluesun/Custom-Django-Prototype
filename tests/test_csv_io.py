@@ -36,9 +36,9 @@ def test_write_products_csv(tmp_path):
 def test_read_products_csv_valid(tmp_path):
     """Tests that read_products_csv correctly reads a valid CSV."""
     csv_content = (
-        "name;sku;company_id;threshold\n"
-        "Product A;A001;1;10\n"
-        "Product B;B002;2;\n"
+        "name,sku,company_id,threshold\n"
+        "Product A,A001,1,10\n"
+        "Product B,B002,2,\n"
     ).encode("utf-8")
 
     uploaded_file = DummyUploadedFile(csv_content)
@@ -52,11 +52,11 @@ def test_read_products_csv_valid(tmp_path):
 def test_read_products_csv_skips_incomplete(tmp_path):
     """Tests that read_products_csv skips incomplete rows."""
     csv_content = (
-        "name;sku;company_id;threshold\n"
-        "Product A;A001;1;10\n"
-        ";B002;2;5\n"   # row with no name -> skipped
-        "Product C;;3;7\n"  # row with no SKU -> skipped
-        "Product D;D004;;3\n"  # row with no company_id -> skipped
+        "name,sku,company_id,threshold\n"
+        "Product A,A001,1,10\n"
+        ",B002,2,5\n"   # row with no name -> skipped
+        "Product C,,3,7\n"  # row with no SKU -> skipped
+        "Product D,D004,,3\n"  # row with no company_id -> skipped
     ).encode("utf-8")
 
     uploaded_file = DummyUploadedFile(csv_content)
@@ -64,3 +64,16 @@ def test_read_products_csv_skips_incomplete(tmp_path):
 
     assert len(result) == 1
     assert result[0]["name"] == "Product A"
+
+
+def test_write_then_read_round_trip():
+    """An exported CSV can be re-imported as-is."""
+    rows = [
+        {"name": "Product A", "sku": "A001", "company_id": 1, "threshold": 10},
+        {"name": "Product B", "sku": "B002", "company_id": 2, "threshold": 0},
+    ]
+    buffer = io.StringIO()
+    write_products_csv(buffer, rows)
+
+    uploaded_file = DummyUploadedFile(buffer.getvalue().encode("utf-8"))
+    assert read_products_csv(uploaded_file) == rows

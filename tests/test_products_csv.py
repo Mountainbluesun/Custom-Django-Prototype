@@ -6,7 +6,6 @@ from companies.models import Company
 from users.models import User
 from catalog.models import Product
 
-@pytest.mark.xfail(reason="Test temporarily disabled - function to be revisited")
 @pytest.mark.django_db
 def test_export_and_import_products_csv(client):
     """
@@ -38,11 +37,11 @@ def test_export_and_import_products_csv(client):
     assert response_export['Content-Type'] == 'text/csv'
     csv_content = response_export.content.decode('utf-8')
     assert "name,sku,company_id,threshold" in csv_content
-    assert "Product P1,SKU1,1,2" in csv_content
+    assert f"Product P1,SKU1,{company1.id},2" in csv_content
 
     # --- 4. Test the IMPORT ---
     # Prepare a new CSV file to import
-    csv_to_import = "name;sku;company_id;threshold\nNew Product;SKU2;2;5"
+    csv_to_import = f"name,sku,company_id,threshold\nNew Product,SKU2,{company2.id},5"
     uploaded_file = SimpleUploadedFile(
         "import.csv",
         csv_to_import.encode("utf-8"),
@@ -59,3 +58,31 @@ def test_export_and_import_products_csv(client):
     assert new_product.name == "New Product"
     assert new_product.company.id == company2.id
     assert new_product.threshold == 5
+
+
+@pytest.mark.django_db
+def test_import_warns_when_no_valid_rows(client):
+    """
+    Checks that importing a file with no readable row (for example a
+    semicolon-separated file) shows a warning instead of a silent success.
+    """
+    admin_user = User.objects.create(
+        username="admin",
+        password=make_password("password123"),
+        is_admin=True
+    )
+    company = Company.objects.create(name="ACME")
+    admin_user.companies.add(company)
+
+    client.post(reverse('users:login'), {"username": "admin", "password": "password123"})
+
+    semicolon_csv = f"name;sku;company_id;threshold\nSemicolon Product;SKU9;{company.id};5"
+    uploaded_file = SimpleUploadedFile(
+        "import.csv",
+        semicolon_csv.encode("utf-8"),
+        content_type="text/csv"
+    )
+    response = client.post(reverse('catalog:import_csv'), {"csv_file": uploaded_file}, follow=True)
+
+    assert "No valid rows found" in response.content.decode()
+    assert Product.objects.count() == 0

@@ -140,7 +140,14 @@ def products_import_csv(request):
         for r in rows:
             service.create_product(**r)
             created += 1
-        messages.success(request, f"Import completed: {created} product(s) added.")
+        if created:
+            messages.success(request, f"Import completed: {created} product(s) added.")
+        else:
+            messages.warning(
+                request,
+                "No valid rows found. Expected a comma-separated CSV file "
+                "with the columns: name, sku, company_id, threshold."
+            )
     except Exception as e:
         messages.error(request, f"Error reading the CSV file: {e}")
 

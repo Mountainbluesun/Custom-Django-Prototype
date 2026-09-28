@@ -27,7 +27,7 @@ def read_products_csv(uploaded_file) -> List[Dict]:
     """
     # uploaded_file is binary -> TextIOWrapper in utf-8
     wrapper = TextIOWrapper(uploaded_file.file, encoding="utf-8")
-    reader = csv.DictReader(wrapper, delimiter= ";")
+    reader = csv.DictReader(wrapper)  # standard comma-separated CSV, like the export
     out: List[Dict] = []
     for row in reader:
         if not row.get("name") or not row.get("sku") or not row.get("company_id"):
