@@ -21,10 +21,6 @@ def login_view(request):
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "")
 
-        print("--- LOGIN ATTEMPT ---")
-        print(f"Username received: '{username}'")
-        print(f"Password received: '{password}'")
-
         user = User.objects.filter(username=username).first()
 
         if user:
@@ -156,10 +152,6 @@ def login_debug_view(request):
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
         password = request.POST.get("password", "")
-        print("--- DEBUG LOGIN ---")
-        print(f"Username received: {username}")
-        print(f"Password received: {password}")
-
         # Use Django's authentication
         user = authenticate(request, username=username, password=password)
 

@@ -1,4 +1,5 @@
 # File: src/catalog/views.py
+import logging
 from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponse
 from django.contrib import messages
@@ -8,6 +9,8 @@ from core.auth_decorators import login_required, admin_required
 from .forms import ProductForm
 from . import service
 from . import csv_io
+
+logger = logging.getLogger(__name__)
 
 
 def _allowed_company_ids(request):
@@ -47,10 +50,7 @@ def product_list(request):
     from inventory.service import compute_stock
     for p in prods:
         p.current_stock = compute_stock(product_id=p.id)
-    print("DEBUG allowed_company_ids:", ids)
-    print("DEBUG products found:", len(prods))
-    for p in prods:
-        print(" -", p.name, "(Company ID:", p.company_id, ")")
+    logger.debug("allowed_company_ids=%s, products found=%d", ids, len(prods))
 
     return render(request, "catalog/list.html", {"products": prods})
 
@@ -63,9 +63,6 @@ def product_create(request):
             service.create_product(**form.cleaned_data)
             messages.success(request, "Product created successfully.")
             return redirect("catalog:list")
-        session_user = request.session.get("user", {}) ## Test
-        print(session_user) ## Test
-
     else:
         form = ProductForm()
 

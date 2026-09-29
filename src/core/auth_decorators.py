@@ -1,14 +1,17 @@
+import logging
 from functools import wraps
 from django.shortcuts import redirect
 from django.http import HttpResponseForbidden
 
 # src/core/auth_decorators.py
 
+logger = logging.getLogger(__name__)
+
+
 def login_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        print(">>> EXECUTING login_required DECORATOR <<<")
-        print(">>> [DECORATOR] request.user:", request.user)
+        logger.debug("login_required: user=%s", request.user)
         if not request.user.is_authenticated:
             return redirect("users:login")
         return view_func(request, *args, **kwargs)

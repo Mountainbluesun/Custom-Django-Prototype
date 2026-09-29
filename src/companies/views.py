@@ -6,23 +6,21 @@ from core.auth_decorators import login_required, admin_required
 from .forms import CompanyForm
 from .service import list_companies, create_company, get_company, update_company, delete_company
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 @login_required
 def company_list(request):
     ids = _allowed_company_ids(request)
-    print("DEBUG allowed_company_ids:", ids)
-
     companies = list_companies(ids)
-    print(f"DEBUG companies found: {companies.count()}")
-    for c in companies:
-        print(f" - {c.name} (ID: {c.id})")
+    logger.debug("allowed_company_ids=%s, companies found=%d", ids, companies.count())
 
     return render(request, "companies/list.html", {"companies": companies})
 
 
 from .models import Company
 
-from companies.models import Company
 
 def _allowed_company_ids(request):
     user = getattr(request, "user", None)
@@ -35,6 +33,10 @@ def _allowed_company_ids(request):
 
     # Otherwise, get the companies associated with the user
     return list(user.companies.values_list('id', flat=True))
+
+
+
+
 
 
 @admin_required
