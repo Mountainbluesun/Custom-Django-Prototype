@@ -107,7 +107,12 @@ def user_edit(request, pk):
             messages.success(request, f"User '{user.username}' has been updated.")
             return redirect("users:list")
     else:
-        form = UserEditForm(initial={'username': user.username, 'email': user.email})
+        form = UserEditForm(initial={
+            'username': user.username,
+            'email': user.email,
+            'is_admin': user.is_admin,
+            'companies': user.companies.all(),
+        })
 
     context = {"form": form, "mode": "edit", "user": user}
     return render(request, "users/form.html", context)

@@ -40,7 +40,10 @@ def update_user(user_id: int, data: dict) -> Optional[User]:
     if user:
         user.username = data['username']
         user.email = data.get('email')
+        user.is_admin = data.get('is_admin', False)
         user.save()
+        if 'companies' in data:
+            user.companies.set(data['companies'])
     return user
 
 

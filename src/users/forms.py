@@ -1,11 +1,20 @@
 # File: src/users/forms.py
 from django import forms
+from companies.models import Company
+
 
 class UserCreationForm(forms.Form):
     username = forms.CharField(label="Username", max_length=100)
     email = forms.EmailField(label="Email address", required=False)
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
     password_confirm = forms.CharField(label="Confirm password", widget=forms.PasswordInput)
+    is_admin = forms.BooleanField(label="Administrator", required=False)
+    companies = forms.ModelMultipleChoiceField(
+        label="Companies",
+        queryset=Company.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+    )
 
     def clean(self):
         cleaned_data = super().clean()
@@ -20,6 +29,13 @@ class UserCreationForm(forms.Form):
 class UserEditForm(forms.Form):
     username = forms.CharField(label="Username", max_length=100)
     email = forms.EmailField(label="Email address", required=False)
+    is_admin = forms.BooleanField(label="Administrator", required=False)
+    companies = forms.ModelMultipleChoiceField(
+        label="Companies",
+        queryset=Company.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+    )
 
 class PasswordResetRequestForm(forms.Form):
     email = forms.EmailField(label="Your email address")
