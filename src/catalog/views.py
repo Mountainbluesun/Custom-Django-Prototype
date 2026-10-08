@@ -1,4 +1,3 @@
-# File: src/catalog/views.py
 import logging
 from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponse

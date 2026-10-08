@@ -1,4 +1,3 @@
-# File: src/inventory/models.py
 from django.db import models
 from catalog.models import Product
 from companies.models import Company

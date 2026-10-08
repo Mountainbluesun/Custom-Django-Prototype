@@ -1,4 +1,3 @@
-# File: src/users/management/commands/create_admin.py
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.hashers import make_password
 from users.models import User

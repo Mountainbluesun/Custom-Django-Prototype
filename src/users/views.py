@@ -1,18 +1,18 @@
 import json
 
-from django.http import Http404, HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import check_password
 
 from core.auth_decorators import login_required, admin_required
 from core.forms import ContactForm
-from .forms import UserCreationForm, UserEditForm, PasswordResetRequestForm, PasswordResetConfirmForm
-from .models import User, Company
+from .forms import UserCreationForm, UserEditForm
+from .models import User
 from . import service
-from .service import list_users, create_user, get_user, update_user, delete_user
+from .service import list_users
 
 # ---------------- LOGIN / LOGOUT ----------------
 

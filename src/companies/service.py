@@ -1,5 +1,4 @@
-# File: src/companies/service.py
-from typing import List, Optional
+from typing import Optional
 from .models import Company
 
 # companies/service.py

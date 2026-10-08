@@ -25,7 +25,6 @@ urlpatterns = [
     path('alerts/', include('alerts.urls')),
     path('users/', include('users.urls')),
     path('dashboard/', include('dashboard.urls')),
-   # path("portfolio/", include("home.urls")),
     path('test-video/', test_video, name='test_video'),
     ]
 
@@ -40,11 +39,5 @@ if settings.DEBUG:
 urlpatterns += [
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(documents_urls)),
-    path("", include(wagtail_urls)),
-
-
-
-    # Les pages Wagtail (toujours en dernier)
-    # path("", include(wagtail_urls)),
     path("", include(wagtail_urls)),
 ]

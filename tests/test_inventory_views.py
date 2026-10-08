@@ -4,7 +4,6 @@ from django.contrib.auth.hashers import make_password
 from companies.models import Company
 from users.models import User
 from catalog.models import Product
-from inventory.models import Movement
 
 @pytest.mark.django_db
 def test_inventory_in_out_transfer_flow(client):

@@ -2,18 +2,18 @@
 #     DJANGO / PYTHON   #
 #########################
 
-# Cache & compilations Python
+# Python cache & compiled files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Environnement virtuel
+# Virtual environment
 venv/
 env/
 .venv/
 
-# Fichiers d’environnement (variables secrètes)
+# Environment files (secret variables)
 .env
 *.env
 
@@ -21,7 +21,7 @@ env/
 #       DATABASES       #
 #########################
 
-# Sauvegardes SQL / PostgreSQL
+# SQL / PostgreSQL backups
 *.sql
 *.dump
 *.db
@@ -31,11 +31,11 @@ env/
 #      DJANGO FILES     #
 #########################
 
-# Static & media générés
+# Generated static & media files
 staticfiles/
 media/
 
-# (optionnel) ignorer les migrations si tu veux un repo très propre
+# (optional) ignore migrations if you want a very clean repo
 # */migrations/
 # !*/migrations/__init__.py
 
@@ -80,12 +80,12 @@ Thumbs.db
 *.pid
 
 *.json
-# Ou plus spécifiquement :
+# Or, more specifically:
 complet_prod.json
 portfolio_full.json
 mes_acces.json
 
-# Archives et Sauvegardes
+# Archives and backups
 *.tar.gz
 *.zip
 *.rar

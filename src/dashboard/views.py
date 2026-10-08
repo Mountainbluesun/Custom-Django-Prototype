@@ -1,9 +1,7 @@
-# File: src/dashboard/views.py
 from django.shortcuts import render
 from django.utils import timezone
 from collections import defaultdict
 import datetime
-import json
 from django.shortcuts import render
 
 from core.auth_decorators import admin_required

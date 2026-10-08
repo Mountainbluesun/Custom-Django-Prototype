@@ -1,4 +1,3 @@
-# File: src/catalog/models.py
 from django.db import models
 from companies.models import Company  # Import the Company model
 

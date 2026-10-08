@@ -1,4 +1,3 @@
-# File: src/config/views.py
 from django.shortcuts import render
 from core.auth_decorators import login_required
 

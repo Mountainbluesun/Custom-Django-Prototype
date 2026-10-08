@@ -1,4 +1,3 @@
-# File: src/users/forms.py
 from django import forms
 from companies.models import Company
 

@@ -1,8 +1,4 @@
-# File: src/users/service.py
 from typing import List, Optional
-from django.contrib.auth.hashers import make_password
-from django.shortcuts import get_object_or_404, redirect, render
-
 from .models import User, Company
 
 

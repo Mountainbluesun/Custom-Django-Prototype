@@ -1,5 +1,4 @@
-# File: src/catalog/service.py
-from typing import List, Optional, Iterable
+from typing import Optional
 from .models import Product, Company
 
 from .models import Product

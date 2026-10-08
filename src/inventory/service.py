@@ -1,7 +1,6 @@
-# File: src/inventory/service.py
 from typing import List, Optional, Iterable
 from django.db.models import Sum
-from .models import Movement, Product, Company, User
+from .models import Movement
 
 
 def list_movements(company_ids: Optional[Iterable[int]] = None, product_id: Optional[int] = None) -> List[Movement]:

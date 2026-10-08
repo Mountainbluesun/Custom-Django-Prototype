@@ -8,7 +8,6 @@ urlpatterns = [
     path("in/", views.stock_in, name="stock_in"),
     path("out/", views.stock_out, name="stock_out"),
     path("transfer/", views.stock_transfer, name="transfer"),
-    #path("alerts/", views.alerts, name="alerts"),
 
 
 ]

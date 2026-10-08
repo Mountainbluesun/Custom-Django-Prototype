@@ -1,7 +1,5 @@
-# File: src/inventory/views.py
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.urls import reverse
 
 from core.auth_decorators import login_required
 from core.scope import scope_for

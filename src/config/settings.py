@@ -1,6 +1,5 @@
 import os
 import sys
-from doctest import debug
 from dotenv import load_dotenv
 
 import environ
@@ -11,8 +10,6 @@ mimetypes.add_type("video/mp4", ".mp4", True)
 # Initialize django-environ
 env = environ.Env(debug=(bool, False))
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-#environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR.parent / '.env')
 load_dotenv(os.path.join(BASE_DIR, '.env'))
@@ -20,18 +17,12 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 # 🔧 Add the 'src' folder to the Python path so Django can find the apps
 sys.path.append(str(BASE_DIR / "src"))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
-
-#ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
-#ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok-free.app', '.ngrok-free.dev']
 
 # Dynamic
 ALLOWED_HOSTS = ["www.jeremylebrun.dev",
@@ -45,18 +36,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.jeremylebrun.dev",
 ]
 
-#NGROK_HOST = os.environ.get('NGROK_HOST')
-#if NGROK_HOST:
-    #ALLOWED_HOSTS.append(NGROK_HOST)
-
-#CSRF_TRUSTED_ORIGINS = [
-    #'https://*.ngrok-free.app',
-   # 'https://*.ngrok-free.dev',
-#]
-
 INSTALLED_APPS = [
-    # Django apps
-    #"django.contrib.admin", #warning
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -77,7 +57,6 @@ INSTALLED_APPS = [
 
     # Your Wagtail apps
     "home",
-    #"projects",
 
     # Essential Wagtail apps
     "wagtail.contrib.forms",
@@ -141,9 +120,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 # Choose the database depending on the environment
 if os.getenv('DJANGO_ENV') == 'vps':
     DATABASES = {
@@ -171,9 +147,6 @@ else:
 
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -189,9 +162,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -213,13 +183,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'   # destination
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-#MEDIA_ROOT = BASE_DIR / "media"
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

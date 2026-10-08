@@ -1,7 +1,6 @@
 import pytest
 from companies.models import Company
 from catalog.models import Product
-from inventory.models import Movement
 from inventory import service as inventory_service
 
 @pytest.mark.django_db

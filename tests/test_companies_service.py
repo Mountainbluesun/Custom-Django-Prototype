@@ -1,6 +1,5 @@
 import pytest
 from companies import service as svc
-from companies.models import Company
 
 @pytest.mark.django_db
 def test_company_crud_service():

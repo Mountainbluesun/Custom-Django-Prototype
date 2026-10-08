@@ -1,6 +1,4 @@
-# File: src/tests/test_management_commands.py (you can add this to an existing file)
 import pytest
-from io import StringIO
 from django.core.management import call_command
 from django.contrib.auth.hashers import make_password, check_password
 from users.models import User

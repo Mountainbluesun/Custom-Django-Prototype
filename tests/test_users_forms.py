@@ -1,4 +1,3 @@
-# File: tests/test_users_forms.py
 import pytest
 from src.users.forms import (
     UserCreationForm,

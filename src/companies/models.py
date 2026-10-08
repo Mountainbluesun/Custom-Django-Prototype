@@ -1,4 +1,4 @@
-from dataclasses import dataclass, asdict
+from dataclasses import asdict
 from django.db import models
 from typing import List, Optional
 from pathlib import Path
