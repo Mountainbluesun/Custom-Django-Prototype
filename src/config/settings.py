@@ -22,7 +22,7 @@ sys.path.append(str(BASE_DIR / "src"))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env.bool("DEBUG", default=False)
 
 # Dynamic
 ALLOWED_HOSTS = ["www.jeremylebrun.dev",
