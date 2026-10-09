@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.hashers import check_password
 
 from core.auth_decorators import login_required, admin_required
@@ -15,6 +16,15 @@ from . import service
 from .service import list_users
 
 # ---------------- LOGIN / LOGOUT ----------------
+class LoginPageView(LoginView):
+    """Login page that also shows the contact form."""
+    template_name = "users/login.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["contact_form"] = ContactForm()
+        return context
+
 
 def login_view(request):
     if request.method == "POST":

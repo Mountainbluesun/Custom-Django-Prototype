@@ -8,8 +8,8 @@
 {% block content %}
 <h1>Welcome to my site 👋</h1>
 <a href="/projets/laravel/">Laravel Project</a>
-<h1> Developer with a strong interest in logic and structure, I mainly work on backend applications and practical projects.
-Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
+<h1>Backend developer with a strong interest in logic and structure.
+    I build practical, tested applications with Python and Django, with a focus on code clarity, simplicity, and efficiency.</h1>
 
 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
   <img
@@ -25,12 +25,11 @@ Self-taught, I focus on code clarity, simplicity, and efficiency.</h1>
 <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
   <div class="card" style="max-width:420px">
     <h1>Login</h1>
-
-    {% if messages %}
-      <ul class="messages">
-        {% for m in messages %}<li>{{ m }}</li>{% endfor %}
-      </ul>
-    {% endif %}
+      {% if form.non_field_errors %}
+      <div style="color: #b91c1c; margin-bottom: 1rem;">
+        {{ form.non_field_errors }}
+      </div>
+      {% endif %}
 
     <form method="post">
       {% csrf_token %}
