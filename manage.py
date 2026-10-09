@@ -1,10 +1,10 @@
-
-
 #!/usr/bin/env python
 import os
 import sys
 
-# --- AJOUT IMPORTANT : rendre src/ importable ---
+
+# --- IMPORTANT ADDITION: make src/importable ---
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SRC_DIR = os.path.join(BASE_DIR, "src")
 if SRC_DIR not in sys.path:

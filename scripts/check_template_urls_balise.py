@@ -1,15 +1,14 @@
-# scripts/check_template_urls_balise.py
 import os
 import re
 from django.conf import settings
 from django.urls import reverse, NoReverseMatch
 
-print("\n🔍 Scan global des templates Django pour détecter les balises {% url '...' %}...\n")
+print("\n🔍 Global scan of Django templates to detect tags {% url '...' %}...\n")
 
 url_pattern = re.compile(r"{%\s*url\s+['\"]([^'\"]+)['\"]")
 found_urls = set()
 
-# 1️⃣ Scanner tous les répertoires de templates du projet
+# 1️⃣ Scan all project template directories
 search_paths = [os.path.join(settings.BASE_DIR, app) for app in os.listdir(settings.BASE_DIR) if os.path.isdir(os.path.join(settings.BASE_DIR, app))]
 
 for path in search_paths:
@@ -23,9 +22,9 @@ for path in search_paths:
                     for m in matches:
                         found_urls.add(m)
 
-print(f"🧾 Balises {{% url %}} détectées dans {len(found_urls)} modèles.\n")
+print(f"🧾  Tags {{% url %}} detected in {len(found_urls)} models.\n")
 
-# 2️⃣ Vérification des noms trouvés
+# 2️⃣ Verification of found names
 def safe_reverse(name):
     try:
         if any(x in name for x in ["edit", "delete", "detail"]):
@@ -42,6 +41,6 @@ for name in sorted(found_urls):
     if resolved:
         print(f"✅ {name} -> {resolved}")
     else:
-        print(f"⚠️ {name} -> introuvable ou nécessite des arguments dynamiques")
+        print(f"⚠️ {name} -> not found or requires dynamic arguments")
 
-print("\n📋 Vérification terminée.\n")
+print("\n📋 Verification complete.\n")

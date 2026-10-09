@@ -8,7 +8,7 @@ from dashboard.views import home as dashboard_view, test_video
 
 urlpatterns = [
     # ---------------------
-    # Accueil de votre application
+    # Your application's home screen
     # ---------------------
     path("", dashboard_view, name="home"),
     path('', include('portfolio.urls')),
@@ -17,7 +17,7 @@ urlpatterns = [
 
 
     # ---------------------
-    # Apps de votre projet
+    # Your project's apps
     # ---------------------
     path('companies/', include('companies.urls')),
     path('products/', include('catalog.urls')),
@@ -34,7 +34,7 @@ if settings.DEBUG:
         urlpatterns += staticfiles_urlpatterns()
         urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-    # Wagtail Admin et CMS
+    # Wagtail Admin and CMS
     # ---------------------
 urlpatterns += [
     path("admin/", include(wagtailadmin_urls)),
